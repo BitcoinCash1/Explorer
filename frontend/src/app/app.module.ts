@@ -52,7 +52,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { DifficultyComponent } from './components/difficulty/difficulty.component';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { faFilter, faAngleDown, faAngleUp, faAngleRight, faAngleLeft, faBolt, faChartArea, faCogs, faCubes, faHammer, faDatabase, faExchangeAlt, faInfoCircle,
-  faLink, faList, faSearch, faCaretUp, faCaretDown, faTachometerAlt, faThList, faTint, faTv, faAngleDoubleDown, faSortUp, faAngleDoubleUp, faChevronDown, faFileAlt, faRedoAlt, faArrowAltCircleRight, faExternalLinkAlt, faBook, faListUl } from '@fortawesome/free-solid-svg-icons';
+  faLink, faList, faSearch, faCaretUp, faCaretDown, faTachometerAlt, faThList, faTint, faTv, faAngleDoubleDown, faSortUp, faAngleDoubleUp, faChevronDown, faFileAlt, faRedoAlt, faArrowAltCircleRight, faExternalLinkAlt, faBook, faListUl, faBoltLightning } from '@fortawesome/free-solid-svg-icons';
 import { ApiDocsComponent } from './components/docs/api-docs.component';
 import { DocsComponent } from './components/docs/docs.component';
 import { ApiDocsNavComponent } from './components/docs/api-docs-nav.component';
@@ -80,6 +80,7 @@ import { DifficultyAdjustmentsTable } from './components/difficulty-adjustments-
 import { BlocksList } from './components/blocks-list/blocks-list.component';
 import { RewardStatsComponent } from './components/reward-stats/reward-stats.component';
 import { DataCyDirective } from './data-cy.directive';
+import { LightningComponent } from './lightning/lightning.component';
 
 @NgModule({
   declarations: [
@@ -141,6 +142,7 @@ import { DataCyDirective } from './data-cy.directive';
     BlocksList,
     DataCyDirective,
     RewardStatsComponent,
+    LightningComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -205,5 +207,7 @@ export class AppModule {
     library.addIcons(faAngleLeft);
     library.addIcons(faBook);
     library.addIcons(faListUl);
+    library.addIcons(faBolt);
+    library.addIcons(faBoltLightning);
   }
 }

@@ -20,6 +20,7 @@ import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-poli
 import { TrademarkPolicyComponent } from './components/trademark-policy/trademark-policy.component';
 import { BisqMasterPageComponent } from './components/bisq-master-page/bisq-master-page.component';
 import { SponsorComponent } from './components/sponsor/sponsor.component';
+import { LightningComponent } from './lightning/lightning.component';
 import { LiquidMasterPageComponent } from './components/liquid-master-page/liquid-master-page.component';
 import { PushTransactionComponent } from './components/push-transaction/push-transaction.component';
 import { PoolRankingComponent } from './components/pool-ranking/pool-ranking.component';
@@ -72,6 +73,10 @@ let routes: Routes = [
       {
         path: 'blocks',
         component: LatestBlocksComponent,
+      },
+      {
+        path: 'lightning',
+        component: LightningComponent,
       },
       {
         path: 'mining',

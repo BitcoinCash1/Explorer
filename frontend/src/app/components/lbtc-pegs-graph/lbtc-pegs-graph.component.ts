@@ -145,11 +145,11 @@ export class LbtcPegsGraphComponent implements OnInit, OnChanges {
           showSymbol: false,
           areaStyle: {
             opacity: 0.2,
-            color: '#116761',
+            color: '#ffff00',
           },
           lineStyle: {
             width: 3,
-            color: '#116761',
+            color: '#ffff00',
           },
         },
       ],
