@@ -18,7 +18,7 @@
       <div class="card-text" i18n-ngbTooltip="mining.rewards-desc" ngbTooltip="Percentage change past week"
         placement="bottom">
         <div class="fee-text">
-          {{ statistics.latest?.node_count || 0 | number }}
+          {{ ((statistics.latest?.tor_nodes || 0) + (statistics.latest?.clearnet_nodes || 0) + (statistics.latest?.unannounced_nodes || 0)) | number }}
         </div>
         <span class="fiat">
           <app-change [current]="statistics.latest?.node_count" [previous]="statistics.previous?.node_count"></app-change>
