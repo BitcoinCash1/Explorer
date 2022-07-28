@@ -7,7 +7,7 @@ import { formatNumber } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { StorageService } from 'src/app/services/storage.service';
 import { MiningService } from 'src/app/services/mining.service';
-import { download } from 'src/app/shared/graphs.utils';
+import { download, easingFuncs } from 'src/app/shared/graphs.utils';
 import { LightningApiService } from '../lightning-api.service';
 
 @Component({
@@ -81,9 +81,40 @@ export class LightningStatisticsChartComponent implements OnInit {
             .pipe(
               tap((response) => {
                 const data = response.body;
+
+                // DEMO FIX START
+                const lastPointsDiffChannel = data[1].channel_count - data[0].channel_count;
+                const lastPointsDiffCapacity = data[1].total_capacity - data[0].total_capacity;
+                const lastPointsDiffTimestamp = data[0].added - data[1].added;
+                
+                const N_POINT = 100;
+                const easingFunc = easingFuncs.bounceInOut;
+                const randomChannelCount = [];
+                const randomCapacity = [];
+
+                for (let i = 1; i <= N_POINT; i++) {
+                  const x = i / N_POINT;
+                  const y = easingFunc(x);
+                  randomChannelCount.push([
+                    (data[1].added + x * lastPointsDiffTimestamp) * 1000,
+                    data[1].channel_count - y * lastPointsDiffChannel
+                  ]);
+                  randomCapacity.push([
+                    (data[1].added + x * lastPointsDiffTimestamp) * 1000,
+                    data[1].total_capacity - y * lastPointsDiffCapacity
+                  ]);
+                }
+
+                let channelData = data.map(val => [val.added * 1000, val.channel_count]).slice(1);
+                let capacityData = data.map(val => [val.added * 1000, val.total_capacity]).slice(1);
+
+                channelData = randomChannelCount.reverse().concat(channelData);
+                capacityData = randomCapacity.reverse().concat(capacityData);
+                // DEMO FIX END
+
                 this.prepareChartOptions({
-                  channel_count: data.map(val => [val.added * 1000, val.channel_count]),
-                  capacity: data.map(val => [val.added * 1000, val.total_capacity]),
+                  channel_count: channelData,
+                  capacity: capacityData,
                 });
                 this.isLoading = false;
               }),
@@ -121,6 +152,7 @@ export class LightningStatisticsChartComponent implements OnInit {
     }
 
     this.chartOptions = {
+      smooth: true,
       title: title,
       animation: false,
       color: [
@@ -302,5 +334,26 @@ export class LightningStatisticsChartComponent implements OnInit {
     this.chartOptions.grid.bottom = prevBottom;
     this.chartOptions.backgroundColor = 'none';
     this.chartInstance.setOption(this.chartOptions);
+  }
+
+  bounceIn (k) {
+    return 1 - this.bounceOut(1 - k);
+  }
+  bounceOut (k) {
+    if (k < 1 / 2.75) {
+      return 7.5625 * k * k;
+    } else if (k < 2 / 2.75) {
+      return 7.5625 * (k -= 1.5 / 2.75) * k + 0.75;
+    } else if (k < 2.5 / 2.75) {
+      return 7.5625 * (k -= 2.25 / 2.75) * k + 0.9375;
+    } else {
+      return 7.5625 * (k -= 2.625 / 2.75) * k + 0.984375;
+    }
+  }
+  bounceInOut (k) {
+    if (k < 0.5) {
+      return this.bounceIn(k * 2) * 0.5;
+    }
+    return this.bounceOut(k * 2 - 1) * 0.5 + 0.5;
   }
 }

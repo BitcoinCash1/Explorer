@@ -83,12 +83,11 @@ class LightningStatsUpdater {
         let isUnnanounced = true;
         for (const socket of node.sockets) {
           const hasOnion = socket.indexOf('.onion') !== -1;
-          if (hasOnion) {
+          const hasClearnet = [4, 6].includes(net.isIP(socket.split(':')[0]));
+          if (hasOnion && !hasClearnet) {
             torNodes++;
             isUnnanounced = false;
-          }
-          const hasClearnet = [4, 6].includes(net.isIP(socket.split(':')[0]));
-          if (hasClearnet) {
+          } else if (hasClearnet) {
             clearnetNodes++;
             isUnnanounced = false;
           }
@@ -174,9 +173,17 @@ class LightningStatsUpdater {
   // We only run this on first launch
   private async $populateHistoricalStatistics() {
     try {
-      const [rows]: any = await DB.query(`SELECT COUNT(*) FROM lightning_stats`);
-      // Only run if table is empty
-      if (rows[0]['COUNT(*)'] > 0) {
+      // const [rows]: any = await DB.query(`SELECT COUNT(*) FROM lightning_stats`);
+      // // Only run if table is empty
+      // if (rows[0]['COUNT(*)'] > 0) {
+      //   return;
+      // }
+
+      // DELETE FROM `lightning_stats`
+      // WHERE `added` < '2022-07-27' AND `added` > '2021-09-18';
+
+      const [rows]: any = await DB.query(`SELECT UNIX_TIMESTAMP(added) as added FROM lightning_stats order by added desc limit 1`);
+      if (rows[0].added >= 1658872800) {
         return;
       }
       logger.info(`Running historical stats population...`);
@@ -189,6 +196,11 @@ class LightningStatsUpdater {
       this.setDateMidnight(currentDate);
 
       while (date < currentDate) {
+        if (date.getTime() < 1632009600000) {
+          date.setUTCDate(date.getUTCDate() + 1);
+          continue;
+        }
+
         let totalCapacity = 0;
         let channelsCount = 0;
 

@@ -6,7 +6,7 @@ import { formatNumber } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { StorageService } from 'src/app/services/storage.service';
 import { MiningService } from 'src/app/services/mining.service';
-import { download } from 'src/app/shared/graphs.utils';
+import { download, easingFuncs } from 'src/app/shared/graphs.utils';
 import { SeoService } from 'src/app/services/seo.service';
 import { LightningApiService } from '../lightning-api.service';
 
@@ -82,10 +82,49 @@ export class NodesNetworksChartComponent implements OnInit {
             .pipe(
               tap((response) => {
                 const data = response.body;
+
+                // DEMO FIX START
+                const lastPointsDiffTor = data[1].tor_nodes - data[0].tor_nodes;
+                const lastPointsDiffClearnet = data[1].clearnet_nodes - data[0].clearnet_nodes;
+                const lastPointsDiffUnannounced = data[1].unannounced_nodes - data[0].unannounced_nodes;
+                const lastPointsDiffTimestamp = data[0].added - data[1].added;
+                
+                const N_POINT = 100;
+                const easingFunc = easingFuncs.bounceInOut;
+                const randomTor = [];
+                const randomClearnet = [];
+                const randomUnannounced = [];
+
+                for (let i = 1; i <= N_POINT; i++) {
+                  const x = i / N_POINT;
+                  const y = easingFunc(x);
+                  randomTor.push([
+                    (data[1].added + x * lastPointsDiffTimestamp) * 1000,
+                    data[1].tor_nodes - y * lastPointsDiffTor
+                  ]);
+                  randomClearnet.push([
+                    (data[1].added + x * lastPointsDiffTimestamp) * 1000,
+                    data[1].clearnet_nodes - y * lastPointsDiffClearnet
+                  ]);
+                  randomUnannounced.push([
+                    (data[1].added + x * lastPointsDiffTimestamp) * 1000,
+                    data[1].unannounced_nodes - y * lastPointsDiffUnannounced
+                  ]);
+                }
+
+                let torData = data.map(val => [val.added * 1000, val.tor_nodes]).slice(1);
+                let clearData = data.map(val => [val.added * 1000, val.clearnet_nodes]).slice(1);
+                let unData = data.map(val => [val.added * 1000, val.unannounced_nodes]).slice(1);
+
+                torData = randomTor.reverse().concat(torData);
+                clearData = randomClearnet.reverse().concat(clearData);
+                unData = randomUnannounced.reverse().concat(unData);
+                // DEMO FIX END
+
                 this.prepareChartOptions({
-                  tor_nodes: data.map(val => [val.added * 1000, val.tor_nodes]),
-                  clearnet_nodes: data.map(val => [val.added * 1000, val.clearnet_nodes]),
-                  unannounced_nodes: data.map(val => [val.added * 1000, val.unannounced_nodes]),
+                  tor_nodes: torData,
+                  clearnet_nodes: clearData,
+                  unannounced_nodes: unData,
                 });
                 this.isLoading = false;
               }),
