@@ -16,9 +16,9 @@
           {{ statistics.latest?.avg_capacity || 0 | number: '1.0-0' }}
           <span i18n="shared.sat-vbyte|sat/vB">sats</span>
         </div>
-        <span class="fiat">
+        <!-- <span class="fiat">
           <app-change [current]="statistics.latest?.avg_capacity" [previous]="statistics.previous?.avg_capacity"></app-change>
-        </span>
+        </span> -->
       </div>
     </div>
 
@@ -31,9 +31,9 @@
           {{ statistics.latest?.avg_fee_rate || 0 | number: '1.0-0' }}
           <span i18n="shared.sat-vbyte|sat/vB">ppm</span>
         </div>
-        <span class="fiat">
+        <!-- <span class="fiat">
           <app-change [current]="statistics.latest?.avg_fee_rate" [previous]="statistics.previous?.avg_fee_rate"></app-change>
-        </span>
+        </span> -->
       </div>
     </div>
 
@@ -46,9 +46,9 @@
             {{ statistics.latest?.avg_base_fee_mtokens || 0 | number: '1.0-0' }}
             <span i18n="shared.sat-vbyte|sat/vB">msats</span>
           </div>
-          <span class="fiat">
+          <!-- <span class="fiat">
             <app-change [current]="statistics.latest?.avg_base_fee_mtokens" [previous]="statistics.previous?.avg_base_fee_mtokens"></app-change>
-          </span>
+          </span> -->
         </div>
       </div>
     </div>
@@ -62,9 +62,9 @@
           {{ statistics.latest?.med_capacity || 0 | number: '1.0-0' }}
           <span i18n="shared.sat-vbyte|sat/vB">sats</span>
         </div>
-        <span class="fiat">
+        <!-- <span class="fiat">
           <app-change [current]="statistics.latest?.med_capacity" [previous]="statistics.previous?.med_capacity"></app-change>
-        </span>
+        </span> -->
       </div>
     </div>
     <div class="item">
@@ -76,9 +76,9 @@
           {{ statistics.latest?.med_fee_rate || 0 | number: '1.0-0' }}
           <span i18n="shared.sat-vbyte|sat/vB">ppm</span>
         </div>
-        <span class="fiat">
+        <!-- <span class="fiat">
           <app-change [current]="statistics.latest?.med_fee_rate" [previous]="statistics.previous?.med_fee_rate"></app-change>
-        </span>
+        </span> -->
       </div>
     </div>
     <div class="item">
@@ -91,9 +91,9 @@
             <span i18n="shared.sat-vbyte|sat/vB">msats</span>
           </div>
         </div>
-        <span class="fiat">
+        <!-- <span class="fiat">
           <app-change [current]="statistics.latest?.med_base_fee_mtokens" [previous]="statistics.previous?.med_base_fee_mtokens"></app-change>
-        </span>
+        </span> -->
       </div>
     </div>
   </div>

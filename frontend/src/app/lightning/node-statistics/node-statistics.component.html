@@ -7,10 +7,10 @@
         <div class="fee-text">
           <app-amount [satoshis]="statistics.latest?.total_capacity" digitsInfo="1.2-2"></app-amount>
         </div>
-        <span class="fiat">
+        <!-- <span class="fiat">
           <app-change [current]="statistics.latest?.total_capacity" [previous]="statistics.previous?.total_capacity">
           </app-change>
-        </span>
+        </span> -->
       </div>
     </div>
     <div class="item">
@@ -20,9 +20,9 @@
         <div class="fee-text">
           {{ ((statistics.latest?.tor_nodes || 0) + (statistics.latest?.clearnet_nodes || 0) + (statistics.latest?.unannounced_nodes || 0)) | number }}
         </div>
-        <span class="fiat">
+        <!-- <span class="fiat">
           <app-change [current]="statistics.latest?.node_count" [previous]="statistics.previous?.node_count"></app-change>
-        </span>
+        </span> -->
       </div>
     </div>
     <div class="item">
@@ -32,10 +32,10 @@
         <div class="fee-text">
           {{ statistics.latest?.channel_count || 0 | number }}
         </div>
-        <span class="fiat">
+        <!-- <span class="fiat">
           <app-change [current]="statistics.latest?.channel_count" [previous]="statistics.previous?.channel_count">
           </app-change>
-        </span>
+        </span> -->
       </div>
     </div>
     <!--
