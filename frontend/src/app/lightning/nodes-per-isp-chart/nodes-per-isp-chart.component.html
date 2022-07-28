@@ -15,7 +15,7 @@
   <div *ngIf="widget">
     <div class="pool-distribution" *ngIf="(nodesPerAsObservable$ | async) as nodesPerAs">
       <div class="item">
-        <h5 class="card-title d-inline-block" i18n="mining.miners-luck">Tagged ISP count</h5>
+        <h5 class="card-title d-inline-block" i18n="mining.miners-luck">Tagged ISPs</h5>
         <p class="card-text">
           {{ nodesPerAs.data.length }}
         </p>
