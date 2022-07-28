@@ -172,7 +172,7 @@ class LightningStatsUpdater {
 
   // We only run this on first launch
   private async $populateHistoricalStatistics() {
-    try {
+    // try {
       // const [rows]: any = await DB.query(`SELECT COUNT(*) FROM lightning_stats`);
       // // Only run if table is empty
       // if (rows[0]['COUNT(*)'] > 0) {
@@ -182,113 +182,113 @@ class LightningStatsUpdater {
       // DELETE FROM `lightning_stats`
       // WHERE `added` < '2022-07-27' AND `added` > '2021-09-18';
 
-      const [rows]: any = await DB.query(`SELECT UNIX_TIMESTAMP(added) as added FROM lightning_stats order by added desc limit 1`);
-      if (rows[0].added >= 1658872800) {
-        return;
-      }
-      logger.info(`Running historical stats population...`);
+    //   const [rows]: any = await DB.query(`SELECT UNIX_TIMESTAMP(added) as added FROM lightning_stats order by added desc limit 1`);
+    //   if (rows[0].added >= 1658872800) {
+    //     return;
+    //   }
+    //   logger.info(`Running historical stats population...`);
 
-      const [channels]: any = await DB.query(`SELECT capacity, created, closing_date FROM channels ORDER BY created ASC`);
-      const [nodes]: any = await DB.query(`SELECT first_seen, sockets FROM nodes ORDER BY first_seen ASC`);
+    //   const [channels]: any = await DB.query(`SELECT capacity, created, closing_date FROM channels ORDER BY created ASC`);
+    //   const [nodes]: any = await DB.query(`SELECT first_seen, sockets FROM nodes ORDER BY first_seen ASC`);
 
-      const date: Date = new Date(this.hardCodedStartTime);
-      const currentDate = new Date();
-      this.setDateMidnight(currentDate);
+    //   const date: Date = new Date(this.hardCodedStartTime);
+    //   const currentDate = new Date();
+    //   this.setDateMidnight(currentDate);
 
-      while (date < currentDate) {
-        if (date.getTime() < 1632009600000) {
-          date.setUTCDate(date.getUTCDate() + 1);
-          continue;
-        }
+    //   while (date < currentDate) {
+    //     if (date.getTime() < 1632009600000) {
+    //       date.setUTCDate(date.getUTCDate() + 1);
+    //       continue;
+    //     }
 
-        let totalCapacity = 0;
-        let channelsCount = 0;
+    //     let totalCapacity = 0;
+    //     let channelsCount = 0;
 
-        for (const channel of channels) {
-          if (new Date(channel.created) > date) {
-            break;
-          }
-          if (channel.closing_date === null || new Date(channel.closing_date) > date) {
-            totalCapacity += channel.capacity;
-            channelsCount++;
-          }
-        }
+    //     for (const channel of channels) {
+    //       if (new Date(channel.created) > date) {
+    //         break;
+    //       }
+    //       if (channel.closing_date === null || new Date(channel.closing_date) > date) {
+    //         totalCapacity += channel.capacity;
+    //         channelsCount++;
+    //       }
+    //     }
 
-        let nodeCount = 0;
-        let clearnetNodes = 0;
-        let torNodes = 0;
-        let unannouncedNodes = 0;
+    //     let nodeCount = 0;
+    //     let clearnetNodes = 0;
+    //     let torNodes = 0;
+    //     let unannouncedNodes = 0;
 
-        for (const node of nodes) {
-          if (new Date(node.first_seen) > date) {
-            break;
-          }
-          nodeCount++;
+    //     for (const node of nodes) {
+    //       if (new Date(node.first_seen) > date) {
+    //         break;
+    //       }
+    //       nodeCount++;
 
-          const sockets = node.sockets.split(',');
-          let isUnnanounced = true;
-          for (const socket of sockets) {
-            const hasOnion = socket.indexOf('.onion') !== -1;
-            if (hasOnion) {
-              torNodes++;
-              isUnnanounced = false;
-            }
-            const hasClearnet = [4, 6].includes(net.isIP(socket.substring(0, socket.lastIndexOf(':'))));
-            if (hasClearnet) {
-              clearnetNodes++;
-              isUnnanounced = false;
-            }
-          }
-          if (isUnnanounced) {
-            unannouncedNodes++;
-          }
-        }
+    //       const sockets = node.sockets.split(',');
+    //       let isUnnanounced = true;
+    //       for (const socket of sockets) {
+    //         const hasOnion = socket.indexOf('.onion') !== -1;
+    //         if (hasOnion) {
+    //           torNodes++;
+    //           isUnnanounced = false;
+    //         }
+    //         const hasClearnet = [4, 6].includes(net.isIP(socket.substring(0, socket.lastIndexOf(':'))));
+    //         if (hasClearnet) {
+    //           clearnetNodes++;
+    //           isUnnanounced = false;
+    //         }
+    //       }
+    //       if (isUnnanounced) {
+    //         unannouncedNodes++;
+    //       }
+    //     }
 
-        const query = `INSERT INTO lightning_stats(
-          added,
-          channel_count,
-          node_count,
-          total_capacity,
-          tor_nodes,
-          clearnet_nodes,
-          unannounced_nodes,
-          avg_capacity,
-          avg_fee_rate,
-          avg_base_fee_mtokens,
-          med_capacity,
-          med_fee_rate,
-          med_base_fee_mtokens
-        )
-        VALUES (FROM_UNIXTIME(?), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    //     const query = `INSERT INTO lightning_stats(
+    //       added,
+    //       channel_count,
+    //       node_count,
+    //       total_capacity,
+    //       tor_nodes,
+    //       clearnet_nodes,
+    //       unannounced_nodes,
+    //       avg_capacity,
+    //       avg_fee_rate,
+    //       avg_base_fee_mtokens,
+    //       med_capacity,
+    //       med_fee_rate,
+    //       med_base_fee_mtokens
+    //     )
+    //     VALUES (FROM_UNIXTIME(?), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
-        const rowTimestamp = date.getTime() / 1000; // Save timestamp for the row insertion down below
+    //     const rowTimestamp = date.getTime() / 1000; // Save timestamp for the row insertion down below
 
-        date.setUTCDate(date.getUTCDate() + 1);
+    //     date.setUTCDate(date.getUTCDate() + 1);
 
-        // Last iteration, save channels stats
-        const channelStats = (date >= currentDate ? await channelsApi.$getChannelsStats() : undefined);
+    //     // Last iteration, save channels stats
+    //     const channelStats = (date >= currentDate ? await channelsApi.$getChannelsStats() : undefined);
 
-        await DB.query(query, [
-          rowTimestamp,
-          channelsCount,
-          nodeCount,
-          totalCapacity,
-          torNodes,
-          clearnetNodes,
-          unannouncedNodes,
-          channelStats?.avgCapacity ?? 0,
-          channelStats?.avgFeeRate ?? 0,
-          channelStats?.avgBaseFee ?? 0,
-          channelStats?.medianCapacity ?? 0,
-          channelStats?.medianFeeRate ?? 0,
-          channelStats?.medianBaseFee ?? 0,
-          ]);
-      }
+    //     await DB.query(query, [
+    //       rowTimestamp,
+    //       channelsCount,
+    //       nodeCount,
+    //       totalCapacity,
+    //       torNodes,
+    //       clearnetNodes,
+    //       unannouncedNodes,
+    //       channelStats?.avgCapacity ?? 0,
+    //       channelStats?.avgFeeRate ?? 0,
+    //       channelStats?.avgBaseFee ?? 0,
+    //       channelStats?.medianCapacity ?? 0,
+    //       channelStats?.medianFeeRate ?? 0,
+    //       channelStats?.medianBaseFee ?? 0,
+    //       ]);
+    //   }
 
-      logger.info('Historical stats populated.');
-    } catch (e) {
-      logger.err('$populateHistoricalData() error: ' + (e instanceof Error ? e.message : e));
-    }
+    //   logger.info('Historical stats populated.');
+    // } catch (e) {
+    //   logger.err('$populateHistoricalData() error: ' + (e instanceof Error ? e.message : e));
+    // }
   }
 
   private async $populateHistoricalNodeStatistics() {
