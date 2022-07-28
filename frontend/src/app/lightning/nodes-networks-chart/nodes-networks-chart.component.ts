@@ -107,11 +107,20 @@ export class NodesNetworksChartComponent implements OnInit {
       title = {
         textStyle: {
           color: 'grey',
-          fontSize: 15
+          fontSize: 15,
         },
         text: $localize`:@@23555386d8af1ff73f297e89dd4af3f4689fb9dd:Indexing blocks`,
         left: 'center',
         top: 'center'
+      };
+    } else if (this.widget) {
+      title = {
+        textStyle: {
+          color: '#4a68b9',
+          fontSize: 12
+        },
+        text: $localize`Node count per network`,
+        left: 'center'
       };
     }
 
@@ -125,7 +134,7 @@ export class NodesNetworksChartComponent implements OnInit {
         '#FFB300',
       ],
       grid: {
-        top: 40,
+        top: this.widget ? 50 : 40,
         bottom: this.widget ? 30 : 70,
         right: this.right,
         left: this.left,
@@ -172,6 +181,7 @@ export class NodesNetworksChartComponent implements OnInit {
         }
       },
       legend: data.node_count.length === 0 ? undefined : {
+        top: this.widget ? 20 : undefined,
         padding: 10,
         data: [
           {

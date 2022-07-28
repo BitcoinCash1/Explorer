@@ -1,6 +1,6 @@
-<div class="full-container h-100">
+<div [class]="widget === false ? 'full-container h-100' : ''">
 
-  <div class="card-header">
+  <div class="card-header" *ngIf="!widget">
     <div class="d-flex d-md-block align-items-baseline" style="margin-bottom: -5px">
       <span i18n="lightning.nodes-per-isp">Lightning nodes per ISP</span>
       <button class="btn p-0 pl-2" style="margin: 0 0 4px 0px" (click)="onSaveChart()">
@@ -12,9 +12,37 @@
     </small>
   </div>
 
-  <div class="container pb-lg-0 bottom-padding">
-    <div class="pb-lg-5" *ngIf="nodesPerAsObservable$ | async">
-      <div class="chart w-100" echarts [initOpts]="chartInitOptions" [options]="chartOptions"
+  <div *ngIf="widget">
+    <div class="pool-distribution" *ngIf="(nodesPerAsObservable$ | async) as nodesPerAs">
+      <div class="item">
+        <h5 class="card-title d-inline-block" i18n="mining.miners-luck">Tagged ISP count</h5>
+        <p class="card-text">
+          {{ nodesPerAs.data.length }}
+        </p>
+      </div>
+      <div class="item">
+        <h5 class="card-title d-inline-block" i18n="master-page.blocks">Tagged capacity</h5>
+        <p class="card-text" i18n-ngbTooltip="mining.blocks-count-desc">
+          <app-amount [satoshis]="nodesPerAs.taggedCapacity" [digitsInfo]="'1.2-2'" [noFiat]="true"></app-amount>
+        </p>
+      </div>
+      <div class="item">
+        <h5 class="card-title d-inline-block">Tagged nodes</h5>
+        <p class="card-text" i18n-ngbTooltip="mining.pools-count-desc">
+          {{ nodesPerAs.taggedNodeCount }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div [class]="!widget ? 'bottom-padding' : 'pb-0'" class="container pb-lg-0">
+    <div class="d-flex toggle-widget" *ngIf="widget">
+      <app-toggle style="padding-right: 20px" [textLeft]="'Show Tor'" [textRight]="" (toggleStatusChanged)="onTorToggleStatusChanged($event)"></app-toggle>
+      <app-toggle [textLeft]="'Nodes'" [textRight]="'Capacity'" (toggleStatusChanged)="onGroupToggleStatusChanged($event)"></app-toggle>
+    </div>
+
+    <div [class]="!widget ? 'pb-lg-5' : 'pb-lg-3'" *ngIf="nodesPerAsObservable$ | async">
+      <div [class]="widget ? 'chart-widget' : 'chart w-100'" echarts [initOpts]="chartInitOptions" [options]="chartOptions"
         (chartInit)="onChartInit($event)">
       </div>
     </div>
@@ -23,12 +51,12 @@
       <div class="spinner-border text-light"></div>
     </div>
 
-    <div class="d-flex toggle">
+    <div class="d-flex toggle" *ngIf="!widget">
       <app-toggle [textLeft]="'Show Tor'" [textRight]="" (toggleStatusChanged)="onTorToggleStatusChanged($event)"></app-toggle>
       <app-toggle [textLeft]="'Nodes'" [textRight]="'Capacity'" (toggleStatusChanged)="onGroupToggleStatusChanged($event)"></app-toggle>
     </div>
 
-    <table class="table table-borderless text-center m-auto" style="max-width: 900px">
+    <table class="table table-borderless text-center m-auto" style="max-width: 900px" *ngIf="!widget">
       <thead>
         <tr>
           <th class="rank text-left pl-0" i18n="mining.rank">Rank</th>
@@ -39,7 +67,7 @@
         </tr>
       </thead>
       <tbody [attr.data-cy]="'pools-table'" *ngIf="(nodesPerAsObservable$ | async) as asList">
-        <tr *ngFor="let asEntry of asList">
+        <tr *ngFor="let asEntry of asList.data.slice(0, 100)">
           <td class="rank text-left pl-0">{{ asEntry.rank }}</td>
           <td class="name text-left text-truncate">
             <a *ngIf="asEntry.ispId" [routerLink]="[('/lightning/nodes/isp/' + asEntry.ispId) | relativeUrl]">{{ asEntry.name }}</a>

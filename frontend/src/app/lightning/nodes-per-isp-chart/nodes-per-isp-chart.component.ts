@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, HostBinding, NgZone } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, HostBinding, NgZone, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { EChartsOption, PieSeriesOption } from 'echarts';
 import { combineLatest, map, Observable, share, Subject, switchMap, tap } from 'rxjs';
@@ -17,6 +17,8 @@ import { RelativeUrlPipe } from 'src/app/shared/pipes/relative-url/relative-url.
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NodesPerISPChartComponent implements OnInit {
+  @Input() widget: boolean = false;
+  
   isLoading = true;
   chartOptions: EChartsOption = {};
   chartInitOptions = {
@@ -59,10 +61,20 @@ export class NodesPerISPChartComponent implements OnInit {
                 this.prepareChartOptions(data);
               }),
               map(data => {
+                let taggedNodeCount = 0;
+                let taggedCapacity = 0;
                 for (let i = 0; i < data.length; ++i) {
                   data[i].rank = i + 1;
+                  if (data[i].ispId !== null) {
+                    taggedNodeCount += data[i].count;
+                    taggedCapacity += data[i].capacity;
+                  }
                 }
-                return data.slice(0, 100);
+                return {
+                  taggedCapacity: taggedCapacity,
+                  taggedNodeCount: taggedNodeCount,
+                  data: data
+                };
               })
             );
         }),
@@ -71,13 +83,15 @@ export class NodesPerISPChartComponent implements OnInit {
   }
 
   generateChartSerieData(as): PieSeriesOption[] {
-    const shareThreshold = this.isMobile() ? 2 : 0.5;
+    const shareThreshold = (this.isMobile() || this.widget) ? 1 : 0.5;
     const data: object[] = [];
     let totalShareOther = 0;
     let totalNodeOther = 0;
 
-    let edgeDistance: string | number = '10%';
-    if (this.isMobile()) {
+    let edgeDistance: any = '10%';
+    if (this.isMobile() && this.widget) {
+      edgeDistance = 0;
+    } else if (this.isMobile() && !this.widget || this.widget) {
       edgeDistance = 0;
     }
 
@@ -101,15 +115,16 @@ export class NodesPerISPChartComponent implements OnInit {
           color: color
         },
         value: as.share,
-        name: as.name + (this.isMobile() ? `` : ` (${as.share}%)`),
+        name: as.name + ((this.isMobile() || this.widget) ? `` : ` (${as.share}%)`),
         label: {
+          width: (this.isMobile() || this.widget) ? 140 : undefined,
           overflow: 'truncate',
           color: '#b1b1b1',
           alignTo: 'edge',
           edgeDistance: edgeDistance,
         },
         tooltip: {
-          show: !this.isMobile(),
+          show: !this.isMobile() || !this.widget,
           backgroundColor: 'rgba(17, 19, 31, 1)',
           borderRadius: 4,
           shadowColor: 'rgba(0, 0, 0, 0.5)',
@@ -134,7 +149,7 @@ export class NodesPerISPChartComponent implements OnInit {
         color: 'grey',
       },
       value: totalShareOther,
-      name: 'Other' + (this.isMobile() ? `` : ` (${totalShareOther.toFixed(2)}%)`),
+      name: 'Other' + ((this.isMobile() || this.widget) ? `` : ` (${totalShareOther.toFixed(2)}%)`),
       label: {
         overflow: 'truncate',
         color: '#b1b1b1',
@@ -162,7 +177,7 @@ export class NodesPerISPChartComponent implements OnInit {
 
   prepareChartOptions(as): void {
     let pieSize = ['20%', '80%']; // Desktop
-    if (this.isMobile()) {
+    if (this.isMobile() && !this.widget) {
       pieSize = ['15%', '60%'];
     }
 
@@ -252,6 +267,10 @@ export class NodesPerISPChartComponent implements OnInit {
 
   onGroupToggleStatusChanged(e): void {
     this.groupBySubject.next(e);
+  }
+
+  isEllipsisActive(e): boolean {
+    return (e.offsetWidth < e.scrollWidth);
   }
 }
 

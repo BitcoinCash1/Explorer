@@ -31,19 +31,20 @@
     </div>
 
     <div class="col">
-      <div class="card">
+      <div class="card" style="height: 420px">
         <div class="card-body">
-          <app-nodes-networks-chart [widget]=true></app-nodes-networks-chart>
-          <div class="mt-1"><a [routerLink]="['/graphs/lightning/nodes-networks' | relativeUrl]" i18n="dashboard.view-more">View more &raquo;</a></div>
+          <app-nodes-per-isp-chart [widget]=true></app-nodes-per-isp-chart>
+          <div class="mt-1"><a [routerLink]="['/graphs/lightning/nodes-per-isp' | relativeUrl]" i18n="dashboard.view-more">View more &raquo;</a></div>
         </div>
       </div>
     </div>
 
     <div class="col">
-      <div class="card">
+      <div class="card" style="height: 420px">
         <div class="card-body">
           <app-lightning-statistics-chart [widget]=true></app-lightning-statistics-chart>
-          <div class="mt-1"><a [routerLink]="['/graphs/lightning/capacity' | relativeUrl]" i18n="dashboard.view-more">View more &raquo;</a></div>
+          <app-nodes-networks-chart [widget]=true></app-nodes-networks-chart>
+          <div class="mt-1"><a [routerLink]="['/graphs/lightning/nodes-networks' | relativeUrl]" i18n="dashboard.view-more">View more &raquo;</a></div>
         </div>
       </div>
     </div>

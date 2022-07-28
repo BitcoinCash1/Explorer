@@ -109,6 +109,15 @@ export class LightningStatisticsChartComponent implements OnInit {
         left: 'center',
         top: 'center'
       };
+    } else if (this.widget) {
+      title = {
+        textStyle: {
+          color: '#4a68b9',
+          fontSize: 12
+        },
+        text: $localize`Network channels and capacity`,
+        left: 'center'
+      };
     }
 
     this.chartOptions = {
@@ -119,7 +128,7 @@ export class LightningStatisticsChartComponent implements OnInit {
         '#D81B60',
       ],
       grid: {
-        top: 40,
+        top: this.widget ? 50 : 40,
         bottom: this.widget ? 30 : 70,
         right: this.right,
         left: this.left,
@@ -167,6 +176,7 @@ export class LightningStatisticsChartComponent implements OnInit {
         }
       },
       legend: data.channel_count.length === 0 ? undefined : {
+        top: this.widget ? 15 : undefined,
         padding: 10,
         data: [
           {
