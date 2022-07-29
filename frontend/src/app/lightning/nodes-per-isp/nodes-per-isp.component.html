@@ -23,14 +23,14 @@
             <app-timestamp [customFormat]="'yyyy-MM-dd'" [unixTime]="node.updated_at"></app-timestamp>
           </td>
           <td class="capacity text-right">
-            <app-amount *ngIf="node.capacity > 100000000; else smallchannel" [satoshis]="node.capacity" [digitsInfo]="'1.2-2'" [noFiat]="true"></app-amount>
+            <app-amount *ngIf="(node.capacity ?? 0) > 100000000; else smallchannel" [satoshis]="node.capacity ?? 0" [digitsInfo]="'1.2-2'" [noFiat]="true"></app-amount>
             <ng-template #smallchannel>
-              {{ node.capacity | amountShortener: 1 }}
+              {{ node.capacity ?? 0 | amountShortener: 1 }}
               <span class="sats" i18n="shared.sats">sats</span>
             </ng-template>
           </td>
           <td class="channels text-right">
-            {{ node.channels }}
+            {{ node.channels ?? 0 }}
           </td>
           <td class="city text-right text-truncate">
             {{ node?.city?.en ?? '-' }}
