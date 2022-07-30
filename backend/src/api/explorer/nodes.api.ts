@@ -165,7 +165,7 @@ class NodesApi {
   public async $getNodesPerCountry(countryId: string) {
     try {
       const query = `
-        SELECT node_stats.public_key, node_stats.capacity, node_stats.channels, nodes.alias,
+        SELECT nodes.public_key, node_stats.capacity, node_stats.channels, nodes.alias,
           UNIX_TIMESTAMP(nodes.first_seen) as first_seen, UNIX_TIMESTAMP(nodes.updated_at) as updated_at,
           geo_names_city.names as city
         FROM node_stats
@@ -174,7 +174,7 @@ class NodesApi {
           FROM node_stats
           GROUP BY public_key
         ) as b ON b.public_key = node_stats.public_key AND b.last_added = node_stats.added
-        JOIN nodes ON nodes.public_key = node_stats.public_key
+        RIGHT JOIN nodes ON nodes.public_key = node_stats.public_key
         JOIN geo_names geo_names_country ON geo_names_country.id = nodes.country_id AND geo_names_country.type = 'country'
         LEFT JOIN geo_names geo_names_city ON geo_names_city.id = nodes.city_id AND geo_names_city.type = 'city'
         WHERE geo_names_country.id = ?
