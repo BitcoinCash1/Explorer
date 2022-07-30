@@ -195,7 +195,7 @@ class NodesApi {
   public async $getNodesPerISP(ISPId: string) {
     try {
       const query = `
-        SELECT node_stats.public_key, node_stats.capacity, node_stats.channels, nodes.alias,
+        SELECT nodes.public_key, node_stats.capacity, node_stats.channels, nodes.alias,
           UNIX_TIMESTAMP(nodes.first_seen) as first_seen, UNIX_TIMESTAMP(nodes.updated_at) as updated_at,
           geo_names_city.names as city, geo_names_country.names as country
         FROM node_stats
