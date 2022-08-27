@@ -9,6 +9,7 @@ import { ElectrsApiService } from 'src/app/services/electrs-api.service';
 import { RelativeUrlPipe } from 'src/app/shared/pipes/relative-url/relative-url.pipe';
 import { ApiService } from 'src/app/services/api.service';
 import { SearchResultsComponent } from './search-results/search-results.component';
+import { ADDRESS_REGEXES, getRegex } from '../../shared/common.utils';
 
 @Component({
   selector: 'app-search-form',
@@ -24,10 +25,10 @@ export class SearchFormComponent implements OnInit {
   typeAhead$: Observable<any>;
   searchForm: FormGroup;
 
-  regexAddress = /^([a-km-zA-HJ-NP-Z1-9]{26,35}|[a-km-zA-HJ-NP-Z1-9]{80}|[a-z]{2,5}1[ac-hj-np-z02-9]{8,100}|[A-Z]{2,5}1[AC-HJ-NP-Z02-9]{8,100})$/;
-  regexBlockhash = /^[0]{8}[a-fA-F0-9]{56}$/;
-  regexTransaction = /^([a-fA-F0-9]{64})(:\d+)?$/;
-  regexBlockheight = /^[0-9]{1,9}$/;
+  regexAddress = getRegex('address', 'mainnet'); // Default to mainnet
+  regexBlockhash = getRegex('blockhash');
+  regexTransaction = getRegex('transaction');
+  regexBlockheight = getRegex('blockheight');
   focus$ = new Subject<string>();
   click$ = new Subject<string>();
 
@@ -48,7 +49,11 @@ export class SearchFormComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.stateService.networkChanged$.subscribe((network) => this.network = network);
+    this.stateService.networkChanged$.subscribe((network) => {
+      this.network = network;
+      // TODO: Eventually change network type here from string to enum of consts
+      this.regexAddress = getRegex('address', network as any);
+    });
 
     this.searchForm = this.formBuilder.group({
       searchText: ['', Validators.required],
@@ -134,6 +139,20 @@ export class SearchFormComponent implements OnInit {
       this.isSearching = true;
       if (this.regexAddress.test(searchText)) {
         this.navigate('/address/', searchText);
+      } else if (
+        // If the search text matches any other network besides this one
+        ADDRESS_REGEXES
+          .filter(([, network]) => network !== this.network)
+          .some(([regex]) => regex.test(searchText))
+      ) {
+        // Gather all network matches as string[]
+        const networks = ADDRESS_REGEXES.filter(([regex, network]) =>
+          network !== this.network &&
+          regex.test(searchText)
+        ).map(([, network]) => network);
+        // ###############################################
+        // TODO: Create the search items for the drop down
+        // ###############################################
       } else if (this.regexBlockhash.test(searchText) || this.regexBlockheight.test(searchText)) {
         this.navigate('/block/', searchText);
       } else if (this.regexTransaction.test(searchText)) {
