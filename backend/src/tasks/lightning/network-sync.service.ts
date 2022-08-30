@@ -293,6 +293,12 @@ class NetworkSyncService {
             logger.err(`Failed to call ${config.ESPLORA.REST_API_URL + '/tx/' + channel.closing_transaction_id + '/outspends'}. Reason ${e instanceof Error ? e.message : e}`);
             continue;
           }
+
+          if (!outspends) {
+            logger.debug(`No outspends for channel ${channel.short_id}, closing tx ${channel.closing_transaction_id}`);
+            continue;
+          }
+
           const lightningScriptReasons: number[] = [];
           for (const outspend of outspends) {
             if (outspend.spent && outspend.txid) {
