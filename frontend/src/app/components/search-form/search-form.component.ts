@@ -52,7 +52,7 @@ export class SearchFormComponent implements OnInit {
     this.stateService.networkChanged$.subscribe((network) => {
       this.network = network;
       // TODO: Eventually change network type here from string to enum of consts
-      this.regexAddress = getRegex('address', network as any);
+      this.regexAddress = getRegex('address', network as any || 'mainnet');
     });
 
     this.searchForm = this.formBuilder.group({
