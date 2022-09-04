@@ -2,6 +2,7 @@
   <ng-template [ngIf]="results.addresses.length">
     <div class="card-title" *ngIf="stateService.env.LIGHTNING">Bitcoin Addresses</div>
     <ng-template ngFor [ngForOf]="results.addresses" let-address let-i="index">
+      <!-- NEED HELP: Insert network icon based on address network only if multiple networks exist -->
       <button (click)="clickItem(i)" [class.active]="i === activeIdx" type="button" role="option" class="dropdown-item">
         <ngb-highlight [result]="address | shortenString : isMobile ? 25 : 36" [term]="searchTerm"></ngb-highlight>
       </button>
