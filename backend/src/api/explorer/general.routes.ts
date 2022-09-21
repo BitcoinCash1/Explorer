@@ -11,7 +11,52 @@ class GeneralLightningRoutes {
       .get(config.MEMPOOL.API_URL_PREFIX + 'lightning/search', this.$searchNodesAndChannels)
       .get(config.MEMPOOL.API_URL_PREFIX + 'lightning/statistics/latest', this.$getGeneralStats)
       .get(config.MEMPOOL.API_URL_PREFIX + 'lightning/statistics/:interval', this.$getStatistics)
+      .get(config.MEMPOOL.API_URL_PREFIX + 'lightning/networks/nodes', this.$getNetworksNodesStats)
+      .get(config.MEMPOOL.API_URL_PREFIX + 'lightning/networks/channels', this.$getNetworksChannelsStats)
+      .get(config.MEMPOOL.API_URL_PREFIX + 'lightning/networks/liquidity', this.$getNetworksLiquidityStats)
     ;
+  }
+
+  private async $getNetworksNodesStats(req: Request, res: Response) {
+    try {
+      const stats = await nodesApi.$getNetworksNodesStats();
+
+      res.header('Pragma', 'public');
+      res.header('Cache-control', 'public');
+      res.setHeader('Expires', new Date(Date.now() + 1000 * 60).toUTCString());
+
+      res.json(stats);
+    } catch (e) {
+      res.status(500).send(e instanceof Error ? e.message : e);
+    }   
+  }
+
+  private async $getNetworksChannelsStats(req: Request, res: Response) {
+    try {
+      const stats = await channelsApi.$getNetworksChannelsStats();
+
+      res.header('Pragma', 'public');
+      res.header('Cache-control', 'public');
+      res.setHeader('Expires', new Date(Date.now() + 1000 * 60).toUTCString());
+
+      res.json(stats);
+    } catch (e) {
+      res.status(500).send(e instanceof Error ? e.message : e);
+    }   
+  }
+
+  private async $getNetworksLiquidityStats(req: Request, res: Response) {
+    try {
+      const stats = await channelsApi.$getNetworksLiquidityStats();
+
+      res.header('Pragma', 'public');
+      res.header('Cache-control', 'public');
+      res.setHeader('Expires', new Date(Date.now() + 1000 * 60).toUTCString());
+
+      res.json(stats);
+    } catch (e) {
+      res.status(500).send(e instanceof Error ? e.message : e);
+    }   
   }
 
   private async $searchNodesAndChannels(req: Request, res: Response) {

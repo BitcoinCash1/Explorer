@@ -30,6 +30,10 @@ import { TopNodesPerCapacity } from '../lightning/nodes-ranking/top-nodes-per-ca
 import { OldestNodes } from '../lightning/nodes-ranking/oldest-nodes/oldest-nodes.component';
 import { NodesRankingsDashboard } from '../lightning/nodes-rankings-dashboard/nodes-rankings-dashboard.component';
 import { NodeChannels } from '../lightning/nodes-channels/node-channels.component';
+import { NetworksPieCharts } from './networks-pie-charts/networks-pie-charts.component';
+import { NetworksNodesPieChart } from '../lightning/networks-pie-charts/networks-nodes-pie-chart/networks-nodes-pie-chart.component';
+import { NetworksChannelsPieChart } from '../lightning/networks-pie-charts/networks-channels-pie-chart/networks-channels-pie-chart.component';
+import { NetworksLiquidityPieChart } from '../lightning/networks-pie-charts/networks-liquidity-pie-chart/networks-liquidity-pie-chart.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +62,10 @@ import { NodeChannels } from '../lightning/nodes-channels/node-channels.componen
     OldestNodes,
     NodesRankingsDashboard,
     NodeChannels,
+    NetworksPieCharts,
+    NetworksNodesPieChart,
+    NetworksChannelsPieChart,
+    NetworksLiquidityPieChart,
   ],
   imports: [
     CommonModule,
@@ -92,6 +100,10 @@ import { NodeChannels } from '../lightning/nodes-channels/node-channels.componen
     OldestNodes,
     NodesRankingsDashboard,
     NodeChannels,
+    NetworksPieCharts,
+    NetworksNodesPieChart,
+    NetworksChannelsPieChart,
+    NetworksLiquidityPieChart,
   ],
   providers: [
     LightningApiService,

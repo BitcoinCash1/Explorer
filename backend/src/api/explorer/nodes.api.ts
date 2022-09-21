@@ -593,6 +593,66 @@ class NodesApi {
     }
   }
 
+  public async $getNetworksNodesStats(): Promise<any> {
+    try {
+      const query = `
+        SELECT GROUP_CONCAT(type) AS type
+        FROM nodes_sockets
+        GROUP BY public_key
+      `;
+      const [result]: any[] = await DB.query(query);
+
+      const stats = [
+        {
+          type: 'tor',
+          count: 0,
+        }, {
+          type: 'clearnet',
+          count: 0,
+        }, {
+          type: 'torclearnet',
+          count: 0,
+        }
+      ];
+
+      for (const socket of result) {
+        const sockets = socket.type.split(',');
+
+        const alreadyCounted : string[] = [];
+        const flags = {
+          tor: false,
+          clearnet: false,
+        };
+
+        for (const socket of sockets) {
+          if (alreadyCounted.includes(socket)) {
+            continue;
+          }
+          if (['ipv4', 'ipv6'].includes(socket)) {
+            flags.clearnet = true;
+          } else if (['torv2', 'torv3'].includes(socket)) {
+            flags.tor = true;
+          }
+          alreadyCounted.push(socket);
+        }
+
+        if (flags.tor) {
+          stats[0].count++;
+        }
+        if (flags.clearnet) {
+          stats[1].count++;
+        }
+        if (flags.tor && flags.clearnet) {
+          stats[2].count++;
+        }
+      }
+
+      return stats;
+    } catch (e) {
+      logger.err(`Cannot get network nodes stats. Reason: ${e instanceof Error ? e.message : e}`);
+    }
+  }
+
   private aliasToSearchText(str: string): string {
     return str.replace(/[-_.]/g, ' ').replace(/[^a-zA-Z0-9 ]/g, '');
   }

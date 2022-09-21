@@ -24,6 +24,7 @@ import { NodesPerISPChartComponent } from '../lightning/nodes-per-isp-chart/node
 import { NodesPerCountryChartComponent } from '../lightning/nodes-per-country-chart/nodes-per-country-chart.component';
 import { NodesMap } from '../lightning/nodes-map/nodes-map.component';
 import { NodesChannelsMap } from '../lightning/nodes-channels-map/nodes-channels-map.component';
+import { NetworksPieCharts } from '../lightning/networks-pie-charts/networks-pie-charts.component';
 
 const browserWindow = window || {};
 // @ts-ignore
@@ -118,6 +119,10 @@ const routes: Routes = [
           {
             path: 'lightning/nodes-channels-map',
             component: NodesChannelsMap,
+          },
+          {
+            path: 'lightning/networks',
+            component: NetworksPieCharts,
           },
           {
             path: '',

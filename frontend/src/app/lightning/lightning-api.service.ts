@@ -81,4 +81,22 @@ export class LightningApiService {
       this.apiBasePath + '/api/v1/lightning/nodes/rankings/age'
     );
   }
+
+  getNetworksNodesStats$(): Observable<any> {
+    return this.httpClient.get<any[]>(
+      this.apiBasePath + '/api/v1/lightning/networks/nodes'
+    );
+  }
+
+  getNetworksChannelsStats$(): Observable<any> {
+    return this.httpClient.get<any[]>(
+      this.apiBasePath + '/api/v1/lightning/networks/channels'
+    );
+  }
+
+  getNetworksLiquidityStats$(): Observable<any> {
+    return this.httpClient.get<any[]>(
+      this.apiBasePath + '/api/v1/lightning/networks/liquidity'
+    );
+  }
 }

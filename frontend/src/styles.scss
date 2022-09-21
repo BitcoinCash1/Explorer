@@ -1064,3 +1064,12 @@ th {
 #divider {
   background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='104%25' height='100%25' fill='none' stroke='white' stroke-width='4' stroke-dasharray='10%2c17' stroke-dashoffset='18' stroke-linecap='square'/%3e%3c/svg%3e");
 }
+
+.venntooltip {
+  position: absolute;
+  background: black;
+  padding: 10px;
+  background-color: 'rgba(17, 19, 31, 1)';
+  border-radius: 5px;
+  box-shadow: 'rgba(0, 0, 0, 0.5)';
+}

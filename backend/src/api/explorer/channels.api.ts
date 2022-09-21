@@ -557,6 +557,145 @@ class ChannelsApi {
     }
     return 0;
   }
+
+  public async $getNetworksChannelsStats(): Promise<any> {
+    try {
+      const query = `
+        SELECT GROUP_CONCAT(node1_socket.type, node2_socket.type) AS sockets
+        FROM channels
+        LEFT JOIN nodes_sockets AS node1_socket ON channels.node1_public_key = node1_socket.public_key
+        LEFT JOIN nodes_sockets AS node2_socket ON channels.node2_public_key = node2_socket.public_key
+        WHERE channels.status = 1
+        GROUP BY CONCAT(channels.node1_public_key, channels.node2_public_key)
+      `;
+      const [channels]: any[] = await DB.query(query);
+
+      const stats = [{
+        type: 'tor',
+        count: 0,
+      }, {
+        type: 'clearnet',
+        count: 0, 
+      }, {
+        type: 'torclearnet',
+        count: 0,
+      }];
+
+      for (const channel of channels) {
+        if (!channel.sockets) {
+          continue;
+        }
+
+        const sockets = channel.sockets.split(',');
+
+        const alreadyCounted : string[] = [];
+        const flags = {
+          tor: false,
+          clearnet: false,
+        };
+
+        for (const socket of sockets) {
+          if (alreadyCounted.includes(socket)) {
+            continue;
+          }
+          if (['torv2torv2', 'torv2torv3', 'torv3torv2', 'torv3torv3'].includes(socket)) {
+            flags.tor = true;
+          } else if (['ipv4ipv4', 'ipv4ipv6', 'ipv6ipv4', 'ipv6ipv6'].includes(socket)) {
+            flags.clearnet = true;
+          } else if (['ipv4torv2', 'ipv4torv3', 'ipv6torv2', 'ipv6torv3',
+            'torv2ipv4', 'torv2ipv6', 'torv3ipv4', 'torv3ipv6'].includes(socket)) {
+            flags.tor = true;
+            flags.clearnet = true;
+          }
+          alreadyCounted.push(socket);
+        }
+
+        if (flags.tor) {
+          stats[0].count++;
+        }
+        if (flags.clearnet) {
+          stats[1].count++;
+        }
+        if (flags.tor && flags.clearnet) {
+          stats[2].count++;
+        }
+      }
+
+      return stats;
+      
+    } catch (e) {
+      logger.err(`Cannot get network channels stats. Reason: ${e instanceof Error ? e.message : e}`);
+    }
+  }
+
+  public async $getNetworksLiquidityStats(): Promise<any> {
+    try {
+      const query = `
+        SELECT capacity, GROUP_CONCAT(node1_socket.type, node2_socket.type) AS sockets
+        FROM channels
+        LEFT JOIN nodes_sockets AS node1_socket ON channels.node1_public_key = node1_socket.public_key
+        LEFT JOIN nodes_sockets AS node2_socket ON channels.node2_public_key = node2_socket.public_key
+        WHERE channels.status = 1
+        GROUP BY CONCAT(channels.node1_public_key, channels.node2_public_key)
+      `;
+      const [channels]: any[] = await DB.query(query);
+
+      const stats = [{
+        type: 'tor',
+        liquidity: 0,
+      }, {
+        type: 'clearnet',
+        liquidity: 0, 
+      }, {
+        type: 'torclearnet',
+        liquidity: 0,
+      }];
+
+      for (const channel of channels) {
+        if (!channel.sockets) {
+          continue;
+        }
+        const sockets = channel.sockets.split(',');
+
+        const alreadyCounted : string[] = [];
+        const flags = {
+          tor: false,
+          clearnet: false,
+        };
+
+        for (const socket of sockets) {
+          if (alreadyCounted.includes(socket)) {
+            continue;
+          }
+          if (['torv2torv2', 'torv2torv3', 'torv3torv2', 'torv3torv3'].includes(socket)) {
+            flags.tor = true;
+          } else if (['ipv4ipv4', 'ipv4ipv6', 'ipv6ipv4', 'ipv6ipv6'].includes(socket)) {
+            flags.clearnet = true;
+          } else if (['ipv4torv2', 'ipv4torv3', 'ipv6torv2', 'ipv6torv3',
+            'torv2ipv4', 'torv2ipv6', 'torv3ipv4', 'torv3ipv6'].includes(socket)) {
+            flags.tor = true;
+            flags.clearnet = true;
+          }
+          alreadyCounted.push(socket);
+        }
+        
+        if (flags.tor) {
+          stats[0].liquidity += channel.capacity;
+        }
+        if (flags.clearnet) {
+          stats[1].liquidity += channel.capacity;
+        }
+        if (flags.tor && flags.clearnet) {
+          stats[2].liquidity += channel.capacity;
+        }
+      }
+
+      return stats;
+      
+    } catch (e) {
+      logger.err(`Cannot get network liquidity stats. Reason: ${e instanceof Error ? e.message : e}`);
+    }
+  }
 }
 
 export default new ChannelsApi();
