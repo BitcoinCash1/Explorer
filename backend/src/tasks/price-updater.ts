@@ -178,9 +178,9 @@ class PriceUpdater {
       ++insertedCount;
     }
     if (insertedCount > 0) {
-      logger.notice(`Inserted ${insertedCount} MtGox USD weekly price history into db`);
+      logger.notice(`Inserted ${insertedCount} MtGox USD weekly price history into db`, logger.tags.mining);
     } else {
-      logger.debug(`Inserted ${insertedCount} MtGox USD weekly price history into db`);
+      logger.debug(`Inserted ${insertedCount} MtGox USD weekly price history into db`, logger.tags.mining);
     }
 
     // Insert Kraken weekly prices
@@ -201,7 +201,7 @@ class PriceUpdater {
   private async $insertMissingRecentPrices(type: 'hour' | 'day'): Promise<void> {
     const existingPriceTimes = await PricesRepository.$getPricesTimes();
 
-    logger.info(`Fetching ${type === 'day' ? 'dai' : 'hour'}ly price history from exchanges and saving missing ones into the database, this may take a while`);
+    logger.info(`Fetching ${type === 'day' ? 'dai' : 'hour'}ly price history from exchanges and saving missing ones into the database`);
 
     const historicalPrices: PriceHistory[] = [];
 

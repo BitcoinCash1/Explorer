@@ -234,17 +234,17 @@ class PoolsParser {
     for (const updatedPool of finalPoolDataUpdate) {
       const [pool]: any[] = await DB.query(`SELECT id, name from pools where slug = "${updatedPool.slug}"`);
       if (pool.length > 0) {
-        logger.notice(`Deleting blocks from ${pool[0].name} mining pool for future re-indexing`);
+        logger.notice(`Deleting blocks from ${pool[0].name} mining pool for future re-indexing`, logger.tags.mining);
         await DB.query(`DELETE FROM blocks WHERE pool_id = ${pool[0].id}`);
       }
     }
 
     // Ignore early days of Bitcoin as there were not mining pool yet
-    logger.notice('Deleting blocks with unknown mining pool from height 130635 for future re-indexing');
+    logger.notice(`Deleting blocks with unknown mining pool from height 130635 for future re-indexing`, logger.tags.mining);
     const [unknownPool] = await DB.query(`SELECT id from pools where slug = "unknown"`);
     await DB.query(`DELETE FROM blocks WHERE pool_id = ${unknownPool[0].id} AND height > 130635`);
 
-    logger.notice('Truncating hashrates for future re-indexing');
+    logger.notice(`Truncating hashrates for future re-indexing`, logger.tags.mining);
     await DB.query(`DELETE FROM hashrates`);
   }
 }

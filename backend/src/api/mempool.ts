@@ -108,7 +108,6 @@ class Mempool {
     const start = new Date().getTime();
     let hasChange: boolean = false;
     const currentMempoolSize = Object.keys(this.mempoolCache).length;
-    let txCount = 0;
     const transactions = await bitcoinApi.$getRawMempool();
     const diff = transactions.length - currentMempoolSize;
     const newTransactions: TransactionExtended[] = [];
@@ -124,7 +123,6 @@ class Mempool {
         try {
           const transaction = await transactionUtils.$getTransactionExtended(txid);
           this.mempoolCache[txid] = transaction;
-          txCount++;
           if (this.inSync) {
             this.txPerSecondArray.push(new Date().getTime());
             this.vBytesPerSecondArray.push({
@@ -133,11 +131,6 @@ class Mempool {
             });
           }
           hasChange = true;
-          if (diff > 0) {
-            logger.debug('Fetched transaction ' + txCount + ' / ' + diff);
-          } else {
-            logger.debug('Fetched transaction ' + txCount);
-          }
           newTransactions.push(transaction);
         } catch (e) {
           logger.debug('Error finding transaction in mempool: ' + (e instanceof Error ? e.message : e));
