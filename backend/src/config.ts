@@ -224,11 +224,11 @@ const defaults: IConfig = {
     'BISQ_URL': 'https://bisq.markets/api',
     'BISQ_ONION': 'http://bisqmktse2cabavbr2xjq7xw3h6g5ottemo5rolfcwt6aly6tp5fdryd.onion/api'
   },
-  "MAXMIND": {
+  'MAXMIND': {
     'ENABLED': false,
-    "GEOLITE2_CITY": "/usr/local/share/GeoIP/GeoLite2-City.mmdb",
-    "GEOLITE2_ASN": "/usr/local/share/GeoIP/GeoLite2-ASN.mmdb",
-    "GEOIP2_ISP": "/usr/local/share/GeoIP/GeoIP2-ISP.mmdb"
+    'GEOLITE2_CITY': '',
+    'GEOLITE2_ASN': '',
+    'GEOIP2_ISP': ''
   },
 };
 
