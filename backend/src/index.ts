@@ -5,37 +5,23 @@ import * as WebSocket from 'ws';
 import cluster from 'cluster';
 import DB from './database';
 import config from './config';
-import blocks from './api/blocks';
-import memPool from './api/mempool';
+import blocks from './api/blocks-bch';
+import memPool from './api/mempool-bch';
 import diskCache from './api/disk-cache';
-import statistics from './api/statistics/statistics';
-import websocketHandler from './api/websocket-handler';
-import fiatConversion from './api/fiat-conversion';
-import bisq from './api/bisq/bisq';
-import bisqMarkets from './api/bisq/markets';
+import statistics from './api/statistics-cash/statistics';
+import websocketHandler from './api/websocket-handler-bch';
+import fiatConversion from './api/fiat-conversion-bch';
 import logger from './logger';
 import backendInfo from './api/backend-info';
 import loadingIndicators from './api/loading-indicators';
-import mempool from './api/mempool';
-import elementsParser from './api/liquid/elements-parser';
-import databaseMigration from './api/database-migration';
+import databaseMigrationBch from './api/database-migration-bch';
 import syncAssets from './sync-assets';
-import icons from './api/liquid/icons';
-import { Common } from './api/common';
+import { Common } from './api/common-bch';
 import poolsUpdater from './tasks/pools-updater';
-import indexer from './indexer';
-import nodesRoutes from './api/explorer/nodes.routes';
-import channelsRoutes from './api/explorer/channels.routes';
-import generalLightningRoutes from './api/explorer/general.routes';
-import lightningStatsUpdater from './tasks/lightning/stats-updater.service';
-import networkSyncService from './tasks/lightning/network-sync.service';
-import statisticsRoutes from './api/statistics/statistics.routes';
-import miningRoutes from './api/mining/mining-routes';
-import bisqRoutes from './api/bisq/bisq.routes';
-import liquidRoutes from './api/liquid/liquid.routes';
-import bitcoinRoutes from './api/bitcoin/bitcoin.routes';
-import fundingTxFetcher from './tasks/lightning/sync-tasks/funding-tx-fetcher';
-import forensicsService from './tasks/lightning/forensics.service';
+import indexerBch from './indexer-bch';
+import statisticsRoutes from './api/statistics-cash/statistics.routes';
+import miningRoutes from './api/mining-cash/mining-routes';
+import bitcoinRoutes from './api/bitcoin-cash/bitcoin.routes';
 
 class Server {
   private wss: WebSocket.Server | undefined;
@@ -104,11 +90,11 @@ class Server {
           const tables = process.env.npm_config_reindex.split(',');
           logger.warn(`Indexed data for "${process.env.npm_config_reindex}" tables will be erased in 5 seconds (using '--reindex')`);
           await Common.sleep$(5000);
-          await databaseMigration.$truncateIndexedData(tables);
+          await databaseMigrationBch.$truncateIndexedData(tables);
         }
-        await databaseMigration.$initializeOrMigrateDatabase();
+        await databaseMigrationBch.$initializeOrMigrateDatabase();
         if (Common.indexingEnabled()) {
-          await indexer.$resetHashratesIndexingState();
+          await indexerBch.$resetHashratesIndexingState();
         }
       } catch (e) {
         throw new Error(e instanceof Error ? e.message : 'Error');
@@ -119,31 +105,12 @@ class Server {
       statistics.startStatistics();
     }
 
-    if (Common.isLiquid()) {
-      try {
-        icons.loadIcons();
-      } catch (e) {
-        logger.err('Cannot load liquid icons. Ignoring. Reason: ' + (e instanceof Error ? e.message : e));
-      }
-    }
-
     fiatConversion.startService();
 
     this.setUpHttpApiRoutes();
 
     if (config.MEMPOOL.ENABLED) {
       this.runMainUpdateLoop();
-    }
-
-    if (config.BISQ.ENABLED) {
-      bisq.startBisqService();
-      bisq.setPriceCallbackFunction((price) => websocketHandler.setExtraInitProperties('bsq-price', price));
-      blocks.setNewBlockCallback(bisq.handleNewBitcoinBlock.bind(bisq));
-      bisqMarkets.startBisqService();
-    }
-
-    if (config.LIGHTNING.ENABLED) {
-      this.$runLightningBackend();
     }
 
     this.server.listen(config.MEMPOOL.HTTP_PORT, () => {
@@ -170,7 +137,7 @@ class Server {
       await poolsUpdater.updatePoolsJson();
       await blocks.$updateBlocks();
       await memPool.$updateMempool();
-      indexer.$run();
+      indexerBch.$run();
 
       setTimeout(this.runMainUpdateLoop.bind(this), config.MEMPOOL.POLL_RATE_MS);
       this.currentBackendRetryInterval = 5;
@@ -178,42 +145,23 @@ class Server {
       const loggerMsg = `runMainLoop error: ${(e instanceof Error ? e.message : e)}. Retrying in ${this.currentBackendRetryInterval} sec.`;
       if (this.currentBackendRetryInterval > 5) {
         logger.warn(loggerMsg);
-        mempool.setOutOfSync();
+        memPool.setOutOfSync();
       } else {
         logger.debug(loggerMsg);
       }
       logger.debug(JSON.stringify(e));
+      if (e instanceof Error) {
+        console.debug(e.stack);
+      }
       setTimeout(this.runMainUpdateLoop.bind(this), 1000 * this.currentBackendRetryInterval);
       this.currentBackendRetryInterval *= 2;
       this.currentBackendRetryInterval = Math.min(this.currentBackendRetryInterval, 60);
     }
   }
 
-  async $runLightningBackend(): Promise<void> {
-    try {
-      await fundingTxFetcher.$init();
-      await networkSyncService.$startService();
-      await forensicsService.$startService();
-      await lightningStatsUpdater.$startService();
-    } catch(e) {
-      logger.err(`Nodejs lightning backend crashed. Restarting in 1 minute. Reason: ${(e instanceof Error ? e.message : e)}`);
-      await Common.sleep$(1000 * 60);
-      this.$runLightningBackend();
-    };
-}
-
   setUpWebsocketHandling(): void {
     if (this.wss) {
       websocketHandler.setWebsocketServer(this.wss);
-    }
-    if (Common.isLiquid() && config.DATABASE.ENABLED) {
-      blocks.setNewBlockCallback(async () => {
-        try {
-          await elementsParser.$parse();
-        } catch (e) {
-          logger.warn('Elements parsing error: ' + (e instanceof Error ? e.message : e));
-        }
-      });
     }
     websocketHandler.setupConnectionHandling();
     if (config.MEMPOOL.ENABLED) {
@@ -232,17 +180,6 @@ class Server {
     }
     if (Common.indexingEnabled() && config.MEMPOOL.ENABLED) {
       miningRoutes.initRoutes(this.app);
-    }
-    if (config.BISQ.ENABLED) {
-      bisqRoutes.initRoutes(this.app);
-    }
-    if (Common.isLiquid()) {
-      liquidRoutes.initRoutes(this.app);
-    }
-    if (config.LIGHTNING.ENABLED) {
-      generalLightningRoutes.initRoutes(this.app);
-      nodesRoutes.initRoutes(this.app);
-      channelsRoutes.initRoutes(this.app);
     }
   }
 }

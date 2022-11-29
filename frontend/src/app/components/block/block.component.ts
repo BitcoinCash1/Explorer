@@ -89,7 +89,7 @@ export class BlockComponent implements OnInit, OnDestroy {
       this.timeLtr = !!ltr;
     });
 
-    this.indexingAvailable = (this.stateService.env.BASE_MODULE === 'mempool' &&
+    this.indexingAvailable = (this.stateService.env.BASE_MODULE === 'mempool.cash' &&
       this.stateService.env.MINING_DASHBOARD === true);
 
     this.txsLoadingStatus$ = this.route.paramMap
