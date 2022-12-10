@@ -1,4 +1,4 @@
-var commands = require('./commands')
+var commands = require('./commands-bch')
 var rpc = require('./jsonrpc')
 
 // ===----------------------------------------------------------------------===//

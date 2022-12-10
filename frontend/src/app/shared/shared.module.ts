@@ -7,10 +7,12 @@ import { faFilter, faAngleDown, faAngleUp, faAngleRight, faAngleLeft, faBolt, fa
   faFileAlt, faRedoAlt, faArrowAltCircleRight, faExternalLinkAlt, faBook, faListUl, faDownload, faQrcode, faArrowRightArrowLeft, faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { MasterPageComponent } from '../components/master-page/master-page.component';
+import { MasterPageComponentBch } from '../components/master-page-bch/master-page.component';
 import { PreviewTitleComponent } from '../components/master-page-preview/preview-title.component';
 import { BisqMasterPageComponent } from '../components/bisq-master-page/bisq-master-page.component';
 import { LiquidMasterPageComponent } from '../components/liquid-master-page/liquid-master-page.component';
 import { AboutComponent } from '../components/about/about.component';
+import { AboutComponentBch } from '../components/about-bch/about.component';
 import { VbytesPipe } from './pipes/bytes-pipe/vbytes.pipe';
 import { ShortenStringPipe } from './pipes/shorten-string-pipe/shorten-string.pipe';
 import { CeilPipe } from './pipes/math-ceil/math-ceil.pipe';
@@ -20,36 +22,53 @@ import { FeeRoundingPipe } from './pipes/fee-rounding/fee-rounding.pipe';
 import { AsmStylerPipe } from './pipes/asm-styler/asm-styler.pipe';
 import { AbsolutePipe } from './pipes/absolute/absolute.pipe';
 import { RelativeUrlPipe } from './pipes/relative-url/relative-url.pipe';
+import { RelativeUrlPipe as RelativeUrlPipeBch } from './pipes/relative-url-bch/relative-url.pipe';
 import { ScriptpubkeyTypePipe } from './pipes/scriptpubkey-type-pipe/scriptpubkey-type.pipe';
 import { BytesPipe } from './pipes/bytes-pipe/bytes.pipe';
 import { WuBytesPipe } from './pipes/bytes-pipe/wubytes.pipe';
 import { BlockchainComponent } from '../components/blockchain/blockchain.component';
+import { BlockchainComponentBch } from '../components/blockchain-bch/blockchain.component';
 import { TimeSinceComponent } from '../components/time-since/time-since.component';
 import { TimeUntilComponent } from '../components/time-until/time-until.component';
 import { ClipboardComponent } from '../components/clipboard/clipboard.component';
 import { QrcodeComponent } from '../components/qrcode/qrcode.component';
 import { FiatComponent } from '../fiat/fiat.component';
+import { FiatComponent as FiatComponentBch } from '../fiat-bch/fiat.component';
 import { NgbNavModule, NgbTooltipModule, NgbButtonsModule, NgbPaginationModule, NgbDropdownModule, NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { TxFeaturesComponent } from '../components/tx-features/tx-features.component';
+import { TxFeaturesComponentBch } from '../components/tx-features-bch/tx-features.component';
 import { TxFeeRatingComponent } from '../components/tx-fee-rating/tx-fee-rating.component';
+import { TxFeeRatingComponentBch } from '../components/tx-fee-rating-bch/tx-fee-rating.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LanguageSelectorComponent } from '../components/language-selector/language-selector.component';
 import { ColoredPriceDirective } from './directives/colored-price.directive';
 import { NoSanitizePipe } from './pipes/no-sanitize.pipe';
 import { MempoolBlocksComponent } from '../components/mempool-blocks/mempool-blocks.component';
+import { MempoolBlocksComponentBch } from '../components/mempool-blocks-bch/mempool-blocks.component';
 import { BlockchainBlocksComponent } from '../components/blockchain-blocks/blockchain-blocks.component';
+import { BlockchainBlocksComponentBch } from '../components/blockchain-blocks-bch/blockchain-blocks.component';
 import { AmountComponent } from '../components/amount/amount.component';
+import { AmountComponentBch } from '../components/amount-bch/amount.component';
 import { RouterModule } from '@angular/router';
 import { CapAddressPipe } from './pipes/cap-address-pipe/cap-address-pipe';
 import { StartComponent } from '../components/start/start.component';
+import { StartComponentBch } from '../components/start-bch/start.component';
 import { TransactionComponent } from '../components/transaction/transaction.component';
+import { TransactionComponentBch } from '../components/transaction-bch/transaction.component';
 import { TransactionsListComponent } from '../components/transactions-list/transactions-list.component';
+import { TransactionsListComponentBch } from '../components/transactions-list-bch/transactions-list.component';
 import { BlockComponent } from '../components/block/block.component';
+import { BlockComponentBch } from '../components/block-bch/block.component';
 import { BlockAuditComponent } from '../components/block-audit/block-audit.component';
+import { BlockAuditComponentBch } from '../components/block-audit-bch/block-audit.component';
 import { BlockOverviewGraphComponent } from '../components/block-overview-graph/block-overview-graph.component';
+import { BlockOverviewGraphComponentBch } from '../components/block-overview-graph-bch/block-overview-graph.component';
 import { BlockOverviewTooltipComponent } from '../components/block-overview-tooltip/block-overview-tooltip.component';
+import { BlockOverviewTooltipComponentBch } from '../components/block-overview-tooltip-bch/block-overview-tooltip.component';
 import { AddressComponent } from '../components/address/address.component';
+import { AddressComponentBch } from '../components/address-bch/address.component';
 import { SearchFormComponent } from '../components/search-form/search-form.component';
+import { SearchFormComponentBch } from '../components/search-form-bch/search-form.component';
 import { AddressLabelsComponent } from '../components/address-labels/address-labels.component';
 import { FooterComponent } from '../components/footer/footer.component';
 import { TimeSpanComponent } from '../components/time-span/time-span.component';
@@ -58,10 +77,14 @@ import { AssetsComponent } from '../components/assets/assets.component';
 import { AssetsNavComponent } from '../components/assets/assets-nav/assets-nav.component';
 import { StatusViewComponent } from '../components/status-view/status-view.component';
 import { FeesBoxComponent } from '../components/fees-box/fees-box.component';
+import { FeesBoxComponentBch } from '../components/fees-box-bch/fees-box.component';
 import { DifficultyComponent } from '../components/difficulty/difficulty.component';
+import { DifficultyComponentBch } from '../components/difficulty-bch/difficulty.component';
 import { TermsOfServiceComponent } from '../components/terms-of-service/terms-of-service.component';
 import { TxBowtieGraphComponent } from '../components/tx-bowtie-graph/tx-bowtie-graph.component';
+import { TxBowtieGraphComponentBch } from '../components/tx-bowtie-graph-bch/tx-bowtie-graph.component';
 import { TxBowtieGraphTooltipComponent } from '../components/tx-bowtie-graph-tooltip/tx-bowtie-graph-tooltip.component';
+import { TxBowtieGraphTooltipComponentBch } from '../components/tx-bowtie-graph-tooltip-bch/tx-bowtie-graph-tooltip.component';
 import { PrivacyPolicyComponent } from '../components/privacy-policy/privacy-policy.component';
 import { TrademarkPolicyComponent } from '../components/trademark-policy/trademark-policy.component';
 import { PushTransactionComponent } from '../components/push-transaction/push-transaction.component';
@@ -71,7 +94,9 @@ import { AssetCirculationComponent } from '../components/asset-circulation/asset
 import { AmountShortenerPipe } from '../shared/pipes/amount-shortener.pipe';
 import { DifficultyAdjustmentsTable } from '../components/difficulty-adjustments-table/difficulty-adjustments-table.components';
 import { BlocksList } from '../components/blocks-list/blocks-list.component';
+import { BlocksListBch } from '../components/blocks-list-bch/blocks-list.component';
 import { RewardStatsComponent } from '../components/reward-stats/reward-stats.component';
+import { RewardStatsComponentBch } from '../components/reward-stats-bch/reward-stats.component';
 import { DataCyDirective } from '../data-cy.directive';
 import { LoadingIndicatorComponent } from '../components/loading-indicator/loading-indicator.component';
 import { IndexingProgressComponent } from '../components/indexing-progress/indexing-progress.component';
@@ -79,6 +104,7 @@ import { SvgImagesComponent } from '../components/svg-images/svg-images.componen
 import { ChangeComponent } from '../components/change/change.component';
 import { SatsComponent } from './components/sats/sats.component';
 import { SearchResultsComponent } from '../components/search-form/search-results/search-results.component';
+import { SearchResultsComponentBch } from '../components/search-form-bch/search-results/search-results.component';
 import { TimestampComponent } from './components/timestamp/timestamp.component';
 import { ToggleComponent } from './components/toggle/toggle.component';
 import { GeolocationComponent } from '../shared/components/geolocation/geolocation.component';
@@ -90,11 +116,15 @@ import { GeolocationComponent } from '../shared/components/geolocation/geolocati
     TimeUntilComponent,
     QrcodeComponent,
     FiatComponent,
+    FiatComponentBch,
     TxFeaturesComponent,
+    TxFeaturesComponentBch,
     TxFeeRatingComponent,
+    TxFeeRatingComponentBch,
     LanguageSelectorComponent,
     ScriptpubkeyTypePipe,
     RelativeUrlPipe,
+    RelativeUrlPipeBch,
     NoSanitizePipe,
     Hex2asciiPipe,
     AsmStylerPipe,
@@ -109,23 +139,38 @@ import { GeolocationComponent } from '../shared/components/geolocation/geolocati
     FeeRoundingPipe,
     ColoredPriceDirective,
     BlockchainComponent,
+    BlockchainComponentBch,
     MempoolBlocksComponent,
+    MempoolBlocksComponentBch,
     BlockchainBlocksComponent,
+    BlockchainBlocksComponentBch,
     AmountComponent,
+    AmountComponentBch,
     AboutComponent,
+    AboutComponentBch,
     MasterPageComponent,
+    MasterPageComponentBch,
     PreviewTitleComponent,
     BisqMasterPageComponent,
     LiquidMasterPageComponent,
     StartComponent,
+    StartComponentBch,
     TransactionComponent,
+    TransactionComponentBch,
     BlockComponent,
+    BlockComponentBch,
     BlockAuditComponent,
+    BlockAuditComponentBch,
     BlockOverviewGraphComponent,
+    BlockOverviewGraphComponentBch,
     BlockOverviewTooltipComponent,
+    BlockOverviewTooltipComponentBch,
     TransactionsListComponent,
+    TransactionsListComponentBch,
     AddressComponent,
+    AddressComponentBch,
     SearchFormComponent,
+    SearchFormComponentBch,
     TimeSpanComponent,
     AddressLabelsComponent,
     FooterComponent,
@@ -133,9 +178,13 @@ import { GeolocationComponent } from '../shared/components/geolocation/geolocati
     AssetsComponent,
     StatusViewComponent,
     FeesBoxComponent,
+    FeesBoxComponentBch,
     DifficultyComponent,
+    DifficultyComponentBch,
     TxBowtieGraphComponent,
+    TxBowtieGraphComponentBch,
     TxBowtieGraphTooltipComponent,
+    TxBowtieGraphTooltipComponentBch,
     TermsOfServiceComponent,
     PrivacyPolicyComponent,
     TrademarkPolicyComponent,
@@ -147,14 +196,17 @@ import { GeolocationComponent } from '../shared/components/geolocation/geolocati
     AmountShortenerPipe,
     DifficultyAdjustmentsTable,
     BlocksList,
+    BlocksListBch,
     DataCyDirective,
     RewardStatsComponent,
+    RewardStatsComponentBch,
     LoadingIndicatorComponent,
     IndexingProgressComponent,
     SvgImagesComponent,
     ChangeComponent,
     SatsComponent,
     SearchResultsComponent,
+    SearchResultsComponentBch,
     TimestampComponent,
     ToggleComponent,
     GeolocationComponent,
@@ -175,7 +227,9 @@ import { GeolocationComponent } from '../shared/components/geolocation/geolocati
   ],
   providers: [
     VbytesPipe,
+    BytesPipe,
     RelativeUrlPipe,
+    RelativeUrlPipeBch,
     NoSanitizePipe,
     ShortenStringPipe,
     CapAddressPipe,
@@ -198,11 +252,15 @@ import { GeolocationComponent } from '../shared/components/geolocation/geolocati
     ClipboardComponent,
     QrcodeComponent,
     FiatComponent,
+    FiatComponentBch,
     TxFeaturesComponent,
+    TxFeaturesComponentBch,
     TxFeeRatingComponent,
+    TxFeeRatingComponentBch,
     LanguageSelectorComponent,
     ScriptpubkeyTypePipe,
     RelativeUrlPipe,
+    RelativeUrlPipeBch,
     Hex2asciiPipe,
     AsmStylerPipe,
     AbsolutePipe,
@@ -217,18 +275,31 @@ import { GeolocationComponent } from '../shared/components/geolocation/geolocati
     ColoredPriceDirective,
     NoSanitizePipe,
     BlockchainComponent,
+    BlockchainComponentBch,
     MempoolBlocksComponent,
+    MempoolBlocksComponentBch,
     BlockchainBlocksComponent,
+    BlockchainBlocksComponentBch,
     AmountComponent,
+    AmountComponentBch,
     StartComponent,
+    StartComponentBch,
     TransactionComponent,
+    TransactionComponentBch,
     BlockComponent,
+    BlockComponentBch,
     BlockAuditComponent,
+    BlockAuditComponentBch,
     BlockOverviewGraphComponent,
+    BlockOverviewGraphComponentBch,
     BlockOverviewTooltipComponent,
+    BlockOverviewTooltipComponentBch,
     TransactionsListComponent,
+    TransactionsListComponentBch,
     AddressComponent,
+    AddressComponentBch,
     SearchFormComponent,
+    SearchFormComponentBch,
     TimeSpanComponent,
     AddressLabelsComponent,
     FooterComponent,
@@ -236,7 +307,9 @@ import { GeolocationComponent } from '../shared/components/geolocation/geolocati
     AssetsComponent,
     StatusViewComponent,
     FeesBoxComponent,
+    FeesBoxComponentBch,
     DifficultyComponent,
+    DifficultyComponentBch,
     TxBowtieGraphComponent,
     TxBowtieGraphTooltipComponent,
     TermsOfServiceComponent,
@@ -250,14 +323,17 @@ import { GeolocationComponent } from '../shared/components/geolocation/geolocati
     AmountShortenerPipe,
     DifficultyAdjustmentsTable,
     BlocksList,
+    BlocksListBch,
     DataCyDirective,
     RewardStatsComponent,
+    RewardStatsComponentBch,
     LoadingIndicatorComponent,
     IndexingProgressComponent,
     SvgImagesComponent,
     ChangeComponent,
     SatsComponent,
     SearchResultsComponent,
+    SearchResultsComponentBch,
     TimestampComponent,
     ToggleComponent,
     GeolocationComponent,

@@ -1,0 +1,79 @@
+image: node:lts
+
+stages:
+  - test
+  - build
+  - deploy
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - .npm/
+
+test-backend:
+  stage: test
+  script:
+    - cd backend
+    - npm ci --cache .npm --prefer-offline
+    - npm run test
+
+lint-backend:
+  stage: test
+  script:
+    - cd backend
+    - npm ci --cache .npm --prefer-offline
+    - npm run lint
+
+build-backend:
+  stage: build
+  script:
+    - cd backend
+    - npm ci --cache .npm --prefer-offline
+    - npm run build
+
+#test-frontend:
+#  stage: test
+#  image: cypress/base:18.12.0
+#  variables:
+#    ELECTRON_EXTRA_LAUNCH_ARGS: "--headless --disable-gpu --disable-software-rasterizer --no-sandbox"
+#  script:
+#    - cd frontend
+#    - npm ci --cache .npm --prefer-offline
+#    - npm run config:defaults:mempool.cash
+#    - npm run cypress:run
+
+lint-frontend:
+  stage: test
+  script:
+    - cd frontend
+    - npm ci --cache .npm --prefer-offline
+    - npm run config:defaults:mempool.cash
+    - npm run lint
+
+build-frontend:
+  stage: build
+  image: danger89/node:lts-rsync
+  script:
+    - cd frontend
+    - npm ci --cache .npm --prefer-offline
+    - npm run config:defaults:mempool.cash
+    - npm run build
+  artifacts:
+    name: "Build"
+    paths:
+      - frontend/dist/mempool/browser
+
+# TODO: Deploy backend (Docker)
+
+deploy-frontend:
+  stage: deploy
+  image: instrumentisto/rsync-ssh:latest
+  rules:
+    - if: '$CI_PROJECT_NAMESPACE == "bitcoincash" && $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+  before_script:
+    - eval $(ssh-agent -s)
+    - mkdir -p ~/.ssh && chmod 700 ~/.ssh
+    - echo "${SSH_PRIVATE_KEY}" | base64 -d | ssh-add - > /dev/null
+    - echo "${SSH_HOST_KEY}" > ~/.ssh/known_hosts
+  script:
+    - rsync -azhv --delete frontend/dist/mempool/browser/ "${SSH_USER_HOST_LOCATION}"
