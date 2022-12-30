@@ -6,10 +6,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './components/app/app.component';
 import { ElectrsApiService } from './services/electrs-api.service';
 import { StateService } from './services/state.service';
+import { StateService as StateServiceBch } from './services/state-bch.service';
 import { EnterpriseService } from './services/enterprise.service';
 import { WebsocketService } from './services/websocket.service';
+import { WebsocketService as WebsocketServiceBch } from './services/websocket-bch.service';
 import { AudioService } from './services/audio.service';
 import { SeoService } from './services/seo.service';
+import { SeoService as SeoServiceBch } from './services/seo-bch.service';
 import { OpenGraphService } from './services/opengraph.service';
 import { SharedModule } from './shared/shared.module';
 import { StorageService } from './services/storage.service';
@@ -23,9 +26,12 @@ import { AppPreloadingStrategy } from './app.preloading-strategy';
 const providers = [
   ElectrsApiService,
   StateService,
+  StateServiceBch,
   WebsocketService,
+  WebsocketServiceBch,
   AudioService,
   SeoService,
+  SeoServiceBch,
   OpenGraphService,
   StorageService,
   EnterpriseService,

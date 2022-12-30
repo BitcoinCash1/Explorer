@@ -1,13 +1,20 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AppPreloadingStrategy } from './app.preloading-strategy'
+import { AppPreloadingStrategy } from './app.preloading-strategy';
 import { StartComponent } from './components/start/start.component';
+import { StartComponentBch } from './components/start-bch/start.component';
 import { TransactionComponent } from './components/transaction/transaction.component';
+import { TransactionComponentBch } from './components/transaction-bch/transaction.component';
 import { BlockComponent } from './components/block/block.component';
+import { BlockComponentBch } from './components/block-bch/block.component';
 import { BlockAuditComponent } from './components/block-audit/block-audit.component';
+import { BlockAuditComponentBch } from './components/block-audit-bch/block-audit.component';
 import { AddressComponent } from './components/address/address.component';
+import { AddressComponentBch } from './components/address-bch/address.component';
 import { MasterPageComponent } from './components/master-page/master-page.component';
+import { MasterPageComponentBch } from './components/master-page-bch/master-page.component';
 import { AboutComponent } from './components/about/about.component';
+import { AboutComponentBch } from './components/about-bch/about.component';
 import { StatusViewComponent } from './components/status-view/status-view.component';
 import { TermsOfServiceComponent } from './components/terms-of-service/terms-of-service.component';
 import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
@@ -15,6 +22,7 @@ import { TrademarkPolicyComponent } from './components/trademark-policy/trademar
 import { BisqMasterPageComponent } from './components/bisq-master-page/bisq-master-page.component';
 import { PushTransactionComponent } from './components/push-transaction/push-transaction.component';
 import { BlocksList } from './components/blocks-list/blocks-list.component';
+import { BlocksListBch } from './components/blocks-list-bch/blocks-list.component';
 import { LiquidMasterPageComponent } from './components/liquid-master-page/liquid-master-page.component';
 import { AssetGroupComponent } from './components/assets/asset-group/asset-group.component';
 import { AssetsFeaturedComponent } from './components/assets/assets-featured/assets-featured.component';
@@ -262,10 +270,102 @@ let routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    loadChildren: () => import('./graphs/graphs.module').then(m => m.GraphsModule)
+    loadChildren: () => import('./graphs-bch/graphs.module').then(m => m.GraphsModule)
   },
   {
     path: '',
+    component: MasterPageComponentBch,
+    children: [
+      {
+        path: 'mining/blocks',
+        redirectTo: 'blocks',
+        pathMatch: 'full'
+      },
+      {
+        path: 'tx/push',
+        component: PushTransactionComponent,
+      },
+      {
+        path: 'about',
+        component: AboutComponentBch,
+      },
+      {
+        path: 'blocks',
+        component: BlocksListBch,
+      },
+      {
+        path: 'terms-of-service',
+        component: TermsOfServiceComponent
+      },
+      {
+        path: 'privacy-policy',
+        component: PrivacyPolicyComponent
+      },
+      {
+        path: 'trademark-policy',
+        component: TrademarkPolicyComponent
+      },
+      {
+        path: 'address/:id',
+        children: [],
+        component: AddressComponentBch,
+        data: {
+          ogImage: true,
+          networkSpecific: true,
+        }
+      },
+      {
+        path: 'tx',
+        data: { networkSpecific: true },
+        component: StartComponentBch,
+        children: [
+          {
+            path: ':id',
+            component: TransactionComponentBch
+          },
+        ],
+      },
+      {
+        path: 'block',
+        data: { networkSpecific: true },
+        component: StartComponentBch,
+        children: [
+          {
+            path: ':id',
+            component: BlockComponentBch,
+            data: {
+              ogImage: true
+            }
+          },
+        ],
+      },
+      {
+        path: 'block-audit',
+        data: { networkSpecific: true },
+        children: [
+          {
+            path: ':id',
+            component: BlockAuditComponentBch
+          },
+        ],
+      },
+      {
+        path: 'docs',
+        loadChildren: () => import('./docs/docs.module').then(m => m.DocsModule)
+      },
+      {
+        path: 'api',
+        loadChildren: () => import('./docs/docs.module').then(m => m.DocsModule)
+      },
+    ],
+  },
+  {
+    path: 'btc', // Default route is renamed to btc
+    pathMatch: 'full',
+    loadChildren: () => import('./graphs/graphs.module').then(m => m.GraphsModule)
+  },
+  {
+    path: 'btc', // Default route is renamed to btc
     component: MasterPageComponent,
     children: [
       {
@@ -380,7 +480,7 @@ let routes: Routes = [
   },
   {
     path: '',
-    loadChildren: () => import('./graphs/graphs.module').then(m => m.GraphsModule)
+    loadChildren: () => import('./graphs-bch/graphs.module').then(m => m.GraphsModule)
   },
   {
     path: '**',

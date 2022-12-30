@@ -125,7 +125,7 @@ export class StateService {
     const browserWindowEnv = browserWindow.__env || {};
     this.env = Object.assign(defaultEnv, browserWindowEnv);
 
-    if (defaultEnv.BASE_MODULE !== 'mempool') {
+    if (defaultEnv.BASE_MODULE !== 'mempool' && defaultEnv.BASE_MODULE !== 'mempool.cash') {
       this.env.MINING_DASHBOARD = false;
     }
 
@@ -175,7 +175,7 @@ export class StateService {
   }
 
   setNetworkBasedonUrl(url: string) {
-    if (this.env.BASE_MODULE !== 'mempool' && this.env.BASE_MODULE !== 'liquid') {
+    if (this.env.BASE_MODULE !== 'mempool' && this.env.BASE_MODULE !== 'mempool.cash' && this.env.BASE_MODULE !== 'liquid') {
       return;
     }
     // horrible network regex breakdown:
@@ -222,7 +222,7 @@ export class StateService {
         }
         return;
       default:
-        if (this.env.BASE_MODULE !== 'mempool') {
+        if (this.env.BASE_MODULE !== 'mempool' && this.env.BASE_MODULE !== 'mempool.cash') {
           if (this.network !== this.env.BASE_MODULE) {
             this.network = this.env.BASE_MODULE;
             this.networkChanged$.next(this.env.BASE_MODULE);
@@ -235,7 +235,7 @@ export class StateService {
   }
 
   setLightningBasedonUrl(url: string) {
-    if (this.env.BASE_MODULE !== 'mempool') {
+    if (this.env.BASE_MODULE !== 'mempool' && this.env.BASE_MODULE !== 'mempool.cash') {
       return;
     }
     const networkMatches = url.match(/\/lightning\//);
