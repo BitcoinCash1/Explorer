@@ -1,10 +1,10 @@
-var https = require('https');
-var fs = require('fs');
+const https = require('https');
+const fs = require('fs');
 
 const CONFIG_FILE_NAME = 'mempool-frontend-config.json';
 let configContent = {};
 
-var PATH;
+let PATH;
 if (process.argv[2]) {
   PATH = process.argv[2];
 }
@@ -40,20 +40,20 @@ function download(filename, url) {
 function downloadMiningPoolLogos() {
   const options = {
     host: 'api.github.com',
-    path: '/repos/mempool/mining-pool-logos/contents/',
+    path: '/repos/bitcoincash1/mining-pool-logos/contents/',
     method: 'GET',
     headers: {'user-agent': 'node.js'}
   };
 
   https.get(options, (response) => {
-    let chunks_of_data = [];
+    const chunks_of_data = [];
 
     response.on('data', (fragments) => {
       chunks_of_data.push(fragments);
     });
   
     response.on('end', () => {
-      let response_body = Buffer.concat(chunks_of_data);
+      const response_body = Buffer.concat(chunks_of_data);
       const poolLogos = JSON.parse(response_body.toString());
       for (const poolLogo of poolLogos) {
           download(`${PATH}/mining-pools/${poolLogo.name}`, poolLogo.download_url);
@@ -63,10 +63,10 @@ function downloadMiningPoolLogos() {
     response.on('error', (error) => {
       throw new Error(error);
     });
-  })
+  });
 }
 
-const poolsJsonUrl = 'https://raw.githubusercontent.com/mempool/mining-pools/master/pools.json';
+const poolsJsonUrl = 'https://raw.githubusercontent.com/bitcoincash1/mining-pools/master/pools.json';
 let assetsJsonUrl = 'https://raw.githubusercontent.com/mempool/asset_registry_db/master/index.json';
 let assetsMinimalJsonUrl = 'https://raw.githubusercontent.com/mempool/asset_registry_db/master/index.minimal.json';
 

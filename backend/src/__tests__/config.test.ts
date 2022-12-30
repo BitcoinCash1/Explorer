@@ -17,6 +17,7 @@ describe('Mempool Backend Config', () => {
         NETWORK: 'mainnet',
         BACKEND: 'none',
         BLOCKS_SUMMARIES_INDEXING: false,
+        BLOCK_LIMIT_SIZE_BYTES: 32000000,
         HTTP_PORT: 8999,
         SPAWN_CLUSTER_PROCS: 0,
         API_URL_PREFIX: '/api/v1/',

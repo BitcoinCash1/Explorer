@@ -1,0 +1,34 @@
+<div class="dropdown-menu show" *ngIf="results" [hidden]="!results.hashQuickMatch && !results.addresses.length && !results.nodes.length && !results.channels.length">
+  <ng-template [ngIf]="results.blockHeight">
+    <div class="card-title">Bitcoin Cash Block Height</div>
+    <button (click)="clickItem(0)" [class.active]="0 === activeIdx" type="button" role="option" class="dropdown-item">
+      Go to "{{ results.searchText }}"
+    </button>
+  </ng-template>
+  <ng-template [ngIf]="results.txId">
+    <div class="card-title">Bitcoin Cash Transaction</div>
+    <button (click)="clickItem(0)" [class.active]="0 === activeIdx" type="button" role="option" class="dropdown-item">
+      Go to "{{ results.searchText | shortenString : 13 }}"
+    </button>
+  </ng-template>
+  <ng-template [ngIf]="results.address">
+    <div class="card-title">Bitcoin Cash Address</div>
+    <button (click)="clickItem(0)" [class.active]="0 === activeIdx" type="button" role="option" class="dropdown-item">
+      Go to "{{ results.searchText | shortenString : isMobile ? 20 : 30 }}"
+    </button>
+  </ng-template>
+  <ng-template [ngIf]="results.blockHash">
+    <div class="card-title">Bitcoin Cash Block</div>
+    <button (click)="clickItem(0)" [class.active]="0 === activeIdx" type="button" role="option" class="dropdown-item">
+      Go to "{{ results.searchText | shortenString : 13 }}"
+    </button>
+  </ng-template>
+  <ng-template [ngIf]="results.addresses.length">
+    <div class="card-title">Bitcoin Cash Addresses</div>
+    <ng-template ngFor [ngForOf]="results.addresses" let-address let-i="index">
+      <button (click)="clickItem(results.hashQuickMatch + i)" [class.active]="(results.hashQuickMatch + i) === activeIdx" type="button" role="option" class="dropdown-item">
+        <ngb-highlight [result]="address | shortenString : isMobile ? 25 : 36" [term]="results.searchText"></ngb-highlight>
+      </button>
+    </ng-template>
+  </ng-template>
+</div>

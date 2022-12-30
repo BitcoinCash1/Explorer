@@ -1,0 +1,15 @@
+FROM node:lts-slim
+
+ARG commitHash
+ENV MEMPOOL_COMMIT_HASH=${commitHash}
+
+WORKDIR /backend
+
+RUN chown 1000:1000 ./
+COPY --chown=1000:1000 dist ./package/
+
+USER 1000
+
+EXPOSE 8999
+
+CMD node /backend/package/index.js
