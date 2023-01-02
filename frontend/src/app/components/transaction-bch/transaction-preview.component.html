@@ -36,7 +36,7 @@
         <span [innerHTML]="'&lrm;' + (tx.weight | wuBytes: 2)"></span>
       </p>
       <p class="field" *ngIf="!isCoinbase(tx)">
-        {{ tx.feePerVsize | feeRounding }} <span class="symbol" i18n="shared.sat-Byte|sat/B">sat/B</span>
+        {{ tx.feePerVsize | feeRoundingBch }} <span class="symbol" i18n="shared.sat-Byte|sat/B">sat/B</span>
       </p>
     </div>
     <div class="overlaid">

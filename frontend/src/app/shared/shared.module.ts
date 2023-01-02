@@ -19,6 +19,7 @@ import { CeilPipe } from './pipes/math-ceil/math-ceil.pipe';
 import { Hex2asciiPipe } from './pipes/hex2ascii/hex2ascii.pipe';
 import { Decimal2HexPipe } from './pipes/decimal2hex/decimal2hex.pipe';
 import { FeeRoundingPipe } from './pipes/fee-rounding/fee-rounding.pipe';
+import { FeeRoundingBchPipe } from './pipes/fee-rounding-bch/fee-rounding.pipe';
 import { AsmStylerPipe } from './pipes/asm-styler/asm-styler.pipe';
 import { AbsolutePipe } from './pipes/absolute/absolute.pipe';
 import { RelativeUrlPipe } from './pipes/relative-url/relative-url.pipe';
@@ -137,6 +138,7 @@ import { GeolocationComponent } from '../shared/components/geolocation/geolocati
     CapAddressPipe,
     Decimal2HexPipe,
     FeeRoundingPipe,
+    FeeRoundingBchPipe,
     ColoredPriceDirective,
     BlockchainComponent,
     BlockchainComponentBch,
@@ -272,6 +274,7 @@ import { GeolocationComponent } from '../shared/components/geolocation/geolocati
     CapAddressPipe,
     Decimal2HexPipe,
     FeeRoundingPipe,
+    FeeRoundingBchPipe,
     ColoredPriceDirective,
     NoSanitizePipe,
     BlockchainComponent,

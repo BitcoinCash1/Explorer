@@ -14,11 +14,11 @@
           <tbody>
             <tr>
               <td i18n="mempool-block.median-fee">Median fee</td>
-              <td>~{{ mempoolBlock.medianFee | number:'1.0-0' }} <span class="symbol" i18n="shared.sat-byte|sat/B">sat/B</span> <span class="fiat"><app-fiat-bch [value]="mempoolBlock.medianFee * 140" digitsInfo="1.2-6" i18n-ngbTooltip="Transaction fee tooltip" ngbTooltip="Based on average transaction of 140 bytes" placement="bottom"></app-fiat-bch></span></td>
+              <td>~{{ mempoolBlock.medianFee | number:'1.1-1' }} <span class="symbol" i18n="shared.sat-byte|sat/B">sat/B</span> <span class="fiat"><app-fiat-bch [value]="mempoolBlock.medianFee * 140" digitsInfo="1.2-6" i18n-ngbTooltip="Transaction fee tooltip" ngbTooltip="Based on average transaction of 140 bytes" placement="bottom"></app-fiat-bch></span></td>
             </tr>
             <tr>
               <td i18n="mempool-block.fee-span">Fee span</td>
-              <td><span class="yellow-color">{{ mempoolBlock.feeRange[0] | number:'1.0-0' }} - {{ mempoolBlock.feeRange[mempoolBlock.feeRange.length - 1] | number:'1.0-0' }} <span class="symbol" i18n="shared.sat-byte|sat/B">sat/B</span></span></td>
+              <td><span class="yellow-color">{{ mempoolBlock.feeRange[0] | number:'1.1-1' }} - {{ mempoolBlock.feeRange[mempoolBlock.feeRange.length - 1] | number:'1.1-1' }} <span class="symbol" i18n="shared.sat-byte|sat/B">sat/B</span></span></td>
             </tr>
             <tr>
               <td i18n="block.total-fees|Total fees in a block">Total fees</td>

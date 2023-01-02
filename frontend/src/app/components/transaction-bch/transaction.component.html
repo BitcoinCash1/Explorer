@@ -454,7 +454,7 @@
       <tr>
         <td i18n="transaction.fee-rate|Transaction fee rate">Fee rate</td>
         <td>
-          {{ tx.feePerVsize | feeRounding }} <span class="symbol" i18n="shared.sat-byte|sat/B">sat/B</span>
+          {{ tx.feePerVsize | feeRoundingBch }} <span class="symbol" i18n="shared.sat-byte|sat/B">sat/B</span>
           <ng-template [ngIf]="tx.status.confirmed">
             &nbsp;
             <app-tx-fee-rating-bch *ngIf="tx.fee && ((cpfpInfo && !cpfpInfo.bestDescendant && !cpfpInfo.ancestors.length) || !cpfpInfo)" [tx]="tx"></app-tx-fee-rating-bch>
@@ -465,7 +465,7 @@
         <td i18n="transaction.effective-fee-rate|Effective transaction fee rate">Effective fee rate</td>
         <td>
           <div class="effective-fee-container">
-            {{ tx.effectiveFeePerVsize | feeRounding }} <span class="symbol" i18n="shared.sat-byte|sat/B">sat/B</span>
+            {{ tx.effectiveFeePerVsize | feeRoundingBch }} <span class="symbol" i18n="shared.sat-byte|sat/B">sat/B</span>
             <ng-template [ngIf]="tx.status.confirmed">
               <app-tx-fee-rating-bch class="d-none d-lg-inline ml-2" *ngIf="tx.fee" [tx]="tx"></app-tx-fee-rating-bch>
             </ng-template>
