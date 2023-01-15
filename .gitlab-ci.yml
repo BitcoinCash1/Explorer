@@ -74,7 +74,7 @@ deploy-docker-backend:
   tags:
     - shell
   before_script:
-    - echo "${DOCKER_PASSWORD}" | base64 -d | docker login -u danger89 --password-stdin
+    - echo "${DOCKER_PASSWORD}" | docker login -u danger89 --password-stdin
   script:
     - docker build -t danger89/bch-explorer-backend -f backend/DockerfileBCH --build-arg commitHash="$CI_COMMIT_SHORT_SHA" ./backend/
     - docker push danger89/bch-explorer-backend
