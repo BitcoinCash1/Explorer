@@ -5,10 +5,10 @@ ENV MEMPOOL_COMMIT_HASH=${commitHash}
 
 WORKDIR /backend
 
-RUN chown 1000:1000 ./
-COPY --chown=1000:1000 dist ./package/
+USER node
 
-USER 1000
+RUN chown node:node ./
+COPY --chown=node:node dist ./package/
 
 EXPOSE 8999
 
