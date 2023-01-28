@@ -162,11 +162,19 @@ services:
     image: danger89/bch-explorer-backend
     container_name: bch-explorer-backend
     restart: always
+    networks:
+      - bch_explorer_external_network
     volumes:
-      - /home/your_username/location_to/mempool-config.json:/backend/mempool-config.json
-      - /home/your_username/location_to/cache:/backend/cache
+      - /home/folder_to/mempool-config.json:/backend/mempool-config.json
+      - /home/folder_to/bch-explorer-cache:/backend/cache
       - /var/run/mysqld/mysqld.sock:/run/mysqld/mysqld.sock
-    network_mode: "host"
+    ports:
+      - "127.0.0.1:8999:8999"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+networks:
+  bch_explorer_external_network:
 ```
 
 To start the Docker container, use: `docker-compose --file bch-explorer-compose.yml up -d` (omit the `-d` if you do **NOT** want to start the service in the background).
