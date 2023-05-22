@@ -1,7 +1,9 @@
 FROM node:lts-slim
 
 ARG commitHash
-ENV MEMPOOL_COMMIT_HASH=${commitHash}
+ENV MEMPOOL_COMMIT_HASH=${commitHash} \
+  GENERATE_SOURCEMAP=false \
+  NODE_OPTIONS=--max_old_space_size=8192
 
 WORKDIR /backend
 
