@@ -179,6 +179,8 @@ networks:
 
 To start the Docker container, use: `docker-compose --file bch-explorer-compose.yml up -d` (omit the `-d` if you do **NOT** want to start the service in the background).
 
+Or when not using Docker, execute: `npm run start-production`
+
 _Note 1:_ As you can see, I run the service in `host` network mode, but you can also create a dedicated Docker bridge network. In that case, be sure you are able to connect [Fulcrum](https://github.com/cculianu/Fulcrum) and [BCHN full node](https://bitcoincashnode.org) services as well.
 
 _Note 2:_ I'm using the MariaDB (MySQL) server on my host machine, you can also create a dedicated database docker container (eg. using [mariadb image](https://hub.docker.com/_/mariadb)) in the Docker compose config, and connect the two services.
