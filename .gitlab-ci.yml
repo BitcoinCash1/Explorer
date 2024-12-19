@@ -29,13 +29,12 @@ build-backend:
   script:
     - cd backend
     - npm ci --cache .npm --prefer-offline --omit=dev
-    - npm run build
-    - cp -r node_modules ./dist
-    - cp healthcheck.js ./dist
+    - npm run package
+    - cp healthcheck.js ./package
   artifacts:
     name: "Backend Build"
     paths:
-      - backend/dist
+      - backend/package
 
 #test-frontend:
 #  stage: test
