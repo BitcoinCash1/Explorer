@@ -67,71 +67,15 @@ export class Common {
     }
   }
 
-  // TODO: Peer review this function for BCH
-  // Check if I made the correct totalSize, effectiveFeePerVsize, ... assumptions and calculations
+  // BCH doesn't have CPFP
   static setRelativesAndGetCpfpInfo(tx: TransactionExtended, memPool: { [txid: string]: TransactionExtended }): CpfpInfo {
-    const parents = this.findAllParents(tx, memPool);
-    const lowerFeeParents = parents.filter((parent) => parent.feePerSize < tx.effectiveFeePerSize);
-
-    let totalSize = tx.size + lowerFeeParents.reduce((prev, val) => prev + val.size, 0);
-    let totalFees = tx.fee + lowerFeeParents.reduce((prev, val) => prev + val.fee, 0);
-
-    tx.ancestors = parents
-      .map((t) => {
-        return {
-          txid: t.txid,
-          size: t.size,
-          fee: t.fee,
-        };
-      });
-
-    // Add high (high fee) decendant weight and fees
-    if (tx.bestDescendant) {
-      totalSize += tx.bestDescendant.size;
-      totalFees += tx.bestDescendant.fee;
-    }
-
-    tx.effectiveFeePerSize = Math.max(0, totalFees / (totalSize));
-    tx.cpfpChecked = true;
-
     return {
-      ancestors: tx.ancestors,
-      bestDescendant: tx.bestDescendant || null,
+      ancestors: [],
+      bestDescendant:  null,
     };
   }
 
-  // TODO: Peer review this function for BCH
-  private static findAllParents(tx: TransactionExtended, memPool: { [txid: string]: TransactionExtended }): TransactionExtended[] {
-    let parents: TransactionExtended[] = [];
-    tx.vin.forEach((parent) => {
-      if (parents.find((p) => p.txid === parent.txid)) {
-        return;
-      }
-
-      const parentTx = memPool[parent.txid];
-      if (parentTx) {
-        if (tx.bestDescendant && tx.bestDescendant.fee / (tx.bestDescendant.size) > parentTx.feePerSize) {
-          if (parentTx.bestDescendant && parentTx.bestDescendant.fee < tx.fee + tx.bestDescendant.fee) {
-            parentTx.bestDescendant = {
-              size: tx.size + tx.bestDescendant.size,
-              fee: tx.fee + tx.bestDescendant.fee,
-              txid: tx.txid,
-            };
-          }
-        } else if (tx.feePerSize > parentTx.feePerSize) {
-          parentTx.bestDescendant = {
-            size: tx.size,
-            fee: tx.fee,
-            txid: tx.txid
-          };
-        }
-        parents.push(parentTx);
-        parents = parents.concat(this.findAllParents(parentTx, memPool));
-      }
-    });
-    return parents;
-  }
-
+ 
   static getSqlInterval(interval: string | null): string | null {
     switch (interval) {
       case '24h': return '1 DAY';

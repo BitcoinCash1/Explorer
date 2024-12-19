@@ -8,7 +8,7 @@ ENV MEMPOOL_COMMIT_HASH=${commitHash} \
 WORKDIR /backend
 
 RUN chown node:node ./
-COPY --chown=node:node dist ./package/
+COPY --chown=node:node package ./package/
 
 USER node
 
