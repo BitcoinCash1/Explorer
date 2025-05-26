@@ -77,11 +77,12 @@ deploy-docker-backend:
       # Using the built-in variables by GitLab
     - echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin "$CI_REGISTRY"
   script:
-    - docker build \
+    - |
+      docker build \
+        --build-arg commitHash="$CI_COMMIT_SHORT_SHA" \
         -t danger89/bch-explorer-backend \
         -t $CI_REGISTRY_IMAGE/bch-explorer-backend \
         -f backend/DockerfileBCH \
-        --build-arg commitHash="$CI_COMMIT_SHORT_SHA" \
         ./backend/
     - docker push danger89/bch-explorer-backend
     - docker push $CI_REGISTRY_IMAGE/bch-explorer-backend
