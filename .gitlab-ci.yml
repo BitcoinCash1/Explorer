@@ -91,7 +91,7 @@ deploy-docker-backend:
 build-and-deploy-frontend:
   stage: build
   variables:
-    - NODE_ENV: production
+    NODE_ENV: production
   rules:
     - if: '$CI_PROJECT_NAMESPACE == "bitcoincash" && $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
   script:
