@@ -264,7 +264,7 @@ export class ApiService {
   }
 
   lightningSearch$(searchText: string): Observable<any[]> {
-    let params = new HttpParams().set('searchText', searchText);
+    const params = new HttpParams().set('searchText', searchText);
     return this.httpClient.get<any[]>(this.apiBaseUrl + this.apiBasePath + '/api/v1/lightning/search', { params });
   }
 

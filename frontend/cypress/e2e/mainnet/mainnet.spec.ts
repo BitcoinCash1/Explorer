@@ -1,6 +1,6 @@
-import { emitMempoolInfo, dropWebSocket } from "../../support/websocket";
+import { emitMempoolInfo, dropWebSocket } from '../../support/websocket';
 
-const baseModule = Cypress.env("BASE_MODULE");
+const baseModule = Cypress.env('BASE_MODULE');
 
 
 //Credit: https://github.com/bahmutov/cypress-examples/blob/6cedb17f83a3bb03ded13cf1d6a3f0656ca2cdf5/docs/recipes/overlapping-elements.md
@@ -14,17 +14,17 @@ const baseModule = Cypress.env("BASE_MODULE");
 const areOverlapping = (rect1, rect2) => {
   // if one rectangle is on the left side of the other
   if (rect1.right < rect2.left || rect2.right < rect1.left) {
-    return false
+    return false;
   }
 
   // if one rectangle is above the other
   if (rect1.bottom < rect2.top || rect2.bottom < rect1.top) {
-    return false
+    return false;
   }
 
   // the rectangles must overlap
-  return true
-}
+  return true;
+};
 
 /**
  * Returns the bounding rectangle of the first DOM
@@ -133,7 +133,7 @@ describe('Mainnet', () => {
 
         cy.get('.search-box-container > .form-control').type('A').then(() => {
           cy.wait('@search-1wizSA');
-          cy.get('app-search-results button.dropdown-item').should('have.length', 1)
+          cy.get('app-search-results button.dropdown-item').should('have.length', 1);
         });
 
         cy.get('app-search-results button.dropdown-item.active').click().then(() => {
@@ -340,14 +340,14 @@ describe('Mainnet', () => {
       cy.visit('/');
       cy.waitForSkeletonGone();
 
-      cy.changeNetwork("testnet");
-      cy.changeNetwork("signet");
-      cy.changeNetwork("mainnet");
+      cy.changeNetwork('testnet');
+      cy.changeNetwork('signet');
+      cy.changeNetwork('mainnet');
     });
 
     it.skip('loads the dashboard with the skeleton blocks', () => {
       cy.mockMempoolSocket();
-      cy.visit("/");
+      cy.visit('/');
       cy.get(':nth-child(1) > #bitcoin-block-0').should('be.visible');
       cy.get(':nth-child(2) > #bitcoin-block-0').should('be.visible');
       cy.get(':nth-child(3) > #bitcoin-block-0').should('be.visible');

@@ -62,7 +62,7 @@ export class BlocksList implements OnInit, OnDestroy {
                   this.blocksCount = blocks[0].height + 1;
                 }
                 this.isLoading = false;
-                this.lastBlockHeight = Math.max(...blocks.map(o => o.height))
+                this.lastBlockHeight = Math.max(...blocks.map(o => o.height));
               }),
               map(blocks => {
                 if (this.indexingAvailable) {
@@ -78,7 +78,7 @@ export class BlocksList implements OnInit, OnDestroy {
                 return blocks;
               }),
               retryWhen(errors => errors.pipe(delayWhen(() => timer(10000))))
-            )
+            );
         })
       ),
       this.stateService.blocks$

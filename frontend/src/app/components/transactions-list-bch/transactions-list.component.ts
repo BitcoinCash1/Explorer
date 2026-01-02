@@ -109,7 +109,7 @@ export class TransactionsListComponentBch implements OnInit, OnChanges {
         setTimeout(() => {
           const assetBoxElements = document.getElementsByClassName('assetBox');
           if (assetBoxElements && assetBoxElements[0]) {
-            assetBoxElements[0].scrollIntoView({block: "center"});
+            assetBoxElements[0].scrollIntoView({block: 'center'});
           }
         }, 10);
       }

@@ -1,5 +1,5 @@
 describe('Liquid', () => {
-  const baseModule = Cypress.env("BASE_MODULE");
+  const baseModule = Cypress.env('BASE_MODULE');
   const basePath = '';
 
   beforeEach(() => {
@@ -56,7 +56,7 @@ describe('Liquid', () => {
     });
 
     it('loads the graphs page - mobile', () => {
-      cy.visit(`${basePath}`)
+      cy.visit(`${basePath}`);
       cy.waitForSkeletonGone();
       cy.get('#btn-graphs').click().then(() => {
         cy.viewport('iphone-6');

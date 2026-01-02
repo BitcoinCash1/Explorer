@@ -69,7 +69,7 @@ export class NodePreviewComponent implements OnInit {
               label: label,
               socket: node.public_key + '@' + socket,
             });
-            socketTypesMap[label] = true
+            socketTypesMap[label] = true;
           }
           node.socketsObject = socketsObject;
           this.socketTypes = Object.keys(socketTypesMap);

@@ -128,7 +128,7 @@ export class HashrateChartComponent implements OnInit {
                   ++diffIndex;
                 }
 
-                let maResolution = 15;
+                const maResolution = 15;
                 const hashrateMa = [];
                 for (let i = maResolution - 1; i < data.hashrates.length; ++i) {
                   let avg = 0;

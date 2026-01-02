@@ -182,7 +182,7 @@ export class PoolComponent implements OnInit {
             formatter: (val) => {
               const selectedPowerOfTen: any = selectPowerOfTen(val);
               const newVal = Math.round(val / selectedPowerOfTen.divider);
-              return `${newVal} ${selectedPowerOfTen.unit}H/s`
+              return `${newVal} ${selectedPowerOfTen.unit}H/s`;
             }
           },
           splitLine: {

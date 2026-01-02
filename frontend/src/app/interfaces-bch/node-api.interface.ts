@@ -1,4 +1,4 @@
-import { Block, Transaction } from "./electrs.interface";
+import { Block, Transaction } from './electrs.interface';
 
 export interface OptimizedMempoolStats {
   added: number;

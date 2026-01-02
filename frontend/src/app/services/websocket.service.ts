@@ -164,13 +164,13 @@ export class WebsocketService {
 
   startTrackMempoolBlock(block: number) {
     this.websocketSubject.next({ 'track-mempool-block': block });
-    this.isTrackingMempoolBlock = true
-    this.trackingMempoolBlock = block
+    this.isTrackingMempoolBlock = true;
+    this.trackingMempoolBlock = block;
   }
 
   stopTrackMempoolBlock() {
     this.websocketSubject.next({ 'track-mempool-block': -1 });
-    this.isTrackingMempoolBlock = false
+    this.isTrackingMempoolBlock = false;
   }
 
   startTrackBisqMarket(market: string) {

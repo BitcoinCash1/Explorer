@@ -367,7 +367,7 @@ export class MempoolGraphComponentBch implements OnInit, OnChanges {
       totalValue: totalValueTemp,
       totalValueArray: totalValueArray.reverse(),
     };
-  }
+  };
 
   orderLevels() {
     this.feeLevelsOrdered = [];

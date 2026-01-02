@@ -149,7 +149,7 @@ export class StatisticsComponentBch implements OnInit {
   }
 
   setFeeLevelDropdownData() {
-    let _feeLevels = feeLevels
+    let _feeLevels = feeLevels;
     let _chartColors = chartColors;
     if (!this.inverted) {
       _feeLevels = [...feeLevels].reverse();
@@ -169,7 +169,7 @@ export class StatisticsComponentBch implements OnInit {
           color: _chartColors[i - 1],
         });
       }
-    })
+    });
   }
 
   /**

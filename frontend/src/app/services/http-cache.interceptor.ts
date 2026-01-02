@@ -34,7 +34,7 @@ export class HttpCacheInterceptor implements HttpInterceptor {
     return next.handle(request)
       .pipe(tap((event: HttpEvent<any>) => {
         if (!this.isBrowser && event instanceof HttpResponse) {
-          let keyId = request.url.split('/').slice(3).join('/');
+          const keyId = request.url.split('/').slice(3).join('/');
           this.transferState.set<any>(makeStateKey('/' + keyId), event);
         }
       }));

@@ -55,7 +55,7 @@ export class TimeSinceComponent implements OnInit, OnChanges, OnDestroy {
   calculate() {
     let date: Date;
     if (this.dateString) {
-      date = new Date(this.dateString)
+      date = new Date(this.dateString);
     } else {
       date = new Date(this.time * 1000);
     }

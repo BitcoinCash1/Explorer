@@ -1,5 +1,5 @@
 describe('Liquid Testnet', () => {
-  const baseModule = Cypress.env("BASE_MODULE");
+  const baseModule = Cypress.env('BASE_MODULE');
   const basePath = '/testnet';
 
   beforeEach(() => {
@@ -30,7 +30,7 @@ describe('Liquid Testnet', () => {
     });
 
     it('loads the blocks page', () => {
-      cy.visit(`${basePath}`)
+      cy.visit(`${basePath}`);
       cy.get('#btn-blocks');
       cy.waitForSkeletonGone();
     });
@@ -52,7 +52,7 @@ describe('Liquid Testnet', () => {
     });
 
     it('loads the graphs page - mobile', () => {
-      cy.visit(`${basePath}`)
+      cy.visit(`${basePath}`);
       cy.waitForSkeletonGone();
       cy.viewport('iphone-6');
       cy.get('.tv-only').should('not.exist');

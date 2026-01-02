@@ -45,7 +45,7 @@ export class AboutComponentBch implements OnInit {
         map((translators) => {
           for (const t in translators) {
             if (translators[t] === '') {
-              delete translators[t]
+              delete translators[t];
             }
           }
           return translators;

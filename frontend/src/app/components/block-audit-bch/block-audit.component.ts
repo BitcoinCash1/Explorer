@@ -72,7 +72,7 @@ export class BlockAuditComponentBch implements OnInit, AfterViewInit, OnDestroy 
       if (fragment === 'actual') {
         this.mode = 'actual';
       } else {
-        this.mode = 'projected'
+        this.mode = 'projected';
       }
       this.setupBlockGraphs();
     });
@@ -97,7 +97,7 @@ export class BlockAuditComponentBch implements OnInit, AfterViewInit, OnDestroy 
               switchMap((hash: string) => {
                 if (hash) {
                   this.blockHash = hash;
-                  return this.apiService.getBlockAudit$(this.blockHash)
+                  return this.apiService.getBlockAudit$(this.blockHash);
                 } else {
                   return null;
                 }
@@ -108,7 +108,7 @@ export class BlockAuditComponentBch implements OnInit, AfterViewInit, OnDestroy 
               }),
             );
         }
-        return this.apiService.getBlockAudit$(this.blockHash)
+        return this.apiService.getBlockAudit$(this.blockHash);
       }),
       filter((response) => response != null),
       map((response) => {
@@ -179,7 +179,7 @@ export class BlockAuditComponentBch implements OnInit, AfterViewInit, OnDestroy 
   ngAfterViewInit() {
     this.childChangeSubscription = combineLatest([this.blockGraphProjected.changes.pipe(startWith(null)), this.blockGraphActual.changes.pipe(startWith(null))]).subscribe(() => {
       this.setupBlockGraphs();
-    })
+    });
   }
 
   setupBlockGraphs() {
@@ -191,11 +191,11 @@ export class BlockAuditComponentBch implements OnInit, AfterViewInit, OnDestroy 
         } else {
           graph.setup(this.blockAudit.template);
         }
-      })
+      });
       this.blockGraphActual.forEach(graph => {
         graph.destroy();
         graph.setup(this.blockAudit.transactions);
-      })
+      });
     }
   }
 

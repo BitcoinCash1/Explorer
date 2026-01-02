@@ -2,7 +2,7 @@ import { Component, OnInit, Input, QueryList, AfterViewInit, ViewChildren } from
 import { Env, StateService } from '../../services/state.service';
 import { Observable, merge, of } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute } from '@angular/router';
 import { faqData, restApiDocsData, wsApiDocsData } from './api-docs-data';
 import { FaqTemplateDirective } from '../faq-template/faq-template.component';
 
@@ -21,7 +21,7 @@ export class ApiDocsComponent implements OnInit, AfterViewInit {
   code: any;
   baseNetworkUrl = '';
   @Input() whichTab: string;
-  desktopDocsNavPosition = "relative";
+  desktopDocsNavPosition = 'relative';
   faq: any[];
   restDocs: any[];
   wsDocs: any;
@@ -40,7 +40,7 @@ export class ApiDocsComponent implements OnInit, AfterViewInit {
     if (this.faqTemplates) {
       this.faqTemplates.forEach((x) => this.dict[x.type] = x.template);
     }
-    this.desktopDocsNavPosition = ( window.pageYOffset > 182 ) ? "fixed" : "relative";
+    this.desktopDocsNavPosition = ( window.pageYOffset > 182 ) ? 'fixed' : 'relative';
   }
 
   ngAfterViewInit() {
@@ -85,17 +85,17 @@ export class ApiDocsComponent implements OnInit, AfterViewInit {
     this.network$.subscribe((network) => {
       this.active = (network === 'liquid' || network === 'liquidtestnet') ? 2 : 0;
       switch( network ) {
-        case "":
+        case '':
           this.electrsPort = 50002; break;
-        case "mainnet":
+        case 'mainnet':
           this.electrsPort = 50002; break;
-        case "testnet":
+        case 'testnet':
           this.electrsPort = 60002; break;
-        case "signet":
+        case 'signet':
           this.electrsPort = 60602; break;
-        case "liquid":
+        case 'liquid':
           this.electrsPort = 51002; break;
-        case "liquidtestnet":
+        case 'liquidtestnet':
           this.electrsPort = 51302; break;
       }
     });
@@ -106,16 +106,16 @@ export class ApiDocsComponent implements OnInit, AfterViewInit {
   }
 
   onDocScroll() {
-    this.desktopDocsNavPosition = ( window.pageYOffset > 182 ) ? "fixed" : "relative";
+    this.desktopDocsNavPosition = ( window.pageYOffset > 182 ) ? 'fixed' : 'relative';
   }
 
   anchorLinkClick( event: any ) {
-    let targetId = "";
-    if( event.target.nodeName === "A" ) {
+    let targetId = '';
+    if( event.target.nodeName === 'A' ) {
       targetId = event.target.hash.substring(1);
     } else {
       let element = event.target;
-      while( element.nodeName !== "A" ) {
+      while( element.nodeName !== 'A' ) {
         element = element.parentElement;
       }
       targetId = element.hash.substring(1);
@@ -128,24 +128,24 @@ export class ApiDocsComponent implements OnInit, AfterViewInit {
 
   openEndpointContainer( targetId ) {
     let tabHeaderHeight = 0;
-    if (document.getElementById( targetId + "-tab-header" )) {
-      tabHeaderHeight = document.getElementById( targetId + "-tab-header" ).scrollHeight;
+    if (document.getElementById( targetId + '-tab-header' )) {
+      tabHeaderHeight = document.getElementById( targetId + '-tab-header' ).scrollHeight;
     }
     if( ( window.innerWidth <= 992 ) && ( ( this.whichTab === 'rest' ) || ( this.whichTab === 'faq' ) ) && targetId ) {
-      const endpointContainerEl = document.querySelector<HTMLElement>( "#" + targetId );
-      const endpointContentEl = document.querySelector<HTMLElement>( "#" + targetId + " .endpoint-content" );
+      const endpointContainerEl = document.querySelector<HTMLElement>( '#' + targetId );
+      const endpointContentEl = document.querySelector<HTMLElement>( '#' + targetId + ' .endpoint-content' );
       const endPointContentElHeight = endpointContentEl.clientHeight;
 
-      if( endpointContentEl.classList.contains( "open" ) ) {
-        endpointContainerEl.style.height = "auto";
-        endpointContentEl.style.top = "-10000px";
-        endpointContentEl.style.opacity = "0";
-        endpointContentEl.classList.remove( "open" );
+      if( endpointContentEl.classList.contains( 'open' ) ) {
+        endpointContainerEl.style.height = 'auto';
+        endpointContentEl.style.top = '-10000px';
+        endpointContentEl.style.opacity = '0';
+        endpointContentEl.classList.remove( 'open' );
       } else {
-        endpointContainerEl.style.height = endPointContentElHeight + tabHeaderHeight + 28 + "px";
-        endpointContentEl.style.top = tabHeaderHeight + 28 + "px";
-        endpointContentEl.style.opacity = "1";
-        endpointContentEl.classList.add( "open" );
+        endpointContainerEl.style.height = endPointContentElHeight + tabHeaderHeight + 28 + 'px';
+        endpointContentEl.style.top = tabHeaderHeight + 28 + 'px';
+        endpointContentEl.style.opacity = '1';
+        endpointContentEl.classList.add( 'open' );
       }
     }
   }

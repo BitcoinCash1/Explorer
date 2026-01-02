@@ -70,7 +70,7 @@ export class StartComponentBch implements OnInit, OnDestroy {
     if (this.mouseDragStartX != null) {
       this.stateService.setBlockScrollingInProgress(true);
       this.blockchainContainer.nativeElement.scrollLeft =
-        this.blockchainScrollLeftInit + this.mouseDragStartX - event.clientX
+        this.blockchainScrollLeftInit + this.mouseDragStartX - event.clientX;
     }
   }
   @HostListener('document:mouseup', [])

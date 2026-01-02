@@ -133,7 +133,7 @@ function getLocalizedSSR(indexHtml) {
         { provide: APP_BASE_HREF, useValue: req.baseUrl }
       ]
     });
-  }
+  };
 }
 
 // only used for development mode
