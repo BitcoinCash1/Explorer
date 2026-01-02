@@ -17,4 +17,4 @@ EXPOSE 8999
 HEALTHCHECK --interval=20s --timeout=16s --start-period=10s \
   CMD node package/healthcheck.js
 
-CMD node package/index.js
+CMD ["node", "package/index.js"]
