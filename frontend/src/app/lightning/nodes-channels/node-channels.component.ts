@@ -14,7 +14,6 @@ import { Observable, share, switchMap, tap } from 'rxjs';
 import { lerpColor } from '../../shared/graphs.utils';
 import { AmountShortenerPipe } from '../../shared/pipes/amount-shortener.pipe';
 import { LightningApiService } from '../lightning-api.service';
-import { RelativeUrlPipe } from '../../shared/pipes/relative-url/relative-url.pipe';
 import { StateService } from '../../services/state.service';
 
 @Component({
@@ -153,20 +152,5 @@ export class NodeChannels implements OnChanges {
   }
 
   onChartInit(ec: ECharts): void {
-    this.chartInstance = ec;
-
-    this.chartInstance.on('click', (e) => {
-      //@ts-ignore
-      if (!e.data.id) {
-        return;
-      }
-      this.zone.run(() => {
-        //@ts-ignore
-        const url = new RelativeUrlPipe(this.stateService).transform(
-          `/lightning/channel/${e.data.id}`
-        );
-        this.router.navigate([url]);
-      });
-    });
   }
 }
