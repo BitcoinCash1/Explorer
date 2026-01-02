@@ -57,7 +57,6 @@ lint-frontend:
 
 test-build-frontend:
   stage: build
-  image: danger89/node:lts-rsync
   rules:
     - if: '$CI_PROJECT_NAMESPACE == "bitcoincash" && $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH'
   script:
@@ -91,7 +90,8 @@ deploy-docker-backend:
 
 build-and-deploy-frontend:
   stage: build
-  image: danger89/node:lts-rsync
+  variables:
+    - NODE_ENV: production
   rules:
     - if: '$CI_PROJECT_NAMESPACE == "bitcoincash" && $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
   script:
