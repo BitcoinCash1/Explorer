@@ -5,9 +5,7 @@ import { Inject, LOCALE_ID, Pipe, PipeTransform } from '@angular/core';
   name: 'feeRounding',
 })
 export class FeeRoundingPipe implements PipeTransform {
-  constructor(
-    @Inject(LOCALE_ID) private locale: string,
-  ) {}
+  constructor(@Inject(LOCALE_ID) private locale: string) {}
 
   transform(fee: number): string {
     if (fee >= 100) {

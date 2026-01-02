@@ -8,13 +8,9 @@ import { WebsocketService } from '../../services/websocket.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LightningWrapperComponent implements OnInit {
-
-  constructor(
-    private websocketService: WebsocketService,
-  ) { }
+  constructor(private websocketService: WebsocketService) {}
 
   ngOnInit() {
     this.websocketService.want(['blocks']);
   }
-
 }

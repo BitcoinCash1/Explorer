@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -11,10 +16,9 @@ export class ChannelsStatisticsComponent implements OnInit {
   @Input() statistics$: Observable<any>;
   mode: string = 'avg';
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   switchMode(mode: 'avg' | 'med') {
     this.mode = mode;

@@ -1,4 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  OnDestroy,
+} from '@angular/core';
 import { BisqTransaction, BisqOutput } from '../bisq.interfaces';
 
 import { Observable, Subscription } from 'rxjs';
@@ -7,14 +13,18 @@ import { BisqApiService } from '../bisq-api.service';
 import { SeoService } from '../../services/seo.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts } from '../../components/ngx-bootstrap-multiselect/types';
+import {
+  IMultiSelectOption,
+  IMultiSelectSettings,
+  IMultiSelectTexts,
+} from '../../components/ngx-bootstrap-multiselect/types';
 import { WebsocketService } from '../../services/websocket.service';
 
 @Component({
   selector: 'app-bisq-transactions',
   templateUrl: './bisq-transactions.component.html',
   styleUrls: ['./bisq-transactions.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BisqTransactionsComponent implements OnInit, OnDestroy {
   transactions$: Observable<[BisqTransaction[], number]>;
@@ -28,19 +38,19 @@ export class BisqTransactionsComponent implements OnInit, OnDestroy {
   radioGroupSubscription: Subscription;
 
   txTypeOptions: IMultiSelectOption[] = [
-      { id: 1, name: $localize`Asset listing fee` },
-      { id: 2, name: $localize`Blind vote` },
-      { id: 3, name: $localize`Compensation request` },
-      { id: 4, name: $localize`Genesis` },
-      { id: 13, name: $localize`Irregular` },
-      { id: 5, name: $localize`Lockup` },
-      { id: 6, name: $localize`Pay trade fee` },
-      { id: 7, name: $localize`Proof of burn` },
-      { id: 8, name: $localize`Proposal` },
-      { id: 9, name: $localize`Reimbursement request` },
-      { id: 10, name: $localize`Transfer BSQ` },
-      { id: 11, name: $localize`Unlock` },
-      { id: 12, name: $localize`Vote reveal` },
+    { id: 1, name: $localize`Asset listing fee` },
+    { id: 2, name: $localize`Blind vote` },
+    { id: 3, name: $localize`Compensation request` },
+    { id: 4, name: $localize`Genesis` },
+    { id: 13, name: $localize`Irregular` },
+    { id: 5, name: $localize`Lockup` },
+    { id: 6, name: $localize`Pay trade fee` },
+    { id: 7, name: $localize`Proof of burn` },
+    { id: 8, name: $localize`Proposal` },
+    { id: 9, name: $localize`Reimbursement request` },
+    { id: 10, name: $localize`Transfer BSQ` },
+    { id: 11, name: $localize`Unlock` },
+    { id: 12, name: $localize`Vote reveal` },
   ];
   txTypesDefaultChecked = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 
@@ -63,8 +73,21 @@ export class BisqTransactionsComponent implements OnInit, OnDestroy {
   paginationSize: 'sm' | 'lg' = 'md';
   paginationMaxSize = 5;
 
-  txTypes = ['ASSET_LISTING_FEE', 'BLIND_VOTE', 'COMPENSATION_REQUEST', 'GENESIS', 'LOCKUP', 'PAY_TRADE_FEE',
-    'PROOF_OF_BURN', 'PROPOSAL', 'REIMBURSEMENT_REQUEST', 'TRANSFER_BSQ', 'UNLOCK', 'VOTE_REVEAL', 'IRREGULAR'];
+  txTypes = [
+    'ASSET_LISTING_FEE',
+    'BLIND_VOTE',
+    'COMPENSATION_REQUEST',
+    'GENESIS',
+    'LOCKUP',
+    'PAY_TRADE_FEE',
+    'PROOF_OF_BURN',
+    'PROPOSAL',
+    'REIMBURSEMENT_REQUEST',
+    'TRANSFER_BSQ',
+    'UNLOCK',
+    'VOTE_REVEAL',
+    'IRREGULAR',
+  ];
 
   constructor(
     private websocketService: WebsocketService,
@@ -73,12 +96,14 @@ export class BisqTransactionsComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private cd: ChangeDetectorRef,
-  ) { }
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.websocketService.want(['blocks']);
-    this.seoService.setTitle($localize`:@@add4cd82e3e38a3110fe67b3c7df56e9602644ee:Transactions`);
+    this.seoService.setTitle(
+      $localize`:@@add4cd82e3e38a3110fe67b3c7df56e9602644ee:Transactions`
+    );
 
     this.radioGroupForm = this.formBuilder.group({
       txTypes: [this.txTypesDefaultChecked],
@@ -91,31 +116,43 @@ export class BisqTransactionsComponent implements OnInit, OnDestroy {
       this.paginationMaxSize = 3;
     }
 
-    this.transactions$ = this.route.queryParams
-      .pipe(
-        tap((queryParams) => {
-          if (queryParams.page) {
-            const newPage = parseInt(queryParams.page, 10);
-            this.page = newPage;
-          } else {
-            this.page = 1;
-          }
-          if (queryParams.types) {
-            const types = queryParams.types.split(',').map((str: string) => parseInt(str, 10));
-            this.types = types.map((id: number) => this.txTypes[id - 1]);
-            this.radioGroupForm.get('txTypes').setValue(types, { emitEvent: false });
-          } else {
-            this.types = [];
-            this.radioGroupForm.get('txTypes').setValue([], { emitEvent: false });
-          }
-          this.cd.markForCheck();
-        }),
-        switchMap(() => this.bisqApiService.listTransactions$((this.page - 1) * this.itemsPerPage, this.itemsPerPage, this.types)),
-        map((response) =>  [response.body, parseInt(response.headers.get('x-total-count'), 10)])
-      );
+    this.transactions$ = this.route.queryParams.pipe(
+      tap((queryParams) => {
+        if (queryParams.page) {
+          const newPage = parseInt(queryParams.page, 10);
+          this.page = newPage;
+        } else {
+          this.page = 1;
+        }
+        if (queryParams.types) {
+          const types = queryParams.types
+            .split(',')
+            .map((str: string) => parseInt(str, 10));
+          this.types = types.map((id: number) => this.txTypes[id - 1]);
+          this.radioGroupForm
+            .get('txTypes')
+            .setValue(types, { emitEvent: false });
+        } else {
+          this.types = [];
+          this.radioGroupForm.get('txTypes').setValue([], { emitEvent: false });
+        }
+        this.cd.markForCheck();
+      }),
+      switchMap(() =>
+        this.bisqApiService.listTransactions$(
+          (this.page - 1) * this.itemsPerPage,
+          this.itemsPerPage,
+          this.types
+        )
+      ),
+      map((response) => [
+        response.body,
+        parseInt(response.headers.get('x-total-count'), 10),
+      ])
+    );
 
-    this.radioGroupSubscription = this.radioGroupForm.valueChanges
-      .subscribe((data) => {
+    this.radioGroupSubscription = this.radioGroupForm.valueChanges.subscribe(
+      (data) => {
         this.types = data.txTypes.map((id: number) => this.txTypes[id - 1]);
         if (this.types.length === this.txTypes.length) {
           this.types = [];
@@ -123,7 +160,8 @@ export class BisqTransactionsComponent implements OnInit, OnDestroy {
         this.page = 1;
         this.typesChanged(data.txTypes);
         this.cd.markForCheck();
-      });
+      }
+    );
   }
 
   pageChange(page: number) {
@@ -143,7 +181,10 @@ export class BisqTransactionsComponent implements OnInit, OnDestroy {
   }
 
   calculateTotalOutput(outputs: BisqOutput[]): number {
-    return outputs.reduce((acc: number, output: BisqOutput) => acc + output.bsqAmount, 0);
+    return outputs.reduce(
+      (acc: number, output: BisqOutput) => acc + output.bsqAmount,
+      0
+    );
   }
 
   getStringByTxType(type: string) {

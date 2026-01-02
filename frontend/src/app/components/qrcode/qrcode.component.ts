@@ -1,4 +1,11 @@
-import { Component, Input, AfterViewInit, ViewChild, ElementRef, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  Input,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import * as QRCode from 'qrcode';
 import { StateService } from '../../services/state.service';
 
@@ -16,9 +23,7 @@ export class QrcodeComponent implements AfterViewInit {
 
   qrcodeObject: any;
 
-  constructor(
-    private stateService: StateService,
-  ) { }
+  constructor(private stateService: StateService) {}
 
   ngOnChanges() {
     if (!this.canvas || !this.canvas.nativeElement) {
@@ -40,7 +45,7 @@ export class QrcodeComponent implements AfterViewInit {
       margin: 0,
       color: {
         dark: '#000',
-        light: '#fff'
+        light: '#fff',
       },
       width: this.size,
     };
@@ -60,7 +65,7 @@ export class QrcodeComponent implements AfterViewInit {
 
     QRCode.toCanvas(this.canvas.nativeElement, address, opts, (error: any) => {
       if (error) {
-         console.error(error);
+        console.error(error);
       }
     });
   }

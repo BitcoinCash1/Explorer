@@ -1,8 +1,27 @@
 import { Inject, Injectable, PLATFORM_ID, LOCALE_ID } from '@angular/core';
-import { ReplaySubject, BehaviorSubject, Subject, fromEvent, Observable } from 'rxjs';
+import {
+  ReplaySubject,
+  BehaviorSubject,
+  Subject,
+  fromEvent,
+  Observable,
+} from 'rxjs';
 import { Transaction } from '../interfaces/electrs.interface';
-import { IBackendInfo, MempoolBlock, MempoolBlockWithTransactions, MempoolBlockDelta, MempoolInfo, Recommendedfees, ReplacedTransaction, TransactionStripped } from '../interfaces/websocket.interface';
-import { BlockExtended, DifficultyAdjustment, OptimizedMempoolStats } from '../interfaces/node-api.interface';
+import {
+  IBackendInfo,
+  MempoolBlock,
+  MempoolBlockWithTransactions,
+  MempoolBlockDelta,
+  MempoolInfo,
+  Recommendedfees,
+  ReplacedTransaction,
+  TransactionStripped,
+} from '../interfaces/websocket.interface';
+import {
+  BlockExtended,
+  DifficultyAdjustment,
+  OptimizedMempoolStats,
+} from '../interfaces/node-api.interface';
 import { Router, NavigationStart } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { map, shareReplay } from 'rxjs/operators';
@@ -14,7 +33,9 @@ interface MarkBlockState {
   txFeePerVSize?: number;
 }
 
-export interface ILoadingIndicators { [name: string]: number; }
+export interface ILoadingIndicators {
+  [name: string]: number;
+}
 
 export interface Env {
   TESTNET_ENABLED: boolean;
@@ -42,32 +63,32 @@ export interface Env {
 }
 
 const defaultEnv: Env = {
-  'TESTNET_ENABLED': false,
-  'SIGNET_ENABLED': false,
-  'LIQUID_ENABLED': false,
-  'LIQUID_TESTNET_ENABLED': false,
-  'BASE_MODULE': 'mempool',
-  'BISQ_ENABLED': false,
-  'BISQ_SEPARATE_BACKEND': false,
-  'ITEMS_PER_PAGE': 10,
-  'KEEP_BLOCKS_AMOUNT': 8,
-  'OFFICIAL_MEMPOOL_SPACE': false,
-  'NGINX_PROTOCOL': 'http',
-  'NGINX_HOSTNAME': '127.0.0.1',
-  'NGINX_PORT': '80',
-  'BLOCK_WEIGHT_UNITS': 4000000,
-  'MEMPOOL_BLOCKS_AMOUNT': 8,
-  'GIT_COMMIT_HASH': '',
-  'PACKAGE_JSON_VERSION': '',
-  'MEMPOOL_WEBSITE_URL': 'https://mempool.space',
-  'LIQUID_WEBSITE_URL': 'https://liquid.network',
-  'BISQ_WEBSITE_URL': 'https://bisq.markets',
-  'MINING_DASHBOARD': true,
-  'LIGHTNING': false,
+  TESTNET_ENABLED: false,
+  SIGNET_ENABLED: false,
+  LIQUID_ENABLED: false,
+  LIQUID_TESTNET_ENABLED: false,
+  BASE_MODULE: 'mempool',
+  BISQ_ENABLED: false,
+  BISQ_SEPARATE_BACKEND: false,
+  ITEMS_PER_PAGE: 10,
+  KEEP_BLOCKS_AMOUNT: 8,
+  OFFICIAL_MEMPOOL_SPACE: false,
+  NGINX_PROTOCOL: 'http',
+  NGINX_HOSTNAME: '127.0.0.1',
+  NGINX_PORT: '80',
+  BLOCK_WEIGHT_UNITS: 4000000,
+  MEMPOOL_BLOCKS_AMOUNT: 8,
+  GIT_COMMIT_HASH: '',
+  PACKAGE_JSON_VERSION: '',
+  MEMPOOL_WEBSITE_URL: 'https://mempool.space',
+  LIQUID_WEBSITE_URL: 'https://liquid.network',
+  BISQ_WEBSITE_URL: 'https://bisq.markets',
+  MINING_DASHBOARD: true,
+  LIGHTNING: false,
 };
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class StateService {
   isBrowser: boolean = isPlatformBrowser(this.platformId);
@@ -118,21 +139,27 @@ export class StateService {
     @Inject(PLATFORM_ID) private platformId: any,
     @Inject(LOCALE_ID) private locale: string,
     private router: Router,
-    private storageService: StorageService,
+    private storageService: StorageService
   ) {
     const browserWindow = window || {};
     // @ts-ignore
     const browserWindowEnv = browserWindow.__env || {};
     this.env = Object.assign(defaultEnv, browserWindowEnv);
 
-    if (defaultEnv.BASE_MODULE !== 'mempool' && defaultEnv.BASE_MODULE !== 'mempool.cash') {
+    if (
+      defaultEnv.BASE_MODULE !== 'mempool' &&
+      defaultEnv.BASE_MODULE !== 'mempool.cash'
+    ) {
       this.env.MINING_DASHBOARD = false;
     }
 
     if (this.isBrowser) {
       this.setNetworkBasedonUrl(window.location.pathname);
       this.setLightningBasedonUrl(window.location.pathname);
-      this.isTabHidden$ = fromEvent(document, 'visibilitychange').pipe(map(() => this.isHidden()), shareReplay());
+      this.isTabHidden$ = fromEvent(document, 'visibilitychange').pipe(
+        map(() => this.isHidden()),
+        shareReplay()
+      );
     } else {
       this.setNetworkBasedonUrl('/');
       this.setLightningBasedonUrl('/');
@@ -146,7 +173,9 @@ export class StateService {
       }
     });
 
-    this.blocks$ = new ReplaySubject<[BlockExtended, boolean]>(this.env.KEEP_BLOCKS_AMOUNT);
+    this.blocks$ = new ReplaySubject<[BlockExtended, boolean]>(
+      this.env.KEEP_BLOCKS_AMOUNT
+    );
 
     if (this.env.BASE_MODULE === 'bisq') {
       this.network = this.env.BASE_MODULE;
@@ -155,16 +184,29 @@ export class StateService {
 
     this.blockVSize = this.env.BLOCK_WEIGHT_UNITS / 4;
 
-    const savedTimePreference = this.storageService.getValue('time-preference-ltr');
-    const rtlLanguage = (this.locale.startsWith('ar') || this.locale.startsWith('fa') || this.locale.startsWith('he'));
+    const savedTimePreference = this.storageService.getValue(
+      'time-preference-ltr'
+    );
+    const rtlLanguage =
+      this.locale.startsWith('ar') ||
+      this.locale.startsWith('fa') ||
+      this.locale.startsWith('he');
     // default time direction is right-to-left, unless locale is a RTL language
-    this.timeLtr = new BehaviorSubject<boolean>(savedTimePreference === 'true' || (savedTimePreference == null && rtlLanguage));
+    this.timeLtr = new BehaviorSubject<boolean>(
+      savedTimePreference === 'true' ||
+        (savedTimePreference == null && rtlLanguage)
+    );
     this.timeLtr.subscribe((ltr) => {
-      this.storageService.setValue('time-preference-ltr', ltr ? 'true' : 'false');
+      this.storageService.setValue(
+        'time-preference-ltr',
+        ltr ? 'true' : 'false'
+      );
     });
 
     const savedFlowPreference = this.storageService.getValue('flow-preference');
-    this.hideFlow = new BehaviorSubject<boolean>(savedFlowPreference === 'hide');
+    this.hideFlow = new BehaviorSubject<boolean>(
+      savedFlowPreference === 'hide'
+    );
     this.hideFlow.subscribe((hide) => {
       if (hide) {
         this.storageService.setValue('flow-preference', hide ? 'hide' : 'show');
@@ -175,7 +217,11 @@ export class StateService {
   }
 
   setNetworkBasedonUrl(url: string) {
-    if (this.env.BASE_MODULE !== 'mempool' && this.env.BASE_MODULE !== 'mempool.cash' && this.env.BASE_MODULE !== 'liquid') {
+    if (
+      this.env.BASE_MODULE !== 'mempool' &&
+      this.env.BASE_MODULE !== 'mempool.cash' &&
+      this.env.BASE_MODULE !== 'liquid'
+    ) {
       return;
     }
     // horrible network regex breakdown:
@@ -184,7 +230,9 @@ export class StateService {
     // (?:preview\/)?                               optional "preview" prefix (non-capturing)
     // (bisq|testnet|liquidtestnet|liquid|signet)/  network string (captured as networkMatches[1])
     // ($|\/)                                       network string must end or end with a slash
-    const networkMatches = url.match(/^\/(?:[a-z]{2}(?:-[A-Z]{2})?\/)?(?:preview\/)?(bisq|testnet|liquidtestnet|liquid|signet)($|\/)/);
+    const networkMatches = url.match(
+      /^\/(?:[a-z]{2}(?:-[A-Z]{2})?\/)?(?:preview\/)?(bisq|testnet|liquidtestnet|liquid|signet)($|\/)/
+    );
     switch (networkMatches && networkMatches[1]) {
       case 'liquid':
         if (this.network !== 'liquid') {
@@ -222,7 +270,10 @@ export class StateService {
         }
         return;
       default:
-        if (this.env.BASE_MODULE !== 'mempool' && this.env.BASE_MODULE !== 'mempool.cash') {
+        if (
+          this.env.BASE_MODULE !== 'mempool' &&
+          this.env.BASE_MODULE !== 'mempool.cash'
+        ) {
           if (this.network !== this.env.BASE_MODULE) {
             this.network = this.env.BASE_MODULE;
             this.networkChanged$.next(this.env.BASE_MODULE);
@@ -235,7 +286,10 @@ export class StateService {
   }
 
   setLightningBasedonUrl(url: string) {
-    if (this.env.BASE_MODULE !== 'mempool' && this.env.BASE_MODULE !== 'mempool.cash') {
+    if (
+      this.env.BASE_MODULE !== 'mempool' &&
+      this.env.BASE_MODULE !== 'mempool.cash'
+    ) {
       return;
     }
     const networkMatches = url.match(/\/lightning\//);
@@ -243,11 +297,13 @@ export class StateService {
     this.lightningChanged$.next(this.lightning);
   }
 
-  getHiddenProp(){
+  getHiddenProp() {
     const prefixes = ['webkit', 'moz', 'ms', 'o'];
-    if ('hidden' in document) { return 'hidden'; }
+    if ('hidden' in document) {
+      return 'hidden';
+    }
     for (const prefix of prefixes) {
-      if ((prefix + 'Hidden') in document) {
+      if (prefix + 'Hidden' in document) {
         return prefix + 'Hidden';
       }
     }
@@ -256,7 +312,9 @@ export class StateService {
 
   isHidden() {
     const prop = this.getHiddenProp();
-    if (!prop) { return false; }
+    if (!prop) {
+      return false;
+    }
     return document[prop];
   }
 
@@ -270,11 +328,11 @@ export class StateService {
 
   setTxCache(transactions) {
     this.txCache = {};
-    transactions.forEach(tx => {
+    transactions.forEach((tx) => {
       this.txCache[tx.txid] = tx;
     });
   }
- 
+
   getTxFromCache(txid) {
     if (this.txCache && this.txCache[txid]) {
       return this.txCache[txid];

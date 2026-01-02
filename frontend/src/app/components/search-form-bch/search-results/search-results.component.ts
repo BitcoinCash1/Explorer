@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+} from '@angular/core';
 import { StateService } from '../../../services/state-bch.service';
 
 @Component({
@@ -10,19 +16,22 @@ export class SearchResultsComponentBch implements OnChanges {
   @Input() results: any = {};
   @Output() selectedResult = new EventEmitter();
 
-  isMobile = (window.innerWidth <= 767.98);
+  isMobile = window.innerWidth <= 767.98;
   resultsFlattened = [];
   activeIdx = 0;
   focusFirst = true;
 
-  constructor(
-    public stateService: StateService,
-    ) { }
+  constructor(public stateService: StateService) {}
 
   ngOnChanges() {
     this.activeIdx = 0;
     if (this.results) {
-      this.resultsFlattened = [...(this.results.hashQuickMatch ? [this.results.searchText] : []), ...this.results.addresses, ...this.results.nodes, ...this.results.channels];
+      this.resultsFlattened = [
+        ...(this.results.hashQuickMatch ? [this.results.searchText] : []),
+        ...this.results.addresses,
+        ...this.results.nodes,
+        ...this.results.channels,
+      ];
     }
   }
 
@@ -62,7 +71,9 @@ export class SearchResultsComponentBch implements OnChanges {
 
   next() {
     if (this.activeIdx === this.resultsFlattened.length - 1) {
-      this.activeIdx = this.focusFirst ? (this.activeIdx + 1) % this.resultsFlattened.length : -1;
+      this.activeIdx = this.focusFirst
+        ? (this.activeIdx + 1) % this.resultsFlattened.length
+        : -1;
     } else {
       this.activeIdx++;
     }
@@ -77,5 +88,4 @@ export class SearchResultsComponentBch implements OnChanges {
       this.activeIdx--;
     }
   }
-
 }

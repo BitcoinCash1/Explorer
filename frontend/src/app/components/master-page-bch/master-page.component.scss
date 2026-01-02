@@ -62,7 +62,6 @@ li.nav-item {
   }
 }
 
-
 .navbar-collapse {
   flex-basis: auto;
   justify-content: flex-end;
@@ -108,11 +107,11 @@ nav {
   display: table;
 }
 .btn-primary {
-  color: #387C4D !important;
-  background-color: #387C4D !important;
+  color: #387c4d !important;
+  background-color: #387c4d !important;
 }
 .mainnet.active {
-  background-color: #387C4D;
+  background-color: #387c4d;
 }
 
 .liquid.active {
@@ -179,7 +178,8 @@ nav {
   display: flex;
 }
 
-.mempool-logo, app-svg-images {
+.mempool-logo,
+app-svg-images {
   align-self: center;
   width: 140px;
   height: 35px;

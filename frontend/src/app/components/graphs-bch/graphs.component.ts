@@ -13,7 +13,7 @@ export class GraphsComponentBch implements OnInit {
   constructor(
     public stateService: StateService,
     private websocketService: WebsocketService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.websocketService.want(['blocks']);

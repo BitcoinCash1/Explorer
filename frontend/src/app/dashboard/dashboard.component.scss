@@ -131,14 +131,16 @@
 .latest-transactions {
   width: 100%;
   text-align: left;
-  table-layout:fixed;
-  tr, td, th {
+  table-layout: fixed;
+  tr,
+  td,
+  th {
     border: 0px;
     padding-top: 0.71rem !important;
     padding-bottom: 0.75rem !important;
   }
   td {
-    overflow:hidden;
+    overflow: hidden;
     width: 25%;
   }
   .table-cell-satoshis {
@@ -182,7 +184,9 @@
 .lastest-blocks-table {
   width: 100%;
   text-align: left;
-  tr, td, th {
+  tr,
+  td,
+  th {
     border: 0px;
     padding-top: 0.65rem !important;
     padding-bottom: 0.7rem !important;
@@ -219,7 +223,7 @@
 .mempool-graph {
   height: 255px;
 }
-.loadingGraphs{
+.loadingGraphs {
   height: 250px;
   display: grid;
   place-items: center;
@@ -318,7 +322,10 @@
   padding-left: 10px;
 }
 
-.title-link, .title-link:hover, .title-link:focus, .title-link:active {
+.title-link,
+.title-link:hover,
+.title-link:focus,
+.title-link:active {
   display: block;
   margin-bottom: 10px;
   text-decoration: none;

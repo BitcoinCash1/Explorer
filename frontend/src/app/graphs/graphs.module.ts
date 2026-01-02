@@ -55,11 +55,9 @@ import { CommonModule } from '@angular/common';
     SharedModule,
     GraphsRoutingModule,
     NgxEchartsModule.forRoot({
-      echarts: () => import('echarts')
-    })
+      echarts: () => import('echarts'),
+    }),
   ],
-  exports: [
-    NgxEchartsModule,
-  ]
+  exports: [NgxEchartsModule],
 })
-export class GraphsModule { }
+export class GraphsModule {}

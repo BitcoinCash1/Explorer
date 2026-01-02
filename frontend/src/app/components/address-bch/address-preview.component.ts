@@ -14,7 +14,7 @@ import { AddressInformation } from '../../interfaces-bch/node-api.interface';
 @Component({
   selector: 'app-address-preview-bch',
   templateUrl: './address-preview.component.html',
-  styleUrls: ['./address-preview.component.scss']
+  styleUrls: ['./address-preview.component.scss'],
 })
 export class AddressPreviewComponentBch implements OnInit, OnDestroy {
   network = '';
@@ -41,17 +41,22 @@ export class AddressPreviewComponentBch implements OnInit, OnDestroy {
     private stateService: StateService,
     private apiService: ApiService,
     private seoService: SeoService,
-    private openGraphService: OpenGraphService,
-  ) { }
+    private openGraphService: OpenGraphService
+  ) {}
 
   ngOnInit() {
-    this.stateService.networkChanged$.subscribe((network) => this.network = network);
+    this.stateService.networkChanged$.subscribe(
+      (network) => (this.network = network)
+    );
 
-    this.addressLoadingStatus$ = this.route.paramMap
-      .pipe(
-        switchMap(() => this.stateService.loadingIndicators$),
-        map((indicators) => indicators['address-' + this.addressString] !== undefined ? indicators['address-' + this.addressString] : 0)
-      );
+    this.addressLoadingStatus$ = this.route.paramMap.pipe(
+      switchMap(() => this.stateService.loadingIndicators$),
+      map((indicators) =>
+        indicators['address-' + this.addressString] !== undefined
+          ? indicators['address-' + this.addressString]
+          : 0
+      )
+    );
 
     this.mainSubscription = this.route.paramMap
       .pipe(
@@ -67,25 +72,33 @@ export class AddressPreviewComponentBch implements OnInit, OnDestroy {
           if (/^[A-Z]{2,5}1[AC-HJ-NP-Z02-9]{8,100}$/.test(this.addressString)) {
             this.addressString = this.addressString.toLowerCase();
           }
-          this.seoService.setTitle($localize`:@@address.component.browser-title:Address: ${this.addressString}:INTERPOLATION:`);
+          this.seoService.setTitle(
+            $localize`:@@address.component.browser-title:Address: ${this.addressString}:INTERPOLATION:`
+          );
 
-          return this.electrsApiService.getAddress$(this.addressString)
-            .pipe(
-              catchError((err) => {
-                this.isLoadingAddress = false;
-                this.error = err;
-                console.log(err);
-                this.openGraphService.fail('address-data-' + this.rawAddress);
-                return of(null);
-              })
-            );
+          return this.electrsApiService.getAddress$(this.addressString).pipe(
+            catchError((err) => {
+              this.isLoadingAddress = false;
+              this.error = err;
+              console.log(err);
+              this.openGraphService.fail('address-data-' + this.rawAddress);
+              return of(null);
+            })
+          );
         })
       )
       .pipe(
         filter((address) => !!address),
         tap((address: Address) => {
-          if ((this.stateService.network === 'liquid' || this.stateService.network === 'liquidtestnet') && /^([m-zA-HJ-NP-Z1-9]{26,35}|[a-z]{2,5}1[ac-hj-np-z02-9]{8,100}|[a-km-zA-HJ-NP-Z1-9]{80})$/.test(address.address)) {
-            this.apiService.validateAddress$(address.address)
+          if (
+            (this.stateService.network === 'liquid' ||
+              this.stateService.network === 'liquidtestnet') &&
+            /^([m-zA-HJ-NP-Z1-9]{26,35}|[a-z]{2,5}1[ac-hj-np-z02-9]{8,100}|[a-km-zA-HJ-NP-Z1-9]{80})$/.test(
+              address.address
+            )
+          ) {
+            this.apiService
+              .validateAddress$(address.address)
               .subscribe((addressInfo) => {
                 this.addressInfo = addressInfo;
               });
@@ -96,7 +109,8 @@ export class AddressPreviewComponentBch implements OnInit, OnDestroy {
           this.openGraphService.waitOver('address-data-' + this.rawAddress);
         })
       )
-      .subscribe(() => {},
+      .subscribe(
+        () => {},
         (error) => {
           console.log(error);
           this.error = error;
@@ -107,11 +121,18 @@ export class AddressPreviewComponentBch implements OnInit, OnDestroy {
   }
 
   updateChainStats() {
-    this.received = this.address.chain_stats.funded_txo_sum + this.address.mempool_stats.funded_txo_sum;
-    this.sent = this.address.chain_stats.spent_txo_sum + this.address.mempool_stats.spent_txo_sum;
-    this.txCount = this.address.chain_stats.tx_count + this.address.mempool_stats.tx_count;
+    this.received =
+      this.address.chain_stats.funded_txo_sum +
+      this.address.mempool_stats.funded_txo_sum;
+    this.sent =
+      this.address.chain_stats.spent_txo_sum +
+      this.address.mempool_stats.spent_txo_sum;
+    this.txCount =
+      this.address.chain_stats.tx_count + this.address.mempool_stats.tx_count;
     this.totalConfirmedTxCount = this.address.chain_stats.tx_count;
-    this.totalUnspent = this.address.chain_stats.funded_txo_count - this.address.chain_stats.spent_txo_count;
+    this.totalUnspent =
+      this.address.chain_stats.funded_txo_count -
+      this.address.chain_stats.spent_txo_count;
   }
 
   ngOnDestroy() {

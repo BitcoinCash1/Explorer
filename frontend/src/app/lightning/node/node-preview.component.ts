@@ -31,7 +31,7 @@ export class NodePreviewComponent implements OnInit {
     private lightningApiService: LightningApiService,
     private activatedRoute: ActivatedRoute,
     private seoService: SeoService,
-    private openGraphService: OpenGraphService,
+    private openGraphService: OpenGraphService
   ) {
     if (isMobile()) {
       this.publicKeySize = 12;
@@ -39,56 +39,58 @@ export class NodePreviewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.node$ = this.activatedRoute.paramMap
-      .pipe(
-        switchMap((params: ParamMap) => {
-          this.publicKey = params.get('public_key');
-          this.openGraphService.waitFor('node-map-' + this.publicKey);
-          this.openGraphService.waitFor('node-data-' + this.publicKey);
-          return this.lightningApiService.getNode$(params.get('public_key'));
-        }),
-        map((node) => {
-          this.seoService.setTitle(`Node: ${node.alias}`);
+    this.node$ = this.activatedRoute.paramMap.pipe(
+      switchMap((params: ParamMap) => {
+        this.publicKey = params.get('public_key');
+        this.openGraphService.waitFor('node-map-' + this.publicKey);
+        this.openGraphService.waitFor('node-data-' + this.publicKey);
+        return this.lightningApiService.getNode$(params.get('public_key'));
+      }),
+      map((node) => {
+        this.seoService.setTitle(`Node: ${node.alias}`);
 
-          const socketsObject = [];
-          const socketTypesMap = {};
-          for (const socket of node.sockets.split(',')) {
-            if (socket === '') {
-              continue;
-            }
-            let label = '';
-            if (socket.match(/(?:[0-9]{1,3}\.){3}[0-9]{1,3}/)) {
-              label = 'IPv4';
-            } else if (socket.indexOf('[') > -1) {
-              label = 'IPv6';
-            } else if (socket.indexOf('onion') > -1) {
-              label = 'Tor';
-            }
-            node.flag = getFlagEmoji(node.iso_code);
-            socketsObject.push({
-              label: label,
-              socket: node.public_key + '@' + socket,
-            });
-            socketTypesMap[label] = true;
+        const socketsObject = [];
+        const socketTypesMap = {};
+        for (const socket of node.sockets.split(',')) {
+          if (socket === '') {
+            continue;
           }
-          node.socketsObject = socketsObject;
-          this.socketTypes = Object.keys(socketTypesMap);
-          node.avgCapacity = node.capacity / Math.max(1, node.active_channel_count);
+          let label = '';
+          if (socket.match(/(?:[0-9]{1,3}\.){3}[0-9]{1,3}/)) {
+            label = 'IPv4';
+          } else if (socket.indexOf('[') > -1) {
+            label = 'IPv6';
+          } else if (socket.indexOf('onion') > -1) {
+            label = 'Tor';
+          }
+          node.flag = getFlagEmoji(node.iso_code);
+          socketsObject.push({
+            label: label,
+            socket: node.public_key + '@' + socket,
+          });
+          socketTypesMap[label] = true;
+        }
+        node.socketsObject = socketsObject;
+        this.socketTypes = Object.keys(socketTypesMap);
+        node.avgCapacity =
+          node.capacity / Math.max(1, node.active_channel_count);
 
-          this.openGraphService.waitOver('node-data-' + this.publicKey);
+        this.openGraphService.waitOver('node-data-' + this.publicKey);
 
-          return node;
-        }),
-        catchError(err => {
-          this.error = err;
-          this.openGraphService.fail('node-map-' + this.publicKey);
-          this.openGraphService.fail('node-data-' + this.publicKey);
-          return [{
+        return node;
+      }),
+      catchError((err) => {
+        this.error = err;
+        this.openGraphService.fail('node-map-' + this.publicKey);
+        this.openGraphService.fail('node-data-' + this.publicKey);
+        return [
+          {
             alias: this.publicKey,
             public_key: this.publicKey,
-          }];
-        })
-      );
+          },
+        ];
+      })
+    );
   }
 
   changeSocket(index: number) {

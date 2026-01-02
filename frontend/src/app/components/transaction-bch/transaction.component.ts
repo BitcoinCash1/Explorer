@@ -1,4 +1,12 @@
-import { Component, OnInit, AfterViewInit, OnDestroy, HostListener, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  OnDestroy,
+  HostListener,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { ElectrsApiService } from '../../services/electrs-api.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import {
@@ -7,7 +15,7 @@ import {
   catchError,
   retryWhen,
   delay,
-  map
+  map,
 } from 'rxjs/operators';
 import { Transaction } from '../../interfaces-bch/electrs.interface';
 import { of, merge, Subscription, Observable, Subject, timer } from 'rxjs';
@@ -16,7 +24,10 @@ import { WebsocketService } from '../../services/websocket-bch.service';
 import { AudioService } from '../../services/audio.service';
 import { ApiService } from '../../services/api-bch.service';
 import { SeoService } from '../../services/seo-bch.service';
-import { BlockExtended, CpfpInfo } from '../../interfaces-bch/node-api.interface';
+import {
+  BlockExtended,
+  CpfpInfo,
+} from '../../interfaces-bch/node-api.interface';
 import { RelativeUrlPipe } from '../../shared/pipes/relative-url-bch/relative-url.pipe';
 
 @Component({
@@ -24,7 +35,9 @@ import { RelativeUrlPipe } from '../../shared/pipes/relative-url-bch/relative-ur
   templateUrl: './transaction.component.html',
   styleUrls: ['./transaction.component.scss'],
 })
-export class TransactionComponentBch implements OnInit, AfterViewInit, OnDestroy {
+export class TransactionComponentBch
+  implements OnInit, AfterViewInit, OnDestroy
+{
   network = '';
   tx: Transaction;
   txId: string;
@@ -60,7 +73,7 @@ export class TransactionComponentBch implements OnInit, AfterViewInit, OnDestroy
   overrideFlowPreference: boolean = null;
   flowEnabled: boolean;
 
-  tooltipPosition: { x: number, y: number };
+  tooltipPosition: { x: number; y: number };
 
   @ViewChild('graphContainer')
   graphContainer: ElementRef;
@@ -89,18 +102,17 @@ export class TransactionComponentBch implements OnInit, AfterViewInit, OnDestroy
       this.setFlowEnabled();
     });
 
-    this.timeAvg$ = timer(0, 1000)
-      .pipe(
-        switchMap(() => this.stateService.difficultyAdjustment$),
-        map((da) => da.timeAvg)
-      );
+    this.timeAvg$ = timer(0, 1000).pipe(
+      switchMap(() => this.stateService.difficultyAdjustment$),
+      map((da) => da.timeAvg)
+    );
 
     this.urlFragmentSubscription = this.route.fragment.subscribe((fragment) => {
       this.fragmentParams = new URLSearchParams(fragment || '');
       const vin = parseInt(this.fragmentParams.get('vin'), 10);
       const vout = parseInt(this.fragmentParams.get('vout'), 10);
-      this.inputIndex = (!isNaN(vin) && vin >= 0) ? vin : null;
-      this.outputIndex = (!isNaN(vout) && vout >= 0) ? vout : null;
+      this.inputIndex = !isNaN(vin) && vin >= 0 ? vin : null;
+      this.outputIndex = !isNaN(vout) && vout >= 0 ? vout : null;
     });
 
     this.fetchCpfpSubscription = this.fetchCpfp$
@@ -152,10 +164,13 @@ export class TransactionComponentBch implements OnInit, AfterViewInit, OnDestroy
               this.fragmentParams.set('vin', vin.toString());
               this.fragmentParams.delete('vout');
             }
-            this.router.navigate([this.relativeUrlPipe.transform('/tx'), this.txId], {
-              queryParamsHandling: 'merge',
-              fragment: this.fragmentParams.toString(),
-            });
+            this.router.navigate(
+              [this.relativeUrlPipe.transform('/tx'), this.txId],
+              {
+                queryParamsHandling: 'merge',
+                fragment: this.fragmentParams.toString(),
+              }
+            );
           } else {
             this.txId = urlMatch[0];
             const vout = parseInt(urlMatch[1], 10);
@@ -163,10 +178,13 @@ export class TransactionComponentBch implements OnInit, AfterViewInit, OnDestroy
               // rewrite legacy vout syntax
               this.fragmentParams.set('vout', vout.toString());
               this.fragmentParams.delete('vin');
-              this.router.navigate([this.relativeUrlPipe.transform('/tx'), this.txId], {
-                queryParamsHandling: 'merge',
-                fragment: this.fragmentParams.toString(),
-              });
+              this.router.navigate(
+                [this.relativeUrlPipe.transform('/tx'), this.txId],
+                {
+                  queryParamsHandling: 'merge',
+                  fragment: this.fragmentParams.toString(),
+                }
+              );
             }
           }
           this.seoService.setTitle(
@@ -182,7 +200,7 @@ export class TransactionComponentBch implements OnInit, AfterViewInit, OnDestroy
             )
           );
         }),
-         switchMap(() => {
+        switchMap(() => {
           let transactionObservable$: Observable<Transaction>;
           const cached = this.stateService.getTxFromCache(this.txId);
           if (cached && cached.fee !== -1) {
@@ -201,7 +219,8 @@ export class TransactionComponentBch implements OnInit, AfterViewInit, OnDestroy
         }),
         switchMap((tx) => of(tx))
       )
-      .subscribe((tx: Transaction) => {
+      .subscribe(
+        (tx: Transaction) => {
           if (!tx) {
             return;
           }
@@ -210,7 +229,7 @@ export class TransactionComponentBch implements OnInit, AfterViewInit, OnDestroy
           if (tx.fee === undefined) {
             this.tx.fee = 0;
           }
-          this.tx.feePerVsize = tx.fee / (tx.size);
+          this.tx.feePerVsize = tx.fee / tx.size;
           this.isLoadingTx = false;
           this.error = undefined;
           this.waitingForTransaction = false;
@@ -242,7 +261,9 @@ export class TransactionComponentBch implements OnInit, AfterViewInit, OnDestroy
               this.fetchCpfp$.next(this.tx.txid);
             }
           }
-          setTimeout(() => { this.applyFragment(); }, 0);
+          setTimeout(() => {
+            this.applyFragment();
+          }, 0);
         },
         (error) => {
           this.error = error;
@@ -250,41 +271,47 @@ export class TransactionComponentBch implements OnInit, AfterViewInit, OnDestroy
         }
       );
 
-    this.blocksSubscription = this.stateService.blocks$.subscribe(([block, txConfirmed]) => {
-      this.latestBlock = block;
+    this.blocksSubscription = this.stateService.blocks$.subscribe(
+      ([block, txConfirmed]) => {
+        this.latestBlock = block;
 
-      if (txConfirmed && this.tx) {
-        this.tx.status = {
-          confirmed: true,
-          block_height: block.height,
-          block_hash: block.id,
-          block_time: block.timestamp,
-        };
-        this.stateService.markBlock$.next({ blockHeight: block.height });
-        this.audioService.playSound('magic');
+        if (txConfirmed && this.tx) {
+          this.tx.status = {
+            confirmed: true,
+            block_height: block.height,
+            block_hash: block.id,
+            block_time: block.timestamp,
+          };
+          this.stateService.markBlock$.next({ blockHeight: block.height });
+          this.audioService.playSound('magic');
+        }
       }
-    });
+    );
 
-    this.txReplacedSubscription = this.stateService.txReplaced$.subscribe((rbfTransaction) => {
-      if (!this.tx) {
-        this.error = new Error();
-        this.waitingForTransaction = false;
+    this.txReplacedSubscription = this.stateService.txReplaced$.subscribe(
+      (rbfTransaction) => {
+        if (!this.tx) {
+          this.error = new Error();
+          this.waitingForTransaction = false;
+        }
+        this.rbfTransaction = rbfTransaction;
+        this.stateService.setTxCache([this.rbfTransaction]);
       }
-      this.rbfTransaction = rbfTransaction;
-      this.stateService.setTxCache([this.rbfTransaction]);
-    });
+    );
 
-    this.queryParamsSubscription = this.route.queryParams.subscribe((params) => {
-      if (params.showFlow === 'false') {
-        this.overrideFlowPreference = false;
-      } else if (params.showFlow === 'true') {
-        this.overrideFlowPreference = true;
-      } else {
-        this.overrideFlowPreference = null;
+    this.queryParamsSubscription = this.route.queryParams.subscribe(
+      (params) => {
+        if (params.showFlow === 'false') {
+          this.overrideFlowPreference = false;
+        } else if (params.showFlow === 'true') {
+          this.overrideFlowPreference = true;
+        } else {
+          this.overrideFlowPreference = null;
+        }
+        this.setFlowEnabled();
+        this.setGraphSize();
       }
-      this.setFlowEnabled();
-      this.setGraphSize();
-    });
+    );
   }
 
   ngAfterViewInit(): void {
@@ -354,8 +381,13 @@ export class TransactionComponentBch implements OnInit, AfterViewInit, OnDestroy
   }
 
   setupGraph() {
-    this.maxInOut = Math.min(this.inOutLimit, Math.max(this.tx?.vin?.length || 1, this.tx?.vout?.length + 1 || 1));
-    this.graphHeight = this.graphExpanded ? this.maxInOut * 15 : Math.min(360, this.maxInOut * 80);
+    this.maxInOut = Math.min(
+      this.inOutLimit,
+      Math.max(this.tx?.vin?.length || 1, this.tx?.vout?.length + 1 || 1)
+    );
+    this.graphHeight = this.graphExpanded
+      ? this.maxInOut * 15
+      : Math.min(360, this.maxInOut * 80);
   }
 
   toggleGraph() {
@@ -365,12 +397,15 @@ export class TransactionComponentBch implements OnInit, AfterViewInit, OnDestroy
       relativeTo: this.route,
       queryParams: { showFlow: showFlow },
       queryParamsHandling: 'merge',
-      fragment: 'flow'
+      fragment: 'flow',
     });
   }
 
   setFlowEnabled() {
-    this.flowEnabled = (this.overrideFlowPreference != null ? this.overrideFlowPreference : !this.hideFlow);
+    this.flowEnabled =
+      this.overrideFlowPreference != null
+        ? this.overrideFlowPreference
+        : !this.hideFlow;
   }
 
   expandGraph() {
@@ -385,7 +420,9 @@ export class TransactionComponentBch implements OnInit, AfterViewInit, OnDestroy
 
   // simulate normal anchor fragment behavior
   applyFragment(): void {
-    const anchor = Array.from(this.fragmentParams.entries()).find(([frag, value]) => value === '');
+    const anchor = Array.from(this.fragmentParams.entries()).find(
+      ([frag, value]) => value === ''
+    );
     if (anchor) {
       const anchorElement = document.getElementById(anchor[0]);
       if (anchorElement) {

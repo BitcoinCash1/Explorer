@@ -62,7 +62,6 @@ li.nav-item {
   }
 }
 
-
 .navbar-collapse {
   flex-basis: auto;
   justify-content: flex-end;
@@ -177,7 +176,8 @@ nav {
   display: flex;
 }
 
-.mempool-logo, app-svg-images {
+.mempool-logo,
+app-svg-images {
   align-self: center;
   width: 140px;
   height: 35px;

@@ -1,5 +1,5 @@
 export function isMobile(): boolean {
-  return (window.innerWidth <= 767.98);
+  return window.innerWidth <= 767.98;
 }
 
 export function getFlagEmoji(countryCode): string {
@@ -9,7 +9,7 @@ export function getFlagEmoji(countryCode): string {
   const codePoints = countryCode
     .toUpperCase()
     .split('')
-    .map(char => 127397 + char.charCodeAt());
+    .map((char) => 127397 + char.charCodeAt());
   return String.fromCodePoint(...codePoints);
 }
 
@@ -103,31 +103,41 @@ export function convertRegion(input, to: 'name' | 'abbreviated'): string {
 
   let i; // Reusable loop variable
   if (to == 'abbreviated') {
-    input = input.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
+    input = input.replace(/\w\S*/g, function (txt) {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
     for (i = 0; i < regions.length; i++) {
       if (regions[i][0] == input) {
-        return (regions[i][1]);
+        return regions[i][1];
       }
     }
   } else if (to == 'name') {
     input = input.toUpperCase();
     for (i = 0; i < regions.length; i++) {
       if (regions[i][1] == input) {
-        return (regions[i][0]);
+        return regions[i][0];
       }
     }
   }
 }
 
-export function haversineDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
-  const rlat1 = lat1 * Math.PI / 180;
-  const rlon1 = lon1 * Math.PI / 180;
-  const rlat2 = lat2 * Math.PI / 180;
-  const rlon2 = lon2 * Math.PI / 180;
+export function haversineDistance(
+  lat1: number,
+  lon1: number,
+  lat2: number,
+  lon2: number
+): number {
+  const rlat1 = (lat1 * Math.PI) / 180;
+  const rlon1 = (lon1 * Math.PI) / 180;
+  const rlat2 = (lat2 * Math.PI) / 180;
+  const rlon2 = (lon2 * Math.PI) / 180;
 
   const dlat = Math.sin((rlat2 - rlat1) / 2);
   const dlon = Math.sin((rlon2 - rlon1) / 2);
-  const a = Math.min(1, Math.max(0, (dlat * dlat) + (Math.cos(rlat1) * Math.cos(rlat2) * dlon * dlon)));
+  const a = Math.min(
+    1,
+    Math.max(0, dlat * dlat + Math.cos(rlat1) * Math.cos(rlat2) * dlon * dlon)
+  );
   const d = 2 * 6371 * Math.asin(Math.sqrt(a));
 
   return d;

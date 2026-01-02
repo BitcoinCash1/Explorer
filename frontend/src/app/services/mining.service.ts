@@ -22,23 +22,22 @@ export interface MiningStats {
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MiningService {
-
   constructor(
     private stateService: StateService,
     private apiService: ApiService,
-    private storageService: StorageService,
-  ) { }
+    private storageService: StorageService
+  ) {}
 
   /**
    * Generate pool ranking stats
    */
   public getMiningStats(interval: string): Observable<MiningStats> {
-    return this.apiService.listPools$(interval).pipe(
-      map(response => this.generateMiningStats(response))
-    );
+    return this.apiService
+      .listPools$(interval)
+      .pipe(map((response) => this.generateMiningStats(response)));
   }
 
   /**
@@ -73,9 +72,19 @@ export class MiningService {
    */
   public getDefaultTimespan(min: string): string {
     const timespans = [
-      '24h', '3d', '1w', '1m', '3m', '6m', '1y', '2y', '3y', 'all'
+      '24h',
+      '3d',
+      '1w',
+      '1m',
+      '3m',
+      '6m',
+      '1y',
+      '2y',
+      '3y',
+      'all',
     ];
-    const preference = this.storageService.getValue('miningWindowPreference') ?? '1w';
+    const preference =
+      this.storageService.getValue('miningWindowPreference') ?? '1w';
     if (timespans.indexOf(preference) < timespans.indexOf(min)) {
       return min;
     }
@@ -90,19 +99,36 @@ export class MiningService {
     const totalEmptyBlock = Object.values(stats.pools).reduce((prev, cur) => {
       return prev + cur.emptyBlocks;
     }, 0);
-    const totalEmptyBlockRatio = (totalEmptyBlock / stats.blockCount * 100).toFixed(2);
+    const totalEmptyBlockRatio = (
+      (totalEmptyBlock / stats.blockCount) *
+      100
+    ).toFixed(2);
     const poolsStats = stats.pools.map((poolStat) => {
       return {
-        share: parseFloat((poolStat.blockCount / stats.blockCount * 100).toFixed(2)),
-        lastEstimatedHashrate: (poolStat.blockCount / stats.blockCount * stats.lastEstimatedHashrate / hashrateDivider).toFixed(2),
-        emptyBlockRatio: (poolStat.emptyBlocks / poolStat.blockCount * 100).toFixed(2),
-        logo: `/resources/mining-pools/` + poolStat.name.toLowerCase().replace(' ', '').replace('.', '') + '.svg',
-        ...poolStat
+        share: parseFloat(
+          ((poolStat.blockCount / stats.blockCount) * 100).toFixed(2)
+        ),
+        lastEstimatedHashrate: (
+          ((poolStat.blockCount / stats.blockCount) *
+            stats.lastEstimatedHashrate) /
+          hashrateDivider
+        ).toFixed(2),
+        emptyBlockRatio: (
+          (poolStat.emptyBlocks / poolStat.blockCount) *
+          100
+        ).toFixed(2),
+        logo:
+          `/resources/mining-pools/` +
+          poolStat.name.toLowerCase().replace(' ', '').replace('.', '') +
+          '.svg',
+        ...poolStat,
       };
     });
 
     return {
-      lastEstimatedHashrate: (stats.lastEstimatedHashrate / hashrateDivider).toFixed(2),
+      lastEstimatedHashrate: (
+        stats.lastEstimatedHashrate / hashrateDivider
+      ).toFixed(2),
       blockCount: stats.blockCount,
       totalEmptyBlock: totalEmptyBlock,
       totalEmptyBlockRatio: totalEmptyBlockRatio,

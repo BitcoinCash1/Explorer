@@ -22,8 +22,8 @@ export class BisqMasterPageComponent implements OnInit {
     private stateService: StateService,
     private languageService: LanguageService,
     private enterpriseService: EnterpriseService,
-    private navigationService: NavigationService,
-  ) { }
+    private navigationService: NavigationService
+  ) {}
 
   ngOnInit() {
     this.env = this.stateService.env;

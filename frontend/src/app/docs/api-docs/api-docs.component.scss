@@ -18,7 +18,8 @@
 
 code {
   background-color: #1d1f31;
-  font-family: Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New;
+  font-family: Consolas, Monaco, Lucida Console, Liberation Mono,
+    DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New;
 }
 
 tr {
@@ -31,7 +32,7 @@ tr {
 
 li.nav-item {
   width: 100%;
-  @media (min-width: 676px){
+  @media (min-width: 676px) {
     width: auto;
   }
 }
@@ -46,7 +47,7 @@ li.nav-item {
 
 .nav-tabs .nav-link.active {
   border-bottom: 1px solid #fff;
-  @media (min-width: 676px){
+  @media (min-width: 676px) {
     border-bottom: 1px solid #11131f;
   }
 }
@@ -57,7 +58,6 @@ li.nav-item {
   li.nav-item {
     width: auto;
   }
-
 }
 
 .code {
@@ -131,7 +131,7 @@ li.nav-item {
 }
 
 .doc-content.no-sidebar {
-  width: 100%
+  width: 100%;
 }
 
 h3 {
@@ -139,8 +139,8 @@ h3 {
 }
 
 .endpoint-container:before {
-	display: block;
- 	content: " ";
+  display: block;
+  content: " ";
   height: 1px;
   margin-top: -1px;
   visibility: hidden;
@@ -237,7 +237,6 @@ h3 {
 }
 
 @media (max-width: 992px) {
-
   h3 {
     margin: 1.5rem 0 0 0;
   }
@@ -287,7 +286,6 @@ h3 {
 }
 
 @media (min-width: 992px) {
-
   .hide-on-desktop {
     display: none;
   }

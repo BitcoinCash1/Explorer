@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  LOCALE_ID,
+  OnInit,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EChartsOption, graphic } from 'echarts';
 import { Observable, of } from 'rxjs';
@@ -14,7 +20,7 @@ import { OpenGraphService } from '../../services/opengraph.service';
   selector: 'app-pool-preview',
   templateUrl: './pool-preview.component.html',
   styleUrls: ['./pool-preview.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PoolPreviewComponent implements OnInit {
   formatNumber = formatNumber;
@@ -36,79 +42,85 @@ export class PoolPreviewComponent implements OnInit {
     private route: ActivatedRoute,
     public stateService: StateService,
     private seoService: SeoService,
-    private openGraphService: OpenGraphService,
-  ) {
-  }
+    private openGraphService: OpenGraphService
+  ) {}
 
   ngOnInit(): void {
-    this.poolStats$ = this.route.params.pipe(map((params) => params.slug))
-      .pipe(
-        switchMap((slug: any) => {
-          this.isLoading = true;
-          this.imageLoaded = false;
-          this.slug = slug;
-          this.openGraphService.waitFor('pool-hash-' + this.slug);
-          this.openGraphService.waitFor('pool-stats-' + this.slug);
-          this.openGraphService.waitFor('pool-chart-' + this.slug);
-          this.openGraphService.waitFor('pool-img-' + this.slug);
-          return this.apiService.getPoolHashrate$(this.slug)
-            .pipe(
-              switchMap((data) => {
-                this.isLoading = false;
-                this.prepareChartOptions(data.map(val => [val.timestamp * 1000, val.avgHashrate]));
-                this.openGraphService.waitOver('pool-hash-' + this.slug);
-                return [slug];
-              }),
-              catchError(() => {
-                this.isLoading = false;
-                this.openGraphService.fail('pool-hash-' + this.slug);
-                return of([slug]);
-              })
+    this.poolStats$ = this.route.params.pipe(map((params) => params.slug)).pipe(
+      switchMap((slug: any) => {
+        this.isLoading = true;
+        this.imageLoaded = false;
+        this.slug = slug;
+        this.openGraphService.waitFor('pool-hash-' + this.slug);
+        this.openGraphService.waitFor('pool-stats-' + this.slug);
+        this.openGraphService.waitFor('pool-chart-' + this.slug);
+        this.openGraphService.waitFor('pool-img-' + this.slug);
+        return this.apiService.getPoolHashrate$(this.slug).pipe(
+          switchMap((data) => {
+            this.isLoading = false;
+            this.prepareChartOptions(
+              data.map((val) => [val.timestamp * 1000, val.avgHashrate])
             );
-        }),
-        switchMap((slug) => {
-          return this.apiService.getPoolStats$(slug).pipe(
-            catchError(() => {
-              this.isLoading = false;
-              this.openGraphService.fail('pool-stats-' + this.slug);
-              return of(null);
-            })
-          );
-        }),
-        map((poolStats) => {
-          if (poolStats == null) {
-            return null;
-          }
+            this.openGraphService.waitOver('pool-hash-' + this.slug);
+            return [slug];
+          }),
+          catchError(() => {
+            this.isLoading = false;
+            this.openGraphService.fail('pool-hash-' + this.slug);
+            return of([slug]);
+          })
+        );
+      }),
+      switchMap((slug) => {
+        return this.apiService.getPoolStats$(slug).pipe(
+          catchError(() => {
+            this.isLoading = false;
+            this.openGraphService.fail('pool-stats-' + this.slug);
+            return of(null);
+          })
+        );
+      }),
+      map((poolStats) => {
+        if (poolStats == null) {
+          return null;
+        }
 
-          this.seoService.setTitle(poolStats.pool.name);
-          let regexes = '"';
-          for (const regex of poolStats.pool.regexes) {
-            regexes += regex + '", "';
-          }
-          poolStats.pool.regexes = regexes.slice(0, -3);
-          poolStats.pool.addresses = poolStats.pool.addresses;
+        this.seoService.setTitle(poolStats.pool.name);
+        let regexes = '"';
+        for (const regex of poolStats.pool.regexes) {
+          regexes += regex + '", "';
+        }
+        poolStats.pool.regexes = regexes.slice(0, -3);
+        poolStats.pool.addresses = poolStats.pool.addresses;
 
-          if (poolStats.reportedHashrate) {
-            poolStats.luck = poolStats.estimatedHashrate / poolStats.reportedHashrate * 100;
-          }
+        if (poolStats.reportedHashrate) {
+          poolStats.luck =
+            (poolStats.estimatedHashrate / poolStats.reportedHashrate) * 100;
+        }
 
-          this.openGraphService.waitOver('pool-stats-' + this.slug);
+        this.openGraphService.waitOver('pool-stats-' + this.slug);
 
-          const logoSrc = `/resources/mining-pools/` + poolStats.pool.name.toLowerCase().replace(' ', '').replace('.', '') + '.svg';
-          if (logoSrc === this.lastImgSrc) {
-            this.openGraphService.waitOver('pool-img-' + this.slug);
-          }
-          this.lastImgSrc = logoSrc;
-          return Object.assign({
-            logo: logoSrc
-          }, poolStats);
-        }),
-        catchError(() => {
-          this.isLoading = false;
-          this.openGraphService.fail('pool-stats-' + this.slug);
-          return of(null);
-        })
-      );
+        const logoSrc =
+          `/resources/mining-pools/` +
+          poolStats.pool.name.toLowerCase().replace(' ', '').replace('.', '') +
+          '.svg';
+        if (logoSrc === this.lastImgSrc) {
+          this.openGraphService.waitOver('pool-img-' + this.slug);
+        }
+        this.lastImgSrc = logoSrc;
+        return Object.assign(
+          {
+            logo: logoSrc,
+          },
+          poolStats
+        );
+      }),
+      catchError(() => {
+        this.isLoading = false;
+        this.openGraphService.fail('pool-stats-' + this.slug);
+        return of(null);
+      })
+    );
   }
 
   prepareChartOptions(data) {
@@ -117,11 +129,11 @@ export class PoolPreviewComponent implements OnInit {
       title = {
         textStyle: {
           color: 'grey',
-          fontSize: 15
+          fontSize: 15,
         },
         text: $localize`:@@23555386d8af1ff73f297e89dd4af3f4689fb9dd:Indexing blocks`,
         left: 'center',
-        top: 'center'
+        top: 'center',
       };
     }
 
@@ -134,7 +146,7 @@ export class PoolPreviewComponent implements OnInit {
           { offset: 0.25, color: '#FB8C00' },
           { offset: 0.5, color: '#FFB300' },
           { offset: 0.75, color: '#FDD835' },
-          { offset: 1, color: '#7CB342' }
+          { offset: 1, color: '#7CB342' },
         ]),
         '#D81B60',
       ],
@@ -145,29 +157,38 @@ export class PoolPreviewComponent implements OnInit {
         top: 15,
         show: false,
       },
-      xAxis: data.length === 0 ? undefined : {
-        type: 'time',
-        show: false,
-      },
-      yAxis: data.length === 0 ? undefined : [
-        {
-          type: 'value',
-          show: false,
-        },
-      ],
-      series: data.length === 0 ? undefined : [
-        {
-          zlevel: 0,
-          name: 'Hashrate',
-          showSymbol: false,
-          symbol: 'none',
-          data: data,
-          type: 'line',
-          lineStyle: {
-            width: 4,
-          },
-        },
-      ],
+      xAxis:
+        data.length === 0
+          ? undefined
+          : {
+              type: 'time',
+              show: false,
+            },
+      yAxis:
+        data.length === 0
+          ? undefined
+          : [
+              {
+                type: 'value',
+                show: false,
+              },
+            ],
+      series:
+        data.length === 0
+          ? undefined
+          : [
+              {
+                zlevel: 0,
+                name: 'Hashrate',
+                showSymbol: false,
+                symbol: 'none',
+                data: data,
+                type: 'line',
+                lineStyle: {
+                  width: 4,
+                },
+              },
+            ],
     };
   }
 

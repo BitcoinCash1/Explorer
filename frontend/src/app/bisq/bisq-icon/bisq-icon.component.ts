@@ -1,4 +1,9 @@
-import { Component, ChangeDetectionStrategy, Input, OnChanges } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  Input,
+  OnChanges,
+} from '@angular/core';
 import { IconPrefix, IconName } from '@fortawesome/fontawesome-common-types';
 
 @Component({
@@ -13,7 +18,7 @@ export class BisqIconComponent implements OnChanges {
   iconProp: [IconPrefix, IconName] = ['fas', 'leaf'];
   color: string;
 
-  constructor() { }
+  constructor() {}
 
   ngOnChanges() {
     switch (this.txType) {

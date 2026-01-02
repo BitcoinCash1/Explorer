@@ -1,8 +1,21 @@
-import { ChangeDetectionStrategy, Component, Inject, Input, LOCALE_ID, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  Input,
+  LOCALE_ID,
+  OnInit,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EChartsOption, graphic } from 'echarts';
 import { BehaviorSubject, Observable, timer } from 'rxjs';
-import { distinctUntilChanged, map, share, switchMap, tap } from 'rxjs/operators';
+import {
+  distinctUntilChanged,
+  map,
+  share,
+  switchMap,
+  tap,
+} from 'rxjs/operators';
 import { BlockExtended, PoolStat } from '../../interfaces/node-api.interface';
 import { ApiService } from '../../services/api.service';
 import { StateService } from '../../services/state.service';
@@ -14,7 +27,7 @@ import { SeoService } from '../../services/seo.service';
   selector: 'app-pool',
   templateUrl: './pool.component.html',
   styleUrls: ['./pool.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PoolComponent implements OnInit {
   @Input() right: number | string = 45;
@@ -35,72 +48,85 @@ export class PoolComponent implements OnInit {
   blocks: BlockExtended[] = [];
   slug: string = undefined;
 
-  loadMoreSubject: BehaviorSubject<number> = new BehaviorSubject(this.blocks[this.blocks.length - 1]?.height);
+  loadMoreSubject: BehaviorSubject<number> = new BehaviorSubject(
+    this.blocks[this.blocks.length - 1]?.height
+  );
 
   constructor(
     @Inject(LOCALE_ID) public locale: string,
     private apiService: ApiService,
     private route: ActivatedRoute,
     public stateService: StateService,
-    private seoService: SeoService,
-  ) {
-  }
+    private seoService: SeoService
+  ) {}
 
   ngOnInit(): void {
-    this.poolStats$ = this.route.params.pipe(map((params) => params.slug))
-      .pipe(
-        switchMap((slug: any) => {
-          this.isLoading = true;
-          this.slug = slug;
-          return this.apiService.getPoolHashrate$(this.slug)
-            .pipe(
-              switchMap((data) => {
-                this.isLoading = false;
-                this.prepareChartOptions(data.map(val => [val.timestamp * 1000, val.avgHashrate]));
-                return [slug];
-              }),
+    this.poolStats$ = this.route.params.pipe(map((params) => params.slug)).pipe(
+      switchMap((slug: any) => {
+        this.isLoading = true;
+        this.slug = slug;
+        return this.apiService.getPoolHashrate$(this.slug).pipe(
+          switchMap((data) => {
+            this.isLoading = false;
+            this.prepareChartOptions(
+              data.map((val) => [val.timestamp * 1000, val.avgHashrate])
             );
-        }),
-        switchMap((slug) => {
-          return this.apiService.getPoolStats$(slug);
-        }),
-        tap(() => {
-          this.loadMoreSubject.next(this.blocks[this.blocks.length - 1]?.height);
-        }),
-        map((poolStats) => {
-          this.seoService.setTitle(poolStats.pool.name);
-          let regexes = '"';
-          for (const regex of poolStats.pool.regexes) {
-            regexes += regex + '", "';
-          }
-          poolStats.pool.regexes = regexes.slice(0, -3);
-          poolStats.pool.addresses = poolStats.pool.addresses;
+            return [slug];
+          })
+        );
+      }),
+      switchMap((slug) => {
+        return this.apiService.getPoolStats$(slug);
+      }),
+      tap(() => {
+        this.loadMoreSubject.next(this.blocks[this.blocks.length - 1]?.height);
+      }),
+      map((poolStats) => {
+        this.seoService.setTitle(poolStats.pool.name);
+        let regexes = '"';
+        for (const regex of poolStats.pool.regexes) {
+          regexes += regex + '", "';
+        }
+        poolStats.pool.regexes = regexes.slice(0, -3);
+        poolStats.pool.addresses = poolStats.pool.addresses;
 
-          if (poolStats.reportedHashrate) {
-            poolStats.luck = poolStats.estimatedHashrate / poolStats.reportedHashrate * 100;
-          }
+        if (poolStats.reportedHashrate) {
+          poolStats.luck =
+            (poolStats.estimatedHashrate / poolStats.reportedHashrate) * 100;
+        }
 
-          return Object.assign({
-            logo: `/resources/mining-pools/` + poolStats.pool.name.toLowerCase().replace(' ', '').replace('.', '') + '.svg'
-          }, poolStats);
-        })
-      );
+        return Object.assign(
+          {
+            logo:
+              `/resources/mining-pools/` +
+              poolStats.pool.name
+                .toLowerCase()
+                .replace(' ', '')
+                .replace('.', '') +
+              '.svg',
+          },
+          poolStats
+        );
+      })
+    );
 
-    this.blocks$ = this.loadMoreSubject
-      .pipe(
-        distinctUntilChanged(),
-        switchMap((flag) => {
-          if (this.slug === undefined) {
-            return [];
-          }
-          return this.apiService.getPoolBlocks$(this.slug, this.blocks[this.blocks.length - 1]?.height);
-        }),
-        tap((newBlocks) => {
-          this.blocks = this.blocks.concat(newBlocks);
-        }),
-        map(() => this.blocks),
-        share(),
-      );
+    this.blocks$ = this.loadMoreSubject.pipe(
+      distinctUntilChanged(),
+      switchMap((flag) => {
+        if (this.slug === undefined) {
+          return [];
+        }
+        return this.apiService.getPoolBlocks$(
+          this.slug,
+          this.blocks[this.blocks.length - 1]?.height
+        );
+      }),
+      tap((newBlocks) => {
+        this.blocks = this.blocks.concat(newBlocks);
+      }),
+      map(() => this.blocks),
+      share()
+    );
   }
 
   prepareChartOptions(data) {
@@ -109,11 +135,11 @@ export class PoolComponent implements OnInit {
       title = {
         textStyle: {
           color: 'grey',
-          fontSize: 15
+          fontSize: 15,
         },
         text: $localize`:@@23555386d8af1ff73f297e89dd4af3f4689fb9dd:Indexing blocks`,
         left: 'center',
-        top: 'center'
+        top: 'center',
       };
     }
 
@@ -126,7 +152,7 @@ export class PoolComponent implements OnInit {
           { offset: 0.25, color: '#FB8C00' },
           { offset: 0.5, color: '#FFB300' },
           { offset: 0.75, color: '#FDD835' },
-          { offset: 1, color: '#7CB342' }
+          { offset: 1, color: '#7CB342' },
         ]),
         '#D81B60',
       ],
@@ -139,7 +165,7 @@ export class PoolComponent implements OnInit {
         show: !this.isMobile(),
         trigger: 'axis',
         axisPointer: {
-          type: 'line'
+          type: 'line',
         },
         backgroundColor: 'rgba(17, 19, 31, 1)',
         borderRadius: 4,
@@ -155,87 +181,110 @@ export class PoolComponent implements OnInit {
 
           if (this.isMobile()) {
             hashratePowerOfTen = selectPowerOfTen(ticks[0].data[1]);
-            hashrate = Math.round(ticks[0].data[1] / hashratePowerOfTen.divider);
+            hashrate = Math.round(
+              ticks[0].data[1] / hashratePowerOfTen.divider
+            );
           }
 
           return `
-            <b style="color: white; margin-left: 18px">${ticks[0].axisValueLabel}</b><br>
-            <span>${ticks[0].marker} ${ticks[0].seriesName}: ${formatNumber(hashrate, this.locale, '1.0-0')} ${hashratePowerOfTen.unit}H/s</span><br>
+            <b style="color: white; margin-left: 18px">${
+              ticks[0].axisValueLabel
+            }</b><br>
+            <span>${ticks[0].marker} ${ticks[0].seriesName}: ${formatNumber(
+            hashrate,
+            this.locale,
+            '1.0-0'
+          )} ${hashratePowerOfTen.unit}H/s</span><br>
           `;
-        }.bind(this)
+        }.bind(this),
       },
-      xAxis: data.length === 0 ? undefined : {
-        type: 'time',
-        splitNumber: (this.isMobile()) ? 5 : 10,
-        axisLabel: {
-          hideOverlap: true,
-        }
-      },
-      yAxis: data.length === 0 ? undefined : [
-        {
-          min: (value) => {
-            return value.min * 0.9;
-          },
-          type: 'value',
-          axisLabel: {
-            color: 'rgb(110, 112, 121)',
-            formatter: (val) => {
-              const selectedPowerOfTen: any = selectPowerOfTen(val);
-              const newVal = Math.round(val / selectedPowerOfTen.divider);
-              return `${newVal} ${selectedPowerOfTen.unit}H/s`;
-            }
-          },
-          splitLine: {
-            show: false,
-          }
-        },
-      ],
-      series: data.length === 0 ? undefined : [
-        {
-          zlevel: 0,
-          name: 'Hashrate',
-          showSymbol: false,
-          symbol: 'none',
-          data: data,
-          type: 'line',
-          lineStyle: {
-            width: 2,
-          },
-        },
-      ],
-      dataZoom: data.length === 0 ? undefined : [{
-        type: 'inside',
-        realtime: true,
-        zoomLock: true,
-        maxSpan: 100,
-        minSpan: 10,
-        moveOnMouseMove: false,
-      }, {
-        fillerColor: '#aaaaff15',
-        borderColor: '#ffffff88',
-        showDetail: false,
-        show: true,
-        type: 'slider',
-        brushSelect: false,
-        realtime: true,
-        bottom: 0,
-        left: 20,
-        right: 15,
-        selectedDataBackground: {
-          lineStyle: {
-            color: '#fff',
-            opacity: 0.45,
-          },
-          areaStyle: {
-            opacity: 0,
-          },
-        },
-      }],
+      xAxis:
+        data.length === 0
+          ? undefined
+          : {
+              type: 'time',
+              splitNumber: this.isMobile() ? 5 : 10,
+              axisLabel: {
+                hideOverlap: true,
+              },
+            },
+      yAxis:
+        data.length === 0
+          ? undefined
+          : [
+              {
+                min: (value) => {
+                  return value.min * 0.9;
+                },
+                type: 'value',
+                axisLabel: {
+                  color: 'rgb(110, 112, 121)',
+                  formatter: (val) => {
+                    const selectedPowerOfTen: any = selectPowerOfTen(val);
+                    const newVal = Math.round(val / selectedPowerOfTen.divider);
+                    return `${newVal} ${selectedPowerOfTen.unit}H/s`;
+                  },
+                },
+                splitLine: {
+                  show: false,
+                },
+              },
+            ],
+      series:
+        data.length === 0
+          ? undefined
+          : [
+              {
+                zlevel: 0,
+                name: 'Hashrate',
+                showSymbol: false,
+                symbol: 'none',
+                data: data,
+                type: 'line',
+                lineStyle: {
+                  width: 2,
+                },
+              },
+            ],
+      dataZoom:
+        data.length === 0
+          ? undefined
+          : [
+              {
+                type: 'inside',
+                realtime: true,
+                zoomLock: true,
+                maxSpan: 100,
+                minSpan: 10,
+                moveOnMouseMove: false,
+              },
+              {
+                fillerColor: '#aaaaff15',
+                borderColor: '#ffffff88',
+                showDetail: false,
+                show: true,
+                type: 'slider',
+                brushSelect: false,
+                realtime: true,
+                bottom: 0,
+                left: 20,
+                right: 15,
+                selectedDataBackground: {
+                  lineStyle: {
+                    color: '#fff',
+                    opacity: 0.45,
+                  },
+                  areaStyle: {
+                    opacity: 0,
+                  },
+                },
+              },
+            ],
     };
   }
 
   isMobile() {
-    return (window.innerWidth <= 767.98);
+    return window.innerWidth <= 767.98;
   }
 
   loadMore() {

@@ -13,32 +13,35 @@ const routes: Routes = [
     children: [
       {
         path: 'block/:id',
-        component: BlockPreviewComponent
+        component: BlockPreviewComponent,
       },
       {
         path: 'address/:id',
         children: [],
-        component: AddressPreviewComponent
+        component: AddressPreviewComponent,
       },
       {
         path: 'tx/:id',
         children: [],
-        component: TransactionPreviewComponent
+        component: TransactionPreviewComponent,
       },
       {
         path: 'mining/pool/:slug',
-        component: PoolPreviewComponent
+        component: PoolPreviewComponent,
       },
       {
         path: 'lightning',
-        loadChildren: () => import('./lightning/lightning-previews.module').then(m => m.LightningPreviewsModule)
+        loadChildren: () =>
+          import('./lightning/lightning-previews.module').then(
+            (m) => m.LightningPreviewsModule
+          ),
       },
     ],
-  }
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class PreviewsRoutingModule { }
+export class PreviewsRoutingModule {}

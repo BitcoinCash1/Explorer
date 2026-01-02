@@ -13,9 +13,24 @@ import { BisqMainDashboardComponent } from './bisq-main-dashboard/bisq-main-dash
 import { BisqIconComponent } from './bisq-icon/bisq-icon.component';
 import { BisqTransactionDetailsComponent } from './bisq-transaction-details/bisq-transaction-details.component';
 import { BisqTransfersComponent } from './bisq-transfers/bisq-transfers.component';
-import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { faLeaf, faQuestion, faExclamationTriangle, faRocket, faRetweet, faFileAlt, faMoneyBill,
-  faEye, faEyeSlash, faLock, faLockOpen, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
+import {
+  FontAwesomeModule,
+  FaIconLibrary,
+} from '@fortawesome/angular-fontawesome';
+import {
+  faLeaf,
+  faQuestion,
+  faExclamationTriangle,
+  faRocket,
+  faRetweet,
+  faFileAlt,
+  faMoneyBill,
+  faEye,
+  faEyeSlash,
+  faLock,
+  faLockOpen,
+  faExclamationCircle,
+} from '@fortawesome/free-solid-svg-icons';
 import { BisqBlocksComponent } from './bisq-blocks/bisq-blocks.component';
 import { BisqApiService } from './bisq-api.service';
 import { BisqAddressComponent } from './bisq-address/bisq-address.component';
@@ -51,18 +66,13 @@ import { NgxDropdownMultiselectComponent } from '../components/ngx-bootstrap-mul
     AutofocusDirective,
     OffClickDirective,
   ],
-  imports: [
-    CommonModule,
-    BisqRoutingModule,
-    SharedModule,
-    FontAwesomeModule,
-  ],
+  imports: [CommonModule, BisqRoutingModule, SharedModule, FontAwesomeModule],
   providers: [
     BisqApiService,
     MultiSelectSearchFilter,
     AutofocusDirective,
     OffClickDirective,
-  ]
+  ],
 })
 export class BisqModule {
   constructor(library: FaIconLibrary) {

@@ -23,59 +23,70 @@ export class ChannelComponent implements OnInit {
     private lightningApiService: LightningApiService,
     private activatedRoute: ActivatedRoute,
     private seoService: SeoService,
-    private electrsApiService: ElectrsApiService,
-  ) { }
+    private electrsApiService: ElectrsApiService
+  ) {}
 
   ngOnInit(): void {
-    this.channel$ = this.activatedRoute.paramMap
-      .pipe(
-        switchMap((params: ParamMap) => {
-          this.error = null;
-          return this.lightningApiService.getChannel$(params.get('short_id'))
-            .pipe(
-              tap((value) => {
-                this.seoService.setTitle($localize`Channel: ${value.short_id}`);
-              }),
-              catchError((err) => {
-                this.error = err;
-                return of(null);
-              })
-            );
-        }),
-        shareReplay(),
-      );
+    this.channel$ = this.activatedRoute.paramMap.pipe(
+      switchMap((params: ParamMap) => {
+        this.error = null;
+        return this.lightningApiService
+          .getChannel$(params.get('short_id'))
+          .pipe(
+            tap((value) => {
+              this.seoService.setTitle($localize`Channel: ${value.short_id}`);
+            }),
+            catchError((err) => {
+              this.error = err;
+              return of(null);
+            })
+          );
+      }),
+      shareReplay()
+    );
 
     this.channelGeo$ = this.channel$.pipe(
       map((data) => {
-        if (!data.node_left.longitude || !data.node_left.latitude ||
-          !data.node_right.longitude || !data.node_right.latitude) {
+        if (
+          !data.node_left.longitude ||
+          !data.node_left.latitude ||
+          !data.node_right.longitude ||
+          !data.node_right.latitude
+        ) {
           return [];
         } else {
           return [
             data.node_left.public_key,
             data.node_left.alias,
-            data.node_left.longitude, data.node_left.latitude,
+            data.node_left.longitude,
+            data.node_left.latitude,
             data.node_right.public_key,
             data.node_right.alias,
-            data.node_right.longitude, data.node_right.latitude,
+            data.node_right.longitude,
+            data.node_right.latitude,
           ];
         }
-      }),
+      })
     );
 
     this.transactions$ = this.channel$.pipe(
       switchMap((channel: IChannel) => {
         return zip([
-          channel.transaction_id ? this.electrsApiService.getTransaction$(channel.transaction_id) : of(null),
-          channel.closing_transaction_id ? this.electrsApiService.getTransaction$(channel.closing_transaction_id).pipe(
-            map((tx) => {
-              tx._channels = { inputs: {0: channel}, outputs: {}};
-              return tx;
-            })
-          ) : of(null),
+          channel.transaction_id
+            ? this.electrsApiService.getTransaction$(channel.transaction_id)
+            : of(null),
+          channel.closing_transaction_id
+            ? this.electrsApiService
+                .getTransaction$(channel.closing_transaction_id)
+                .pipe(
+                  map((tx) => {
+                    tx._channels = { inputs: { 0: channel }, outputs: {} };
+                    return tx;
+                  })
+                )
+            : of(null),
         ]);
-      }),
+      })
     );
   }
-
 }

@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { combineLatest, Observable, timer } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { StateService } from '../..//services/state.service';
@@ -31,17 +36,14 @@ export class DifficultyComponent implements OnInit {
   @Input() showHalving = false;
   @Input() showTitle = true;
 
-  constructor(
-    public stateService: StateService,
-  ) { }
+  constructor(public stateService: StateService) {}
 
   ngOnInit(): void {
     this.isLoadingWebSocket$ = this.stateService.isLoadingWebSocket$;
     this.difficultyEpoch$ = combineLatest([
       this.stateService.blocks$.pipe(map(([block]) => block)),
       this.stateService.difficultyAdjustment$,
-    ])
-    .pipe(
+    ]).pipe(
       map(([block, da]) => {
         let colorAdjustments = '#ffffff66';
         if (da.difficultyChange > 0) {
@@ -64,7 +66,8 @@ export class DifficultyComponent implements OnInit {
         }
 
         const blocksUntilHalving = 210000 - (block.height % 210000);
-        const timeUntilHalving = new Date().getTime() + (blocksUntilHalving * 600000);
+        const timeUntilHalving =
+          new Date().getTime() + blocksUntilHalving * 600000;
 
         const data = {
           base: `${da.progressPercent.toFixed(2)}%`,

@@ -1,15 +1,40 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { ElectrsApiService } from '../../services/electrs-api.service';
-import { switchMap, tap, throttleTime, catchError, map, shareReplay, startWith, pairwise } from 'rxjs/operators';
+import {
+  switchMap,
+  tap,
+  throttleTime,
+  catchError,
+  map,
+  shareReplay,
+  startWith,
+  pairwise,
+} from 'rxjs/operators';
 import { Transaction, Vout } from '../../interfaces-bch/electrs.interface';
-import { Observable, of, Subscription, asyncScheduler, EMPTY, Subject } from 'rxjs';
+import {
+  Observable,
+  of,
+  Subscription,
+  asyncScheduler,
+  EMPTY,
+  Subject,
+} from 'rxjs';
 import { StateService } from '../../services/state-bch.service';
 import { SeoService } from '../../services/seo-bch.service';
 import { WebsocketService } from '../../services/websocket-bch.service';
 import { RelativeUrlPipe } from '../../shared/pipes/relative-url-bch/relative-url.pipe';
-import { BlockExtended, TransactionStripped } from '../../interfaces-bch/node-api.interface';
+import {
+  BlockExtended,
+  TransactionStripped,
+} from '../../interfaces-bch/node-api.interface';
 import { ApiService } from '../../services/api-bch.service';
 import { BlockOverviewGraphComponentBch } from '../block-overview-graph-bch/block-overview-graph.component';
 import { detectWebGL } from '../../shared/graphs.utils';
@@ -17,7 +42,7 @@ import { detectWebGL } from '../../shared/graphs.utils';
 @Component({
   selector: 'app-block-bch',
   templateUrl: './block.component.html',
-  styleUrls: ['./block.component.scss']
+  styleUrls: ['./block.component.scss'],
 })
 export class BlockComponentBch implements OnInit, OnDestroy {
   network = '';
@@ -81,7 +106,9 @@ export class BlockComponentBch implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.websocketService.want(['blocks', 'mempool-blocks']);
-    this.paginationMaxSize = window.matchMedia('(max-width: 670px)').matches ? 3 : 5;
+    this.paginationMaxSize = window.matchMedia('(max-width: 670px)').matches
+      ? 3
+      : 5;
     this.network = this.stateService.network;
     this.itemsPerPage = this.stateService.env.ITEMS_PER_PAGE;
 
@@ -89,38 +116,44 @@ export class BlockComponentBch implements OnInit, OnDestroy {
       this.timeLtr = !!ltr;
     });
 
-    this.indexingAvailable = (this.stateService.env.BASE_MODULE === 'mempool.cash' &&
-      this.stateService.env.MINING_DASHBOARD === true);
+    this.indexingAvailable =
+      this.stateService.env.BASE_MODULE === 'mempool.cash' &&
+      this.stateService.env.MINING_DASHBOARD === true;
 
-    this.txsLoadingStatus$ = this.route.paramMap
-      .pipe(
-        switchMap(() => this.stateService.loadingIndicators$),
-        map((indicators) => indicators['blocktxs-' + this.blockHash] !== undefined ? indicators['blocktxs-' + this.blockHash] : 0)
+    this.txsLoadingStatus$ = this.route.paramMap.pipe(
+      switchMap(() => this.stateService.loadingIndicators$),
+      map((indicators) =>
+        indicators['blocktxs-' + this.blockHash] !== undefined
+          ? indicators['blocktxs-' + this.blockHash]
+          : 0
+      )
+    );
+
+    this.blocksSubscription = this.stateService.blocks$.subscribe(([block]) => {
+      this.latestBlock = block;
+      this.latestBlocks.unshift(block);
+      this.latestBlocks = this.latestBlocks.slice(
+        0,
+        this.stateService.env.KEEP_BLOCKS_AMOUNT
       );
+      this.setNextAndPreviousBlockLink();
 
-    this.blocksSubscription = this.stateService.blocks$
-      .subscribe(([block]) => {
-        this.latestBlock = block;
-        this.latestBlocks.unshift(block);
-        this.latestBlocks = this.latestBlocks.slice(0, this.stateService.env.KEEP_BLOCKS_AMOUNT);
-        this.setNextAndPreviousBlockLink();
-
-        if (block.id === this.blockHash) {
-          this.block = block;
-          if (this.block.id && this.block?.extras?.matchRate == null) {
-            this.fetchAuditScore$.next(this.block.id);
-          }
-          if (block?.extras?.reward != undefined) {
-            this.fees = block.extras.reward / 100000000 - this.blockSubsidy;
-          }
+      if (block.id === this.blockHash) {
+        this.block = block;
+        if (this.block.id && this.block?.extras?.matchRate == null) {
+          this.fetchAuditScore$.next(this.block.id);
         }
-      });
+        if (block?.extras?.reward != undefined) {
+          this.fees = block.extras.reward / 100000000 - this.blockSubsidy;
+        }
+      }
+    });
 
     if (this.indexingAvailable) {
       this.fetchAuditScoreSubscription = this.fetchAuditScore$
         .pipe(
           switchMap((hash) => this.apiService.getBlockAuditScore$(hash)),
-          catchError(() => EMPTY),
+          catchError(() => EMPTY)
         )
         .subscribe((score) => {
           if (score && score.hash === this.block.id) {
@@ -161,16 +194,24 @@ export class BlockComponentBch implements OnInit, OnDestroy {
 
           let blockInCache: BlockExtended;
           if (isBlockHeight) {
-            blockInCache = this.latestBlocks.find((block) => block.height === parseInt(blockHash, 10));
+            blockInCache = this.latestBlocks.find(
+              (block) => block.height === parseInt(blockHash, 10)
+            );
             if (blockInCache) {
               return of(blockInCache);
             }
-            return this.electrsApiService.getBlockHashFromHeight$(parseInt(blockHash, 10))
+            return this.electrsApiService
+              .getBlockHashFromHeight$(parseInt(blockHash, 10))
               .pipe(
                 switchMap((hash) => {
                   this.blockHash = hash;
                   this.location.replaceState(
-                    this.router.createUrlTree([(this.network ? '/' + this.network : '') + '/block/', hash]).toString()
+                    this.router
+                      .createUrlTree([
+                        (this.network ? '/' + this.network : '') + '/block/',
+                        hash,
+                      ])
+                      .toString()
                   );
                   return this.apiService.getBlock$(hash).pipe(
                     catchError((err) => {
@@ -186,11 +227,13 @@ export class BlockComponentBch implements OnInit, OnDestroy {
                   this.isLoadingBlock = false;
                   this.isLoadingOverview = false;
                   return EMPTY;
-                }),
+                })
               );
           }
 
-          blockInCache = this.latestBlocks.find((block) => block.id === this.blockHash);
+          blockInCache = this.latestBlocks.find(
+            (block) => block.id === this.blockHash
+          );
           if (blockInCache) {
             return of(blockInCache);
           }
@@ -210,9 +253,15 @@ export class BlockComponentBch implements OnInit, OnDestroy {
           // Preload previous block summary (execute the http query so the response will be cached)
           this.unsubscribeNextBlockSubscriptions();
           setTimeout(() => {
-            this.nextBlockSubscription = this.apiService.getBlock$(block.previousblockhash).subscribe();
-            this.nextBlockTxListSubscription = this.electrsApiService.getBlockTransactions$(block.previousblockhash).subscribe();
-            this.nextBlockSummarySubscription = this.apiService.getStrippedBlockTransactions$(block.previousblockhash).subscribe();
+            this.nextBlockSubscription = this.apiService
+              .getBlock$(block.previousblockhash)
+              .subscribe();
+            this.nextBlockTxListSubscription = this.electrsApiService
+              .getBlockTransactions$(block.previousblockhash)
+              .subscribe();
+            this.nextBlockSummarySubscription = this.apiService
+              .getStrippedBlockTransactions$(block.previousblockhash)
+              .subscribe();
           }, 100);
         }
 
@@ -222,7 +271,9 @@ export class BlockComponentBch implements OnInit, OnDestroy {
         this.nextBlockHeight = block.height + 1;
         this.setNextAndPreviousBlockLink();
 
-        this.seoService.setTitle($localize`:@@block.component.browser-title:Block ${block.height}:BLOCK_HEIGHT:: ${block.id}:BLOCK_ID:`);
+        this.seoService.setTitle(
+          $localize`:@@block.component.browser-title:Block ${block.height}:BLOCK_HEIGHT:: ${block.id}:BLOCK_ID:`
+        );
         this.isLoadingBlock = false;
         this.setBlockSubsidy();
         if (block?.extras?.reward !== undefined) {
@@ -241,88 +292,123 @@ export class BlockComponentBch implements OnInit, OnDestroy {
       throttleTime(300, asyncScheduler, { leading: true, trailing: true }),
       shareReplay(1)
     );
-    this.transactionSubscription = block$.pipe(
-      switchMap((block) => this.electrsApiService.getBlockTransactions$(block.id)
-        .pipe(
-          catchError((err) => {
-            this.transactionsError = err;
-            return of([]);
-        }))
-      ),
-    )
-    .subscribe((transactions: Transaction[]) => {
-      if (this.fees === undefined && transactions[0]) {
-        this.fees = transactions[0].vout.reduce((acc: number, curr: Vout) => acc + curr.value, 0) / 100000000 - this.blockSubsidy;
-      }
-      this.transactions = transactions;
-      this.isLoadingTransactions = false;
-    },
-    (error) => {
-      this.error = error;
-      this.isLoadingBlock = false;
-      this.isLoadingOverview = false;
-    });
-
-    this.overviewSubscription = block$.pipe(
-      startWith(null),
-      pairwise(),
-      switchMap(([prevBlock, block]) => this.apiService.getStrippedBlockTransactions$(block.id)
-        .pipe(
-          catchError((err) => {
-            this.overviewError = err;
-            return of([]);
-          }),
-          switchMap((transactions) => {
-            if (prevBlock) {
-              return of({ transactions, direction: (prevBlock.height < block.height) ? 'right' : 'left' });
-            } else {
-              return of({ transactions, direction: 'down' });
-            }
-          })
+    this.transactionSubscription = block$
+      .pipe(
+        switchMap((block) =>
+          this.electrsApiService.getBlockTransactions$(block.id).pipe(
+            catchError((err) => {
+              this.transactionsError = err;
+              return of([]);
+            })
+          )
         )
-      ),
-    )
-    .subscribe(({transactions, direction}: {transactions: TransactionStripped[], direction: string}) => {
-      this.strippedTransactions = transactions;
-      this.isLoadingOverview = false;
-      if (this.blockGraph) {
-        this.blockGraph.destroy();
-        this.blockGraph.setup(this.strippedTransactions);
-      }
-    },
-    (error) => {
-      this.error = error;
-      this.isLoadingOverview = false;
-      if (this.blockGraph) {
-        this.blockGraph.destroy();
-      }
-    });
+      )
+      .subscribe(
+        (transactions: Transaction[]) => {
+          if (this.fees === undefined && transactions[0]) {
+            this.fees =
+              transactions[0].vout.reduce(
+                (acc: number, curr: Vout) => acc + curr.value,
+                0
+              ) /
+                100000000 -
+              this.blockSubsidy;
+          }
+          this.transactions = transactions;
+          this.isLoadingTransactions = false;
+        },
+        (error) => {
+          this.error = error;
+          this.isLoadingBlock = false;
+          this.isLoadingOverview = false;
+        }
+      );
 
-    this.networkChangedSubscription = this.stateService.networkChanged$
-      .subscribe((network) => this.network = network);
+    this.overviewSubscription = block$
+      .pipe(
+        startWith(null),
+        pairwise(),
+        switchMap(([prevBlock, block]) =>
+          this.apiService.getStrippedBlockTransactions$(block.id).pipe(
+            catchError((err) => {
+              this.overviewError = err;
+              return of([]);
+            }),
+            switchMap((transactions) => {
+              if (prevBlock) {
+                return of({
+                  transactions,
+                  direction: prevBlock.height < block.height ? 'right' : 'left',
+                });
+              } else {
+                return of({ transactions, direction: 'down' });
+              }
+            })
+          )
+        )
+      )
+      .subscribe(
+        ({
+          transactions,
+          direction,
+        }: {
+          transactions: TransactionStripped[];
+          direction: string;
+        }) => {
+          this.strippedTransactions = transactions;
+          this.isLoadingOverview = false;
+          if (this.blockGraph) {
+            this.blockGraph.destroy();
+            this.blockGraph.setup(this.strippedTransactions);
+          }
+        },
+        (error) => {
+          this.error = error;
+          this.isLoadingOverview = false;
+          if (this.blockGraph) {
+            this.blockGraph.destroy();
+          }
+        }
+      );
 
-    this.queryParamsSubscription = this.route.queryParams.subscribe((params) => {
-      if (params.showDetails === 'true') {
-        this.showDetails = true;
-      } else {
-        this.showDetails = false;
-      }
-    });
+    this.networkChangedSubscription =
+      this.stateService.networkChanged$.subscribe(
+        (network) => (this.network = network)
+      );
 
-    this.keyNavigationSubscription = this.stateService.keyNavigation$.subscribe((event) => {
-      const prevKey = this.timeLtr ? 'ArrowLeft' : 'ArrowRight';
-      const nextKey = this.timeLtr ? 'ArrowRight' : 'ArrowLeft';
-      if (this.showPreviousBlocklink && event.key === prevKey && this.nextBlockHeight - 2 >= 0) {
-        this.navigateToPreviousBlock();
-      }
-      if (event.key === nextKey) {
-        if (this.showNextBlocklink) {
-          this.navigateToNextBlock();
+    this.queryParamsSubscription = this.route.queryParams.subscribe(
+      (params) => {
+        if (params.showDetails === 'true') {
+          this.showDetails = true;
         } else {
-          this.router.navigate([this.relativeUrlPipe.transform('/mempool-block'), '0']);
+          this.showDetails = false;
         }
       }
-    });
+    );
+
+    this.keyNavigationSubscription = this.stateService.keyNavigation$.subscribe(
+      (event) => {
+        const prevKey = this.timeLtr ? 'ArrowLeft' : 'ArrowRight';
+        const nextKey = this.timeLtr ? 'ArrowRight' : 'ArrowLeft';
+        if (
+          this.showPreviousBlocklink &&
+          event.key === prevKey &&
+          this.nextBlockHeight - 2 >= 0
+        ) {
+          this.navigateToPreviousBlock();
+        }
+        if (event.key === nextKey) {
+          if (this.showNextBlocklink) {
+            this.navigateToNextBlock();
+          } else {
+            this.router.navigate([
+              this.relativeUrlPipe.transform('/mempool-block'),
+              '0',
+            ]);
+          }
+        }
+      }
+    );
   }
 
   ngOnDestroy() {
@@ -363,14 +449,15 @@ export class BlockComponentBch implements OnInit, OnDestroy {
     this.transactionsError = null;
     target.scrollIntoView(); // works for chrome
 
-    this.electrsApiService.getBlockTransactions$(this.block.id, start)
+    this.electrsApiService
+      .getBlockTransactions$(this.block.id, start)
       .pipe(
         catchError((err) => {
           this.transactionsError = err;
           return of([]);
-      })
+        })
       )
-     .subscribe((transactions) => {
+      .subscribe((transactions) => {
         this.transactions = transactions;
         this.isLoadingTransactions = false;
         target.scrollIntoView(); // works for firefox
@@ -384,7 +471,7 @@ export class BlockComponentBch implements OnInit, OnDestroy {
         relativeTo: this.route,
         queryParams: { showDetails: false },
         queryParamsHandling: 'merge',
-        fragment: 'block'
+        fragment: 'block',
       });
     } else {
       this.showDetails = true;
@@ -392,21 +479,25 @@ export class BlockComponentBch implements OnInit, OnDestroy {
         relativeTo: this.route,
         queryParams: { showDetails: true },
         queryParamsHandling: 'merge',
-        fragment: 'details'
+        fragment: 'details',
       });
     }
   }
 
   hasTaproot(version: number): boolean {
     const versionBit = 2; // Taproot
-    return (Number(version) & (1 << versionBit)) === (1 << versionBit);
+    return (Number(version) & (1 << versionBit)) === 1 << versionBit;
   }
 
   displayTaprootStatus(): boolean {
     if (this.stateService.network !== '') {
       return false;
     }
-    return this.block && this.block.height > 681393 && (new Date().getTime() / 1000) < 1628640000;
+    return (
+      this.block &&
+      this.block.height > 681393 &&
+      new Date().getTime() / 1000 < 1628640000
+    );
   }
 
   onResize(event: any) {
@@ -417,25 +508,42 @@ export class BlockComponentBch implements OnInit, OnDestroy {
     if (!this.block) {
       return;
     }
-    const block = this.latestBlocks.find((b) => b.height === this.nextBlockHeight - 2);
-    this.router.navigate([this.relativeUrlPipe.transform('/block/'),
-      block ? block.id : this.block.previousblockhash], { state: { data: { block, blockHeight: this.nextBlockHeight - 2 } } });
+    const block = this.latestBlocks.find(
+      (b) => b.height === this.nextBlockHeight - 2
+    );
+    this.router.navigate(
+      [
+        this.relativeUrlPipe.transform('/block/'),
+        block ? block.id : this.block.previousblockhash,
+      ],
+      { state: { data: { block, blockHeight: this.nextBlockHeight - 2 } } }
+    );
   }
 
   navigateToNextBlock() {
-    const block = this.latestBlocks.find((b) => b.height === this.nextBlockHeight);
-    this.router.navigate([this.relativeUrlPipe.transform('/block/'),
-      block ? block.id : this.nextBlockHeight], { state: { data: { block, blockHeight: this.nextBlockHeight } } });
+    const block = this.latestBlocks.find(
+      (b) => b.height === this.nextBlockHeight
+    );
+    this.router.navigate(
+      [
+        this.relativeUrlPipe.transform('/block/'),
+        block ? block.id : this.nextBlockHeight,
+      ],
+      { state: { data: { block, blockHeight: this.nextBlockHeight } } }
+    );
   }
 
-  setNextAndPreviousBlockLink(){
+  setNextAndPreviousBlockLink() {
     if (this.latestBlock) {
-      if (!this.blockHeight){
+      if (!this.blockHeight) {
         this.showPreviousBlocklink = false;
       } else {
         this.showPreviousBlocklink = true;
       }
-      if (this.latestBlock.height && this.latestBlock.height === this.blockHeight) {
+      if (
+        this.latestBlock.height &&
+        this.latestBlock.height === this.blockHeight
+      ) {
         this.showNextBlocklink = false;
       } else {
         this.showNextBlocklink = true;
@@ -444,7 +552,9 @@ export class BlockComponentBch implements OnInit, OnDestroy {
   }
 
   onTxClick(event: TransactionStripped): void {
-    const url = new RelativeUrlPipe(this.stateService).transform(`/tx/${event.txid}`);
+    const url = new RelativeUrlPipe(this.stateService).transform(
+      `/tx/${event.txid}`
+    );
     this.router.navigate([url]);
   }
 }

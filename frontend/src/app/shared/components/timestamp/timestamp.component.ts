@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnChanges,
+} from '@angular/core';
 
 @Component({
   selector: 'app-timestamp',
@@ -20,5 +25,4 @@ export class TimestampComponent implements OnChanges {
       this.seconds = new Date(this.dateString).getTime() / 1000;
     }
   }
-
 }

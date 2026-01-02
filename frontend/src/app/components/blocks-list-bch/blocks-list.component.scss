@@ -1,5 +1,11 @@
 .progress-mempool.bch {
-  background: repeating-linear-gradient(to right, #2d3348, #2d3348 0%, #12684f 0%, #08cc95 100%);
+  background: repeating-linear-gradient(
+    to right,
+    #2d3348,
+    #2d3348 0%,
+    #12684f 0%,
+    #08cc95 100%
+  );
 }
 .spinner-border {
   height: 25px;
@@ -23,7 +29,9 @@
   max-width: 100%;
 }
 
-tr, td, th {
+tr,
+td,
+th {
   border: 0px;
   padding-top: 0.65rem !important;
   padding-bottom: 0.7rem !important;
@@ -219,7 +227,7 @@ tr, td, th {
 
 /* Tooltip text */
 .tooltip-custom {
-  position: relative; 
+  position: relative;
 }
 
 .tooltip-custom .tooltiptext {
@@ -241,9 +249,9 @@ tr, td, th {
 
 .scriptmessage {
   overflow: hidden;
-	display: inline-block;
-	text-overflow: ellipsis;
-	vertical-align: middle;
-	max-width: 50vw;
+  display: inline-block;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  max-width: 50vw;
   text-align: left;
 }

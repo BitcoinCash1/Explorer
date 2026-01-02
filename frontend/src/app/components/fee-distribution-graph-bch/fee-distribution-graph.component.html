@@ -1,5 +1,12 @@
-<div class="fee-distribution-chart" *ngIf="mempoolVsizeFeesOptions; else loadingFees">
-  <div echarts [initOpts]="mempoolVsizeFeesInitOptions" [options]="mempoolVsizeFeesOptions"></div>
+<div
+  class="fee-distribution-chart"
+  *ngIf="mempoolVsizeFeesOptions; else loadingFees"
+>
+  <div
+    echarts
+    [initOpts]="mempoolVsizeFeesInitOptions"
+    [options]="mempoolVsizeFeesOptions"
+  ></div>
 </div>
 
 <ng-template #loadingFees>

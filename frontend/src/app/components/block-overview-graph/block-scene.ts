@@ -4,7 +4,7 @@ import { TransactionStripped } from '../../interfaces/websocket.interface';
 import { Position, Square, ViewUpdateParams } from './sprite-types';
 
 export default class BlockScene {
-  scene: { count: number, offset: { x: number, y: number}};
+  scene: { count: number; offset: { x: number; y: number } };
   vertexArray: FastVertexArray;
   txs: { [key: string]: TxView };
   orientation: string;
@@ -22,19 +22,48 @@ export default class BlockScene {
   animateUntil = 0;
   dirty: boolean;
 
-  constructor({ width, height, resolution, blockLimit, orientation, flip, vertexArray }:
-      { width: number, height: number, resolution: number, blockLimit: number,
-        orientation: string, flip: boolean, vertexArray: FastVertexArray }
-  ) {
-    this.init({ width, height, resolution, blockLimit, orientation, flip, vertexArray });
+  constructor({
+    width,
+    height,
+    resolution,
+    blockLimit,
+    orientation,
+    flip,
+    vertexArray,
+  }: {
+    width: number;
+    height: number;
+    resolution: number;
+    blockLimit: number;
+    orientation: string;
+    flip: boolean;
+    vertexArray: FastVertexArray;
+  }) {
+    this.init({
+      width,
+      height,
+      resolution,
+      blockLimit,
+      orientation,
+      flip,
+      vertexArray,
+    });
   }
 
-  resize({ width = this.width, height = this.height, animate = true }: { width?: number, height?: number, animate: boolean }): void {
+  resize({
+    width = this.width,
+    height = this.height,
+    animate = true,
+  }: {
+    width?: number;
+    height?: number;
+    animate: boolean;
+  }): void {
     this.width = width;
     this.height = height;
     this.gridSize = this.width / this.gridWidth;
-    this.unitPadding =  width / 500;
-    this.unitWidth = this.gridSize - (this.unitPadding * 2);
+    this.unitPadding = width / 500;
+    this.unitWidth = this.gridSize - this.unitPadding * 2;
 
     this.dirty = true;
     if (this.initialised && this.scene) {
@@ -53,7 +82,7 @@ export default class BlockScene {
 
   // Destroy the current layout and clean up graphics sprites without any exit animation
   destroy(): void {
-    Object.values(this.txs).forEach(tx => tx.destroy());
+    Object.values(this.txs).forEach((tx) => tx.destroy());
     this.txs = {};
     this.layout = null;
   }
@@ -61,12 +90,15 @@ export default class BlockScene {
   // set up the scene with an initial set of transactions, without any transition animation
   setup(txs: TransactionStripped[]) {
     // clean up any old transactions
-    Object.values(this.txs).forEach(tx => {
+    Object.values(this.txs).forEach((tx) => {
       tx.destroy();
       delete this.txs[tx.txid];
     });
-    this.layout = new BlockLayout({ width: this.gridWidth, height: this.gridHeight });
-    txs.forEach(tx => {
+    this.layout = new BlockLayout({
+      width: this.gridWidth,
+      height: this.gridHeight,
+    });
+    txs.forEach((tx) => {
       const txView = new TxView(tx, this.vertexArray);
       this.txs[tx.txid] = txView;
       this.place(txView);
@@ -74,9 +106,9 @@ export default class BlockScene {
       this.applyTxUpdate(txView, {
         display: {
           position: txView.screenPosition,
-          color: txView.getColor()
+          color: txView.getColor(),
         },
-        duration: 0
+        duration: 0,
       });
     });
   }
@@ -89,30 +121,38 @@ export default class BlockScene {
   // Animate block leaving scene
   exit(direction: string): void {
     const startTime = performance.now();
-    const removed = this.removeBatch(Object.keys(this.txs), startTime, direction);
+    const removed = this.removeBatch(
+      Object.keys(this.txs),
+      startTime,
+      direction
+    );
 
     // clean up sprites
     setTimeout(() => {
-      removed.forEach(tx => {
+      removed.forEach((tx) => {
         tx.destroy();
       });
     }, 2000);
   }
 
   // Reset layout and replace with new set of transactions
-  replace(txs: TransactionStripped[], direction: string = 'left', sort: boolean = true): void {
+  replace(
+    txs: TransactionStripped[],
+    direction: string = 'left',
+    sort: boolean = true
+  ): void {
     const startTime = performance.now();
     const nextIds = {};
     const remove = [];
-    txs.forEach(tx => {
+    txs.forEach((tx) => {
       nextIds[tx.txid] = true;
     });
-    Object.keys(this.txs).forEach(txid => {
+    Object.keys(this.txs).forEach((txid) => {
       if (!nextIds[txid]) {
         remove.push(txid);
       }
     });
-    txs.forEach(tx => {
+    txs.forEach((tx) => {
       if (!this.txs[tx.txid]) {
         this.txs[tx.txid] = new TxView(tx, this.vertexArray);
       }
@@ -122,19 +162,24 @@ export default class BlockScene {
 
     // clean up sprites
     setTimeout(() => {
-      removed.forEach(tx => {
+      removed.forEach((tx) => {
         tx.destroy();
       });
     }, 1000);
 
-    this.layout = new BlockLayout({ width: this.gridWidth, height: this.gridHeight });
+    this.layout = new BlockLayout({
+      width: this.gridWidth,
+      height: this.gridHeight,
+    });
 
     if (sort) {
-      Object.values(this.txs).sort(feeRateDescending).forEach(tx => {
-        this.place(tx);
-      });
+      Object.values(this.txs)
+        .sort(feeRateDescending)
+        .forEach((tx) => {
+          this.place(tx);
+        });
     } else {
-      txs.forEach(tx => {
+      txs.forEach((tx) => {
         this.place(this.txs[tx.txid]);
       });
     }
@@ -142,35 +187,48 @@ export default class BlockScene {
     this.updateAll(startTime, 200, direction);
   }
 
-  update(add: TransactionStripped[], remove: string[], direction: string = 'left', resetLayout: boolean = false): void {
+  update(
+    add: TransactionStripped[],
+    remove: string[],
+    direction: string = 'left',
+    resetLayout: boolean = false
+  ): void {
     const startTime = performance.now();
     const removed = this.removeBatch(remove, startTime, direction);
 
     // clean up sprites
     setTimeout(() => {
-      removed.forEach(tx => {
+      removed.forEach((tx) => {
         tx.destroy();
       });
     }, 1000);
 
     if (resetLayout) {
-      add.forEach(tx => {
+      add.forEach((tx) => {
         if (!this.txs[tx.txid]) {
           this.txs[tx.txid] = new TxView(tx, this.vertexArray);
         }
       });
-      this.layout = new BlockLayout({ width: this.gridWidth, height: this.gridHeight });
-      Object.values(this.txs).sort(feeRateDescending).forEach(tx => {
-        this.place(tx);
+      this.layout = new BlockLayout({
+        width: this.gridWidth,
+        height: this.gridHeight,
       });
+      Object.values(this.txs)
+        .sort(feeRateDescending)
+        .forEach((tx) => {
+          this.place(tx);
+        });
     } else {
       // try to insert new txs directly
       const remaining = [];
-      add.map(tx => new TxView(tx, this.vertexArray)).sort(feeRateDescending).forEach(tx => {
-        if (!this.tryInsertByFee(tx)) {
-          remaining.push(tx);
-        }
-      });
+      add
+        .map((tx) => new TxView(tx, this.vertexArray))
+        .sort(feeRateDescending)
+        .forEach((tx) => {
+          if (!this.tryInsertByFee(tx)) {
+            remaining.push(tx);
+          }
+        });
       this.placeBatch(remaining);
       this.layout.applyGravity();
     }
@@ -192,10 +250,23 @@ export default class BlockScene {
     this.animateUntil = Math.max(this.animateUntil, tx.setHover(value));
   }
 
-  private init({ width, height, resolution, blockLimit, orientation, flip, vertexArray }:
-      { width: number, height: number, resolution: number, blockLimit: number,
-        orientation: string, flip: boolean, vertexArray: FastVertexArray }
-  ): void {
+  private init({
+    width,
+    height,
+    resolution,
+    blockLimit,
+    orientation,
+    flip,
+    vertexArray,
+  }: {
+    width: number;
+    height: number;
+    resolution: number;
+    blockLimit: number;
+    orientation: string;
+    flip: boolean;
+    vertexArray: FastVertexArray;
+  }): void {
     this.orientation = orientation;
     this.flip = flip;
     this.vertexArray = vertexArray;
@@ -204,8 +275,8 @@ export default class BlockScene {
       count: 0,
       offset: {
         x: 0,
-        y: 0
-      }
+        y: 0,
+      },
     };
 
     // Set the scale of the visualization (with a 5% margin)
@@ -213,7 +284,10 @@ export default class BlockScene {
     this.gridWidth = resolution;
     this.gridHeight = resolution;
     this.resize({ width, height, animate: true });
-    this.layout = new BlockLayout({ width: this.gridWidth, height: this.gridHeight });
+    this.layout = new BlockLayout({
+      width: this.gridWidth,
+      height: this.gridHeight,
+    });
 
     this.txs = {};
 
@@ -225,22 +299,48 @@ export default class BlockScene {
     this.animateUntil = Math.max(this.animateUntil, tx.update(update));
   }
 
-  private updateTx(tx: TxView, startTime: number, delay: number, direction: string = 'left', animate: boolean = true): void {
+  private updateTx(
+    tx: TxView,
+    startTime: number,
+    delay: number,
+    direction: string = 'left',
+    animate: boolean = true
+  ): void {
     if (tx.dirty || this.dirty) {
       this.saveGridToScreenPosition(tx);
       this.setTxOnScreen(tx, startTime, delay, direction, animate);
     }
   }
 
-  private setTxOnScreen(tx: TxView, startTime: number, delay: number = 50, direction: string = 'left', animate: boolean = true): void {
+  private setTxOnScreen(
+    tx: TxView,
+    startTime: number,
+    delay: number = 50,
+    direction: string = 'left',
+    animate: boolean = true
+  ): void {
     if (!tx.initialised) {
       const txColor = tx.getColor();
       this.applyTxUpdate(tx, {
         display: {
           position: {
-            x: tx.screenPosition.x + (direction === 'right' ? -this.width : (direction === 'left' ? this.width : 0)) * 1.4,
-            y: tx.screenPosition.y + (direction === 'up' ? -this.height : (direction === 'down' ? this.height : 0)) * 1.4,
-            s: tx.screenPosition.s
+            x:
+              tx.screenPosition.x +
+              (direction === 'right'
+                ? -this.width
+                : direction === 'left'
+                ? this.width
+                : 0) *
+                1.4,
+            y:
+              tx.screenPosition.y +
+              (direction === 'up'
+                ? -this.height
+                : direction === 'down'
+                ? this.height
+                : 0) *
+                1.4,
+            s: tx.screenPosition.s,
           },
           color: txColor,
         },
@@ -250,7 +350,7 @@ export default class BlockScene {
       this.applyTxUpdate(tx, {
         display: {
           position: tx.screenPosition,
-          color: txColor
+          color: txColor,
         },
         duration: animate ? 1000 : 1,
         start: startTime,
@@ -259,30 +359,35 @@ export default class BlockScene {
     } else {
       this.applyTxUpdate(tx, {
         display: {
-          position: tx.screenPosition
+          position: tx.screenPosition,
         },
         duration: animate ? 1000 : 0,
         minDuration: animate ? 500 : 0,
         start: startTime,
         delay: animate ? delay : 0,
-        adjust: animate
+        adjust: animate,
       });
       if (!animate) {
         this.applyTxUpdate(tx, {
           display: {
-            position: tx.screenPosition
+            position: tx.screenPosition,
           },
           duration: 0,
           minDuration: 0,
           start: startTime,
           delay: 0,
-          adjust: false
+          adjust: false,
         });
       }
     }
   }
 
-  private updateAll(startTime: number, delay: number = 50, direction: string = 'left', animate: boolean = true): void {
+  private updateAll(
+    startTime: number,
+    delay: number = 50,
+    direction: string = 'left',
+    animate: boolean = true
+  ): void {
     this.scene.count = 0;
     const ids = this.getTxList();
     startTime = startTime || performance.now();
@@ -292,20 +397,38 @@ export default class BlockScene {
     this.dirty = false;
   }
 
-  private remove(id: string, startTime: number, direction: string = 'left'): TxView | void {
+  private remove(
+    id: string,
+    startTime: number,
+    direction: string = 'left'
+  ): TxView | void {
     const tx = this.txs[id];
     if (tx) {
       this.layout.remove(tx);
       this.applyTxUpdate(tx, {
         display: {
           position: {
-            x: tx.screenPosition.x + (direction === 'right' ? this.width : (direction === 'left' ? -this.width : 0)) * 1.4,
-            y: tx.screenPosition.y + (direction === 'up' ? this.height : (direction === 'down' ? -this.height : 0)) * 1.4,
-          }
+            x:
+              tx.screenPosition.x +
+              (direction === 'right'
+                ? this.width
+                : direction === 'left'
+                ? -this.width
+                : 0) *
+                1.4,
+            y:
+              tx.screenPosition.y +
+              (direction === 'up'
+                ? this.height
+                : direction === 'down'
+                ? -this.height
+                : 0) *
+                1.4,
+          },
         },
         duration: 1000,
         start: startTime,
-        delay: 50
+        delay: 50,
       });
     }
     delete this.txs[id];
@@ -323,8 +446,8 @@ export default class BlockScene {
   // convert grid coordinates to screen coordinates
   private gridToScreen(position: Square | void): Square {
     if (position) {
-      const slotSize = (position.s * this.gridSize);
-      const squareSize = slotSize - (this.unitPadding * 2);
+      const slotSize = position.s * this.gridSize;
+      const squareSize = slotSize - this.unitPadding * 2;
 
       // The grid is laid out notionally left-to-right, bottom-to-top,
       // so we rotate and/or flip the y axis to match the target configuration.
@@ -338,8 +461,8 @@ export default class BlockScene {
       // |  c     |  --> |     c  |  -->   |        |
       // |a______b|      |b______a|        |_______b|
 
-      let x = (this.gridSize * position.x) + (slotSize / 2);
-      let y = (this.gridSize * position.y) + (slotSize / 2);
+      let x = this.gridSize * position.x + slotSize / 2;
+      let y = this.gridSize * position.y + slotSize / 2;
       let t;
       if (this.flip) {
         x = this.width - x;
@@ -360,9 +483,9 @@ export default class BlockScene {
           break;
       }
       return {
-        x: x + this.unitPadding - (slotSize / 2),
-        y: y + this.unitPadding - (slotSize / 2),
-        s: squareSize
+        x: x + this.unitPadding - slotSize / 2,
+        y: y + this.unitPadding - slotSize / 2,
+        s: squareSize,
       };
     } else {
       return { x: 0, y: 0, s: 0 };
@@ -394,13 +517,16 @@ export default class BlockScene {
     }
     return {
       x: Math.floor(x / this.gridSize),
-      y: Math.floor(y / this.gridSize)
+      y: Math.floor(y / this.gridSize),
     };
   }
 
   // calculates and returns the size of the tx in multiples of the grid size
   private txSize(tx: TxView): number {
-    const scale = Math.max(1, Math.round(Math.sqrt(tx.vsize / this.vbytesPerUnit)));
+    const scale = Math.max(
+      1,
+      Math.round(Math.sqrt(tx.vsize / this.vbytesPerUnit))
+    );
     return Math.min(this.gridWidth, Math.max(1, scale)); // bound between 1 and the max displayable size (just in case!)
   }
 
@@ -426,9 +552,11 @@ export default class BlockScene {
     if (txs.length) {
       // grab the new tx with the highest fee rate
       txs = txs.sort(feeRateDescending);
-      const maxSize = 2 * txs.reduce((max, tx) => {
-        return Math.max(this.txSize(tx), max);
-      }, 1);
+      const maxSize =
+        2 *
+        txs.reduce((max, tx) => {
+          return Math.max(this.txSize(tx), max);
+        }, 1);
 
       // find a reasonable place for it in the layout
       const root = this.layout.getReplacementRoot(txs[0].feerate, maxSize);
@@ -440,23 +568,28 @@ export default class BlockScene {
       txs = txs.sort(feeRateDescending);
 
       // insert everything back into the layout
-      txs.forEach(tx => {
+      txs.forEach((tx) => {
         this.txs[tx.txid] = tx;
         this.place(tx);
       });
     }
   }
 
-  private removeBatch(ids: string[], startTime: number, direction: string = 'left'): TxView[] {
+  private removeBatch(
+    ids: string[],
+    startTime: number,
+    direction: string = 'left'
+  ): TxView[] {
     if (!startTime) {
       startTime = performance.now();
     }
-    return ids.map(id => {
-      return this.remove(id, startTime, direction);
-    }).filter(tx => tx != null) as TxView[];
+    return ids
+      .map((id) => {
+        return this.remove(id, startTime, direction);
+      })
+      .filter((tx) => tx != null) as TxView[];
   }
 }
-
 
 class Slot {
   l: number;
@@ -470,17 +603,14 @@ class Slot {
   }
 
   intersects(slot: Slot): boolean {
-    return !((slot.r <= this.l) || (slot.l >= this.r));
+    return !(slot.r <= this.l || slot.l >= this.r);
   }
 
   subtract(slot: Slot): Slot[] | void {
     if (this.intersects(slot)) {
       // from middle
       if (slot.l > this.l && slot.r < this.r) {
-        return [
-          new Slot(this.l, slot.l),
-          new Slot(slot.r, this.r)
-        ];
+        return [new Slot(this.l, slot.l), new Slot(slot.r, this.r)];
       } // totally covered
       else if (slot.l <= this.l && slot.r >= this.r) {
         return [];
@@ -520,7 +650,6 @@ class Row {
   filled: TxSlot[];
   slots: Slot[];
 
-
   constructor(y: number, width: number) {
     this.y = y;
     this.w = width;
@@ -532,7 +661,7 @@ class Row {
   insert(x: number, w: number, tx: TxView): void {
     const newSlot = new TxSlot(x, x + w, tx);
     // insert into filled list
-    let index = this.filled.findIndex((slot) => (slot.l >= newSlot.r));
+    let index = this.filled.findIndex((slot) => slot.l >= newSlot.r);
     if (index < 0) {
       index = this.filled.length;
     }
@@ -550,11 +679,11 @@ class Row {
   }
 
   remove(x: number, w: number): void {
-    const txIndex = this.filled.findIndex((slot) => (slot.l === x) );
+    const txIndex = this.filled.findIndex((slot) => slot.l === x);
     this.filled.splice(txIndex, 1);
 
     const newSlot = new Slot(x, x + w);
-    let slotIndex = this.slots.findIndex((slot) => (slot.l >= newSlot.r) );
+    let slotIndex = this.slots.findIndex((slot) => slot.l >= newSlot.r);
     if (slotIndex < 0) {
       slotIndex = this.slots.length;
     }
@@ -586,7 +715,7 @@ class Row {
 
   getSlotsBetween(left: number, right: number): TxSlot[] {
     const range = new Slot(left, right);
-    return this.filled.filter(slot => {
+    return this.filled.filter((slot) => {
       return slot.intersects(range);
     });
   }
@@ -604,10 +733,10 @@ class Row {
   getAvgFeerate(): number {
     let count = 0;
     let total = 0;
-    this.filled.forEach(slot => {
+    this.filled.forEach((slot) => {
       if (slot.tx) {
         count += slot.w;
-        total += (slot.tx.feerate * slot.w);
+        total += slot.tx.feerate * slot.w;
       }
     });
     return total / count;
@@ -621,7 +750,7 @@ class BlockLayout {
   txPositions: { [key: string]: Square };
   txs: { [key: string]: TxView };
 
-  constructor({ width, height }: { width: number, height: number }) {
+  constructor({ width, height }: { width: number; height: number }) {
     this.width = width;
     this.height = height;
     this.rows = [new Row(0, this.width)];
@@ -646,7 +775,11 @@ class BlockLayout {
   remove(tx: TxView) {
     const position = this.txPositions[tx.txid];
     if (position) {
-      for (let y = position.y; y < position.y + position.s && y < this.rows.length; y++) {
+      for (
+        let y = position.y;
+        y < position.y + position.s && y < this.rows.length;
+        y++
+      ) {
         this.rows[y].remove(position.x, position.s);
       }
     }
@@ -689,8 +822,14 @@ class BlockLayout {
   // row: current row to check
   // start: starting row
   // size: size of space needed
-  findFit(left: number, right: number, row: number, start: number, size: number): Square {
-    if ((row - start) >= size || row >= this.rows.length) {
+  findFit(
+    left: number,
+    right: number,
+    row: number,
+    start: number,
+    size: number
+  ): Square {
+    if (row - start >= size || row >= this.rows.length) {
       return { x: left, y: start };
     }
     for (const slot of this.rows[row].slots) {
@@ -732,7 +871,7 @@ class BlockLayout {
       if (this.rows[row].slots.length > 0) {
         return { x: this.rows[row].slots[0].l, y: row };
       } else {
-        slot = this.rows[row].filled.find(x => {
+        slot = this.rows[row].filled.find((x) => {
           return x.tx.feerate < feerate;
         });
         if (slot) {
@@ -755,7 +894,7 @@ class BlockLayout {
       let rowMax = 0;
       const slots = this.rows[row].getSlotsBetween(left, right);
       // check each slot in this row overlapping the search channel
-      slots.forEach(slot => {
+      slots.forEach((slot) => {
         // select the associated transaction
         selected[slot.tx.txid] = slot.tx;
         rowMax = Math.max(rowMax, slot.tx.feerate);
@@ -773,7 +912,7 @@ class BlockLayout {
             for (let echo = row - 1; echo >= 0 && count < slot.w; echo--) {
               const echoSlots = this.rows[echo].getSlotsBetween(slot.l, slot.r);
               count = 0;
-              echoSlots.forEach(echoSlot => {
+              echoSlots.forEach((echoSlot) => {
                 selected[echoSlot.tx.txid] = echoSlot.tx;
                 if (echoSlot.tx.feerate >= slot.tx.feerate) {
                   count += echoSlot.w;
@@ -789,7 +928,7 @@ class BlockLayout {
 
     const txList = Object.values(selected);
 
-    txList.forEach(tx => {
+    txList.forEach((tx) => {
       this.remove(tx);
     });
     return txList;
@@ -802,27 +941,35 @@ class BlockLayout {
     if (row === 0 || !this.rows[row]) {
       return true;
     }
-    return (this.rows[row].getAvgFeerate() > (targetFee * 0.9));
+    return this.rows[row].getAvgFeerate() > targetFee * 0.9;
   }
 
   // drop any free-floating transactions down into empty spaces
   applyGravity(): void {
-    Object.entries(this.txPositions).sort(([keyA, posA], [keyB, posB]) => {
-      return posA.y - posB.y || posA.x - posB.x;
-    }).forEach(([txid, position]) => {
-      // see how far this transaction can fall
-      let dropTo = position.y;
-      while (dropTo > 0 && !this.rows[dropTo - 1].getSlotsBetween(position.x, position.x + position.s).length) {
-        dropTo--;
-      }
-      // if it can fall at all
-      if (dropTo < position.y) {
-        // remove and reinsert in the row we found
-        const tx = this.txs[txid];
-        this.remove(tx);
-        this.insert(tx, position.s);
-      }
-    });
+    Object.entries(this.txPositions)
+      .sort(([keyA, posA], [keyB, posB]) => {
+        return posA.y - posB.y || posA.x - posB.x;
+      })
+      .forEach(([txid, position]) => {
+        // see how far this transaction can fall
+        let dropTo = position.y;
+        while (
+          dropTo > 0 &&
+          !this.rows[dropTo - 1].getSlotsBetween(
+            position.x,
+            position.x + position.s
+          ).length
+        ) {
+          dropTo--;
+        }
+        // if it can fall at all
+        if (dropTo < position.y) {
+          // remove and reinsert in the row we found
+          const tx = this.txs[txid];
+          this.remove(tx);
+          this.insert(tx, position.s);
+        }
+      });
   }
 }
 

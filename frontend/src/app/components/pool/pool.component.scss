@@ -5,12 +5,12 @@
 
 @media (min-width: 768px) {
   .d-md-block {
-      display: table-cell !important;
+    display: table-cell !important;
   }
 }
 @media (min-width: 992px) {
   .d-lg-block {
-      display: table-cell !important;
+    display: table-cell !important;
   }
 }
 
@@ -142,11 +142,11 @@ div.scrollable {
 }
 
 .scriptmessage {
-	overflow: hidden;
-	display: inline-block;
-	text-overflow: ellipsis;
-	vertical-align: middle;
-	width: auto;
+  overflow: hidden;
+  display: inline-block;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+  width: auto;
   text-align: left;
 }
 
@@ -156,7 +156,6 @@ div.scrollable {
 .skeleton-loader.data {
   max-width: 70px;
 }
-
 
 .loadingGraphs {
   position: absolute;

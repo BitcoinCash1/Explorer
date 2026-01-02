@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Env, StateService } from '../../services/state.service';
-import { merge, Observable, of} from 'rxjs';
+import { merge, Observable, of } from 'rxjs';
 import { LanguageService } from '../../services/language.service';
 import { EnterpriseService } from '../../services/enterprise.service';
 import { NavigationService } from '../../services/navigation.service';
@@ -24,8 +24,8 @@ export class LiquidMasterPageComponent implements OnInit {
     private stateService: StateService,
     private languageService: LanguageService,
     private enterpriseService: EnterpriseService,
-    private navigationService: NavigationService,
-  ) { }
+    private navigationService: NavigationService
+  ) {}
 
   ngOnInit() {
     this.env = this.stateService.env;

@@ -1,4 +1,11 @@
-import { Component, Input, Output, ChangeDetectionStrategy, EventEmitter, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  ChangeDetectionStrategy,
+  EventEmitter,
+  AfterViewInit,
+} from '@angular/core';
 
 @Component({
   selector: 'app-toggle',

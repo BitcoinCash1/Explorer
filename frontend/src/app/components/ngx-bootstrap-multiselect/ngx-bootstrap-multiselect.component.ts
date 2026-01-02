@@ -25,7 +25,11 @@ import {
 
 import { takeUntil } from 'rxjs/operators';
 import { MultiSelectSearchFilter } from './search-filter.pipe';
-import { IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts, } from './types';
+import {
+  IMultiSelectOption,
+  IMultiSelectSettings,
+  IMultiSelectTexts,
+} from './types';
 import { Subject, Observable } from 'rxjs';
 
 const MULTISELECT_VALUE_ACCESSOR: any = {
@@ -40,15 +44,17 @@ const MULTISELECT_VALUE_ACCESSOR: any = {
   templateUrl: './ngx-bootstrap-multiselect.component.html',
   styleUrls: ['./ngx-bootstrap-multiselect.component.css'],
   providers: [MULTISELECT_VALUE_ACCESSOR, MultiSelectSearchFilter],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NgxDropdownMultiselectComponent implements OnInit,
-  OnChanges,
-  DoCheck,
-  OnDestroy,
-  ControlValueAccessor,
-  Validator {
-
+export class NgxDropdownMultiselectComponent
+  implements
+    OnInit,
+    OnChanges,
+    DoCheck,
+    OnDestroy,
+    ControlValueAccessor,
+    Validator
+{
   private localIsVisible = false;
   private workerDocClicked = false;
 
@@ -124,7 +130,7 @@ export class NgxDropdownMultiselectComponent implements OnInit,
     selectAddedValues: false,
     ignoreLabels: false,
     maintainSelectionOrderInTitle: false,
-    focusBack: true
+    focusBack: true,
   };
   defaultTexts: IMultiSelectTexts = {
     checkAll: 'Select all',
@@ -162,7 +168,9 @@ export class NgxDropdownMultiselectComponent implements OnInit,
   }
 
   clickedOutside(): void {
-    if (!this.isVisible || !this.settings.closeOnClickOutside) { return; }
+    if (!this.isVisible || !this.settings.closeOnClickOutside) {
+      return;
+    }
 
     this.isVisible = false;
     this._focusBack = true;
@@ -188,20 +196,22 @@ export class NgxDropdownMultiselectComponent implements OnInit,
   ngOnInit(): void {
     this.title = this.texts.defaultTitle || '';
 
-    this.filterControl.valueChanges.pipe(takeUntil(this.destroyed$)).subscribe(() => {
-      this.updateRenderItems();
-      if (this.settings.isLazyLoad) {
-        this.load();
-      }
-    });
+    this.filterControl.valueChanges
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe(() => {
+        this.updateRenderItems();
+        if (this.settings.isLazyLoad) {
+          this.load();
+        }
+      });
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['options']) {
       this.options = this.options || [];
       this.parents = this.options
-        .filter(option => typeof option.parentId === 'number')
-        .map(option => option.parentId);
+        .filter((option) => typeof option.parentId === 'number')
+        .map((option) => option.parentId);
       this.updateRenderItems();
 
       if (
@@ -210,7 +220,7 @@ export class NgxDropdownMultiselectComponent implements OnInit,
         this.loadedValueIds.length === 0
       ) {
         this.loadedValueIds = this.loadedValueIds.concat(
-          changes.options.currentValue.map(value => value.id)
+          changes.options.currentValue.map((value) => value.id)
         );
       }
       if (
@@ -219,9 +229,9 @@ export class NgxDropdownMultiselectComponent implements OnInit,
         changes.options.previousValue
       ) {
         const addedValues = changes.options.currentValue.filter(
-          value => this.loadedValueIds.indexOf(value.id) === -1
+          (value) => this.loadedValueIds.indexOf(value.id) === -1
         );
-        this.loadedValueIds.concat(addedValues.map(value => value.id));
+        this.loadedValueIds.concat(addedValues.map((value) => value.id));
         if (this.checkAllStatus) {
           this.addChecks(addedValues);
         } else if (this.checkAllSearchRegister.size > 0) {
@@ -244,7 +254,9 @@ export class NgxDropdownMultiselectComponent implements OnInit,
 
     if (changes['texts']) {
       this.texts = { ...this.defaultTexts, ...this.texts };
-      if (!changes['texts'].isFirstChange()) { this.updateTitle(); }
+      if (!changes['texts'].isFirstChange()) {
+        this.updateTitle();
+      }
     }
   }
 
@@ -264,7 +276,10 @@ export class NgxDropdownMultiselectComponent implements OnInit,
     this.focusedItem = undefined;
   }
 
-  applyFilters(options: IMultiSelectOption[], value: string): IMultiSelectOption[] {
+  applyFilters(
+    options: IMultiSelectOption[],
+    value: string
+  ): IMultiSelectOption[] {
     return this.searchFilter.transform(
       options,
       value,
@@ -283,8 +298,8 @@ export class NgxDropdownMultiselectComponent implements OnInit,
     }
   }
 
-  onModelChange: Function = (_: any) => { };
-  onModelTouched: Function = () => { };
+  onModelChange: Function = (_: any) => {};
+  onModelTouched: Function = () => {};
 
   writeValue(value: any): void {
     if (value !== undefined && value !== null) {
@@ -319,16 +334,19 @@ export class NgxDropdownMultiselectComponent implements OnInit,
     if (this.model && this.model.length) {
       return {
         required: {
-          valid: false
-        }
+          valid: false,
+        },
       };
     }
 
-    if (this.options.filter(o => this.model.indexOf(o.id) && !o.disabled).length === 0) {
+    if (
+      this.options.filter((o) => this.model.indexOf(o.id) && !o.disabled)
+        .length === 0
+    ) {
       return {
         selection: {
-          valid: false
-        }
+          valid: false,
+        },
       };
     }
 
@@ -388,11 +406,11 @@ export class NgxDropdownMultiselectComponent implements OnInit,
         this.removed.emit(id);
         if (
           this.settings.isLazyLoad &&
-          this.lazyLoadOptions.some(val => val.id === id)
+          this.lazyLoadOptions.some((val) => val.id === id)
         ) {
           this.lazyLoadOptions.splice(
             this.lazyLoadOptions.indexOf(
-              this.lazyLoadOptions.find(val => val.id === id)
+              this.lazyLoadOptions.find((val) => val.id === id)
             ),
             1
           );
@@ -413,11 +431,11 @@ export class NgxDropdownMultiselectComponent implements OnInit,
         } else if (this.parents.indexOf(option.id) > -1) {
           this.options
             .filter(
-              child =>
+              (child) =>
                 this.model.indexOf(child.id) > -1 &&
                 child.parentId === option.id
             )
-            .forEach(child =>
+            .forEach((child) =>
               removeItem(this.model.indexOf(child.id), child.id)
             );
         }
@@ -430,7 +448,7 @@ export class NgxDropdownMultiselectComponent implements OnInit,
           this.added.emit(id);
           if (
             this.settings.isLazyLoad &&
-            !this.lazyLoadOptions.some(val => val.id === id)
+            !this.lazyLoadOptions.some((val) => val.id === id)
           ) {
             this.lazyLoadOptions.push(option);
           }
@@ -440,18 +458,18 @@ export class NgxDropdownMultiselectComponent implements OnInit,
         if (!isAtSelectionLimit) {
           if (option.parentId && !this.settings.ignoreLabels) {
             const children = this.options.filter(
-              child =>
+              (child) =>
                 child.id !== option.id && child.parentId === option.parentId
             );
-            if (children.every(child => this.model.indexOf(child.id) > -1)) {
+            if (children.every((child) => this.model.indexOf(child.id) > -1)) {
               addItem(option.parentId);
             }
           } else if (this.parents.indexOf(option.id) > -1) {
             const children = this.options.filter(
-              child =>
+              (child) =>
                 this.model.indexOf(child.id) < 0 && child.parentId === option.id
             );
-            children.forEach(child => addItem(child.id));
+            children.forEach((child) => addItem(child.id));
           }
         } else {
           removeItem(0, this.model[0]);
@@ -462,13 +480,12 @@ export class NgxDropdownMultiselectComponent implements OnInit,
       }
       this.model = this.model.slice();
       this.fireModelChange();
-
     }, 0);
   }
 
   updateNumSelected() {
     this.numSelected =
-      this.model.filter(id => this.parents.indexOf(id) < 0).length || 0;
+      this.model.filter((id) => this.parents.indexOf(id) < 0).length || 0;
   }
 
   updateTitle() {
@@ -497,16 +514,22 @@ export class NgxDropdownMultiselectComponent implements OnInit,
       let titleSelections: Array<IMultiSelectOption>;
 
       if (this.settings.maintainSelectionOrderInTitle) {
-        const optionIds = useOptions.map((selectOption: IMultiSelectOption, idx: number) => selectOption.id);
+        const optionIds = useOptions.map(
+          (selectOption: IMultiSelectOption, idx: number) => selectOption.id
+        );
         titleSelections = this.model
           .map((selectedId) => optionIds.indexOf(selectedId))
           .filter((optionIndex) => optionIndex > -1)
           .map((optionIndex) => useOptions[optionIndex]);
       } else {
-        titleSelections = useOptions.filter((option: IMultiSelectOption) => this.model.indexOf(option.id) > -1);
+        titleSelections = useOptions.filter(
+          (option: IMultiSelectOption) => this.model.indexOf(option.id) > -1
+        );
       }
 
-      this.title = titleSelections.map((option: IMultiSelectOption) => option.name).join(', ');
+      this.title = titleSelections
+        .map((option: IMultiSelectOption) => option.name)
+        .join(', ');
     } else {
       this.title =
         this.numSelected +
@@ -531,10 +554,8 @@ export class NgxDropdownMultiselectComponent implements OnInit,
       .filter((option: IMultiSelectOption) => {
         if (
           !option.disabled &&
-          (
-            this.model.indexOf(option.id) === -1 &&
-            !(this.settings.ignoreLabels && option.isLabel)
-          )
+          this.model.indexOf(option.id) === -1 &&
+          !(this.settings.ignoreLabels && option.isLabel)
         ) {
           this.added.emit(option.id);
           return true;
@@ -571,7 +592,9 @@ export class NgxDropdownMultiselectComponent implements OnInit,
         ? this.model
         : this.filteredOptions.map((option: IMultiSelectOption) => option.id);
       // set unchecked options only to the ones that were checked
-      unCheckedOptions = checkedOptions.filter(item => unCheckedOptions.indexOf(item) > -1);
+      unCheckedOptions = checkedOptions.filter(
+        (item) => unCheckedOptions.indexOf(item) > -1
+      );
       this.model = this.model.filter((id: number) => {
         if (
           (unCheckedOptions.indexOf(id) < 0 &&
@@ -588,8 +611,13 @@ export class NgxDropdownMultiselectComponent implements OnInit,
         if (this.searchFilterApplied()) {
           if (this.checkAllSearchRegister.has(this.filterControl.value)) {
             this.checkAllSearchRegister.delete(this.filterControl.value);
-            this.checkAllSearchRegister.forEach(function(searchTerm) {
-              const filterOptions = this.applyFilters(this.options.filter(option => unCheckedOptions.indexOf(option.id) > -1), searchTerm);
+            this.checkAllSearchRegister.forEach(function (searchTerm) {
+              const filterOptions = this.applyFilters(
+                this.options.filter(
+                  (option) => unCheckedOptions.indexOf(option.id) > -1
+                ),
+                searchTerm
+              );
               this.addChecks(filterOptions);
             });
           }
@@ -606,20 +634,18 @@ export class NgxDropdownMultiselectComponent implements OnInit,
   preventCheckboxCheck(event: Event, option: IMultiSelectOption): void {
     if (
       option.disabled ||
-      (
-        this.settings.selectionLimit &&
+      (this.settings.selectionLimit &&
         !this.settings.autoUnselect &&
         this.model.length >= this.settings.selectionLimit &&
         this.model.indexOf(option.id) === -1 &&
-        this.maybePreventDefault(event)
-      )
+        this.maybePreventDefault(event))
     ) {
       this.maybePreventDefault(event);
     }
   }
 
   isCheckboxDisabled(option?: IMultiSelectOption): boolean {
-    return this.disabledSelection || option && option.disabled;
+    return this.disabledSelection || (option && option.disabled);
   }
 
   checkScrollPosition(ev): void {
@@ -632,9 +658,9 @@ export class NgxDropdownMultiselectComponent implements OnInit,
     if (
       scrollTop >=
       scrollHeight -
-      (1 + this.settings.loadViewDistance) * scrollElementHeight -
-      roundingPixel -
-      gutterPixel
+        (1 + this.settings.loadViewDistance) * scrollElementHeight -
+        roundingPixel -
+        gutterPixel
     ) {
       this.load();
     }

@@ -10,14 +10,16 @@ import { StateService } from '../../services/state.service';
   selector: 'app-difficulty-adjustments-table',
   templateUrl: './difficulty-adjustments-table.component.html',
   styleUrls: ['./difficulty-adjustments-table.component.scss'],
-  styles: [`
-    .loadingGraphs {
-      position: absolute;
-      top: 50%;
-      left: calc(50% - 15px);
-      z-index: 100;
-    }
-  `],
+  styles: [
+    `
+      .loadingGraphs {
+        position: absolute;
+        top: 50%;
+        left: calc(50% - 15px);
+        z-index: 100;
+      }
+    `,
+  ],
 })
 export class DifficultyAdjustmentsTable implements OnInit {
   hashrateObservable$: Observable<any>;
@@ -28,8 +30,7 @@ export class DifficultyAdjustmentsTable implements OnInit {
     @Inject(LOCALE_ID) public locale: string,
     private apiService: ApiService,
     public stateService: StateService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     let decimals = 2;
@@ -37,7 +38,8 @@ export class DifficultyAdjustmentsTable implements OnInit {
       decimals = 5;
     }
 
-    this.hashrateObservable$ = this.apiService.getDifficultyAdjustments$('3m')
+    this.hashrateObservable$ = this.apiService
+      .getDifficultyAdjustments$('3m')
       .pipe(
         map((response) => {
           const data = response.body;
@@ -48,18 +50,21 @@ export class DifficultyAdjustmentsTable implements OnInit {
               height: adjustment[1],
               timestamp: adjustment[0],
               change: (adjustment[3] - 1) * 100,
-              difficultyShorten: formatNumber(
-                adjustment[2] / selectedPowerOfTen.divider,
-                this.locale, `1.${decimals}-${decimals}`) + selectedPowerOfTen.unit
+              difficultyShorten:
+                formatNumber(
+                  adjustment[2] / selectedPowerOfTen.divider,
+                  this.locale,
+                  `1.${decimals}-${decimals}`
+                ) + selectedPowerOfTen.unit,
             });
           }
           this.isLoading = false;
           return tableData.slice(0, 6);
-        }),
+        })
       );
   }
 
   isMobile() {
-    return (window.innerWidth <= 767.98);
+    return window.innerWidth <= 767.98;
   }
 }

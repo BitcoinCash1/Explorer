@@ -1,4 +1,12 @@
-import { Component, ChangeDetectionStrategy, OnChanges, Input, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  OnChanges,
+  Input,
+  OnInit,
+  ChangeDetectorRef,
+  OnDestroy,
+} from '@angular/core';
 import { Transaction } from '../../interfaces/electrs.interface';
 import { StateService } from '../../services/state.service';
 import { Subscription } from 'rxjs';
@@ -23,13 +31,17 @@ export class TxFeeRatingComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor(
     private stateService: StateService,
-    private cd: ChangeDetectorRef,
-  ) { }
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.blocksSubscription = this.stateService.blocks$.subscribe(([block]) => {
       this.blocks.push(block);
-      if (this.tx.status.confirmed && this.tx.status.block_height === block.height && block?.extras?.medianFee > 0) {
+      if (
+        this.tx.status.confirmed &&
+        this.tx.status.block_height === block.height &&
+        block?.extras?.medianFee > 0
+      ) {
         this.calculateRatings(block);
         this.cd.markForCheck();
       }
@@ -42,7 +54,9 @@ export class TxFeeRatingComponent implements OnInit, OnChanges, OnDestroy {
       return;
     }
 
-    const foundBlock = this.blocks.find((b) => b.height === this.tx.status.block_height);
+    const foundBlock = this.blocks.find(
+      (b) => b.height === this.tx.status.block_height
+    );
     if (foundBlock && foundBlock?.extras?.medianFee > 0) {
       this.calculateRatings(foundBlock);
     }
@@ -53,7 +67,8 @@ export class TxFeeRatingComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   calculateRatings(block: BlockExtended) {
-    const feePervByte = this.tx.effectiveFeePerVsize || this.tx.fee / (this.tx.weight / 4);
+    const feePervByte =
+      this.tx.effectiveFeePerVsize || this.tx.fee / (this.tx.weight / 4);
     this.medianFeeNeeded = block?.extras?.medianFee;
 
     // Block not filled

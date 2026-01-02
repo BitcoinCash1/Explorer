@@ -1,5 +1,15 @@
 import { createChart, CrosshairMode, isBusinessDay } from 'lightweight-charts';
-import { ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  HostListener,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 
 @Component({
   selector: 'app-lightweight-charts-area',
@@ -7,7 +17,9 @@ import { ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, On
   styleUrls: ['./lightweight-charts-area.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LightweightChartsAreaComponent implements OnInit, OnChanges, OnDestroy {
+export class LightweightChartsAreaComponent
+  implements OnInit, OnChanges, OnDestroy
+{
   @Input() data: any;
   @Input() lineData: any;
   @Input() precision: number;
@@ -21,9 +33,7 @@ export class LightweightChartsAreaComponent implements OnInit, OnChanges, OnDest
 
   width: number;
 
-  constructor(
-    private element: ElementRef,
-  ) { }
+  constructor(private element: ElementRef) {}
 
   @HostListener('window:resize', ['$event'])
   resizeCanvas(): void {
@@ -83,7 +93,13 @@ export class LightweightChartsAreaComponent implements OnInit, OnChanges, OnDest
     chartholder.appendChild(toolTip);
 
     this.chart.subscribeCrosshairMove((param) => {
-      if (!param.time || param.point.x < 0 || param.point.x > this.width || param.point.y < 0 || param.point.y > this.height) {
+      if (
+        !param.time ||
+        param.point.x < 0 ||
+        param.point.x > this.width ||
+        param.point.y < 0 ||
+        param.point.y > this.height
+      ) {
         toolTip.style.display = 'none';
         return;
       }
@@ -100,8 +116,12 @@ export class LightweightChartsAreaComponent implements OnInit, OnChanges, OnDest
       const volumeText = $localize`:@@bisq-graph-volume:Volume`;
 
       toolTip.innerHTML = `<table>
-          <tr><td class="tradesText">${tradesText}:</td><td class="text-right tradesText">${Math.round(line * 100) / 100}</td></tr>
-          <tr><td class="volumeText">${volumeText}:<td class="text-right volumeText">${Math.round(price * 100) / 100} BTC</td></tr>
+          <tr><td class="tradesText">${tradesText}:</td><td class="text-right tradesText">${
+        Math.round(line * 100) / 100
+      }</td></tr>
+          <tr><td class="volumeText">${volumeText}:<td class="text-right volumeText">${
+        Math.round(price * 100) / 100
+      } BTC</td></tr>
         </table>
         <div>${dateStr}</div>`;
 
@@ -133,7 +153,7 @@ export class LightweightChartsAreaComponent implements OnInit, OnChanges, OnDest
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (!changes.data || changes.data.isFirstChange()){
+    if (!changes.data || changes.data.isFirstChange()) {
       return;
     }
     this.updateData();
@@ -147,5 +167,4 @@ export class LightweightChartsAreaComponent implements OnInit, OnChanges, OnDest
   ngOnDestroy() {
     this.chart.remove();
   }
-
 }

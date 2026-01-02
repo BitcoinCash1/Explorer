@@ -2,12 +2,10 @@ import { formatCurrency, getCurrencySymbol } from '@angular/common';
 import { Inject, LOCALE_ID, Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'fiatShortener'
+  name: 'fiatShortener',
 })
 export class FiatShortenerPipe implements PipeTransform {
-  constructor(
-    @Inject(LOCALE_ID) public locale: string
-  ) {}
+  constructor(@Inject(LOCALE_ID) public locale: string) {}
 
   transform(num: number, ...args: any[]): unknown {
     const digits = args[0] || 1;
@@ -24,13 +22,24 @@ export class FiatShortenerPipe implements PipeTransform {
       { value: 1e9, symbol: 'G' },
       { value: 1e12, symbol: 'T' },
       { value: 1e15, symbol: 'P' },
-      { value: 1e18, symbol: 'E' }
+      { value: 1e18, symbol: 'E' },
     ];
     const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
-    const item = lookup.slice().reverse().find((item) => num >= item.value);
+    const item = lookup
+      .slice()
+      .reverse()
+      .find((item) => num >= item.value);
 
-    let result = item ? (num / item.value).toFixed(digits).replace(rx, '$1') : '0';
-    result = formatCurrency(parseInt(result, 10), this.locale, getCurrencySymbol('USD', 'narrow'), 'USD', '1.0-0');
+    let result = item
+      ? (num / item.value).toFixed(digits).replace(rx, '$1')
+      : '0';
+    result = formatCurrency(
+      parseInt(result, 10),
+      this.locale,
+      getCurrencySymbol('USD', 'narrow'),
+      'USD',
+      '1.0-0'
+    );
 
     return result + item.symbol;
   }

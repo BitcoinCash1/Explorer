@@ -16,8 +16,8 @@ export class MasterPagePreviewComponent implements OnInit {
 
   constructor(
     public stateService: StateService,
-    private languageService: LanguageService,
-  ) { }
+    private languageService: LanguageService
+  ) {}
 
   ngOnInit() {
     this.network$ = merge(of(''), this.stateService.networkChanged$);

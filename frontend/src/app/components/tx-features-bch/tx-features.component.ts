@@ -1,4 +1,9 @@
-import { Component, ChangeDetectionStrategy, OnChanges, Input } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  OnChanges,
+  Input,
+} from '@angular/core';
 import { Transaction } from '../../interfaces-bch/electrs.interface';
 
 @Component({
@@ -10,7 +15,7 @@ import { Transaction } from '../../interfaces-bch/electrs.interface';
 export class TxFeaturesComponentBch implements OnChanges {
   @Input() tx: Transaction;
 
-  constructor() { }
+  constructor() {}
 
   ngOnChanges() {
     if (!this.tx) {

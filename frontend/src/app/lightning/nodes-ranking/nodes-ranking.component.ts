@@ -13,7 +13,7 @@ export class NodesRanking implements OnInit {
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.route.data.subscribe(data => {
+    this.route.data.subscribe((data) => {
       this.type = data.type;
     });
   }

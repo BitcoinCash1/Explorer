@@ -1,7 +1,14 @@
-import { Component, OnInit, LOCALE_ID, Inject, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  LOCALE_ID,
+  Inject,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { of, merge} from 'rxjs';
+import { of, merge } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import { OptimizedMempoolStats } from '../../interfaces-bch/node-api.interface';
@@ -18,7 +25,7 @@ import { IncomingTransactionsGraphComponent } from '../incoming-transactions-gra
 @Component({
   selector: 'app-statistics-bch',
   templateUrl: './statistics.component.html',
-  styleUrls: ['./statistics.component.scss']
+  styleUrls: ['./statistics.component.scss'],
 })
 export class StatisticsComponentBch implements OnInit {
   @ViewChild('mempoolgraph') mempoolGraph: MempoolGraphComponent;
@@ -53,94 +60,113 @@ export class StatisticsComponentBch implements OnInit {
     private apiService: ApiService,
     public stateService: StateService,
     private seoService: SeoService,
-    private storageService: StorageService,
-  ) { }
+    private storageService: StorageService
+  ) {}
 
   ngOnInit() {
     this.inverted = this.storageService.getValue('inverted-graph') === 'true';
     this.setFeeLevelDropdownData();
-    this.seoService.setTitle($localize`:@@5d4f792f048fcaa6df5948575d7cb325c9393383:Graphs`);
-    this.stateService.networkChanged$.subscribe((network) => this.network = network);
-    this.graphWindowPreference = this.storageService.getValue('graphWindowPreference') ? this.storageService.getValue('graphWindowPreference').trim() : '2h';
+    this.seoService.setTitle(
+      $localize`:@@5d4f792f048fcaa6df5948575d7cb325c9393383:Graphs`
+    );
+    this.stateService.networkChanged$.subscribe(
+      (network) => (this.network = network)
+    );
+    this.graphWindowPreference = this.storageService.getValue(
+      'graphWindowPreference'
+    )
+      ? this.storageService.getValue('graphWindowPreference').trim()
+      : '2h';
 
     this.radioGroupForm = this.formBuilder.group({
-      dateSpan: this.graphWindowPreference
+      dateSpan: this.graphWindowPreference,
     });
 
-    this.route
-      .fragment
-      .subscribe((fragment) => {
-        if (['2h', '24h', '1w', '1m', '3m', '6m', '1y', '2y', '3y'].indexOf(fragment) > -1) {
-          this.radioGroupForm.controls.dateSpan.setValue(fragment, { emitEvent: false });
-        }
-      });
-
-    merge(
-      of(''),
-      this.radioGroupForm.controls.dateSpan.valueChanges
-    )
-    .pipe(
-      switchMap(() => {
-        this.timespan = this.radioGroupForm.controls.dateSpan.value;
-        this.spinnerLoading = true;
-        if (this.radioGroupForm.controls.dateSpan.value === '2h') {
-          this.websocketService.want(['blocks', 'live-2h-chart']);
-          return this.apiService.list2HStatistics$();
-        }
-        this.websocketService.want(['blocks']);
-        if (this.radioGroupForm.controls.dateSpan.value === '24h') {
-          return this.apiService.list24HStatistics$();
-        }
-        if (this.radioGroupForm.controls.dateSpan.value === '1w') {
-          return this.apiService.list1WStatistics$();
-        }
-        if (this.radioGroupForm.controls.dateSpan.value === '1m') {
-          return this.apiService.list1MStatistics$();
-        }
-        if (this.radioGroupForm.controls.dateSpan.value === '3m') {
-          return this.apiService.list3MStatistics$();
-        }
-        if (this.radioGroupForm.controls.dateSpan.value === '6m') {
-          return this.apiService.list6MStatistics$();
-        }
-        if (this.radioGroupForm.controls.dateSpan.value === '1y') {
-          return this.apiService.list1YStatistics$();
-        }
-        if (this.radioGroupForm.controls.dateSpan.value === '2y') {
-          return this.apiService.list2YStatistics$();
-        }
-        return this.apiService.list3YStatistics$();
-      })
-    )
-    .subscribe((mempoolStats: any) => {
-      this.mempoolStats = mempoolStats;
-      this.handleNewMempoolData(this.mempoolStats.concat([]));
-      this.loading = false;
-      this.spinnerLoading = false;
+    this.route.fragment.subscribe((fragment) => {
+      if (
+        ['2h', '24h', '1w', '1m', '3m', '6m', '1y', '2y', '3y'].indexOf(
+          fragment
+        ) > -1
+      ) {
+        this.radioGroupForm.controls.dateSpan.setValue(fragment, {
+          emitEvent: false,
+        });
+      }
     });
 
-    this.stateService.live2Chart$
-      .subscribe((mempoolStats) => {
-        this.mempoolStats.unshift(mempoolStats);
-        this.mempoolStats = this.mempoolStats.slice(0, this.mempoolStats.length - 1);
+    merge(of(''), this.radioGroupForm.controls.dateSpan.valueChanges)
+      .pipe(
+        switchMap(() => {
+          this.timespan = this.radioGroupForm.controls.dateSpan.value;
+          this.spinnerLoading = true;
+          if (this.radioGroupForm.controls.dateSpan.value === '2h') {
+            this.websocketService.want(['blocks', 'live-2h-chart']);
+            return this.apiService.list2HStatistics$();
+          }
+          this.websocketService.want(['blocks']);
+          if (this.radioGroupForm.controls.dateSpan.value === '24h') {
+            return this.apiService.list24HStatistics$();
+          }
+          if (this.radioGroupForm.controls.dateSpan.value === '1w') {
+            return this.apiService.list1WStatistics$();
+          }
+          if (this.radioGroupForm.controls.dateSpan.value === '1m') {
+            return this.apiService.list1MStatistics$();
+          }
+          if (this.radioGroupForm.controls.dateSpan.value === '3m') {
+            return this.apiService.list3MStatistics$();
+          }
+          if (this.radioGroupForm.controls.dateSpan.value === '6m') {
+            return this.apiService.list6MStatistics$();
+          }
+          if (this.radioGroupForm.controls.dateSpan.value === '1y') {
+            return this.apiService.list1YStatistics$();
+          }
+          if (this.radioGroupForm.controls.dateSpan.value === '2y') {
+            return this.apiService.list2YStatistics$();
+          }
+          return this.apiService.list3YStatistics$();
+        })
+      )
+      .subscribe((mempoolStats: any) => {
+        this.mempoolStats = mempoolStats;
         this.handleNewMempoolData(this.mempoolStats.concat([]));
+        this.loading = false;
+        this.spinnerLoading = false;
       });
+
+    this.stateService.live2Chart$.subscribe((mempoolStats) => {
+      this.mempoolStats.unshift(mempoolStats);
+      this.mempoolStats = this.mempoolStats.slice(
+        0,
+        this.mempoolStats.length - 1
+      );
+      this.handleNewMempoolData(this.mempoolStats.concat([]));
+    });
   }
 
   handleNewMempoolData(mempoolStats: OptimizedMempoolStats[]) {
     mempoolStats.reverse();
-    const labels = mempoolStats.map(stats => stats.added);
+    const labels = mempoolStats.map((stats) => stats.added);
 
     this.capExtremeVbytesValues();
 
     this.mempoolTransactionsWeightPerSecondData = {
       labels: labels,
-      series: [mempoolStats.map((stats) => [stats.added * 1000, stats.bytes_per_second])],
+      series: [
+        mempoolStats.map((stats) => [
+          stats.added * 1000,
+          stats.bytes_per_second,
+        ]),
+      ],
     };
   }
 
   saveGraphPreference() {
-    this.storageService.setValue('graphWindowPreference', this.radioGroupForm.controls.dateSpan.value);
+    this.storageService.setValue(
+      'graphWindowPreference',
+      this.radioGroupForm.controls.dateSpan.value
+    );
   }
 
   invertGraph() {
@@ -159,13 +185,21 @@ export class StatisticsComponentBch implements OnInit {
       if (this.inverted) {
         this.feeLevelDropdownData.push({
           fee: fee,
-          range: this.stateService.isLiquid() ? `${(_feeLevels[i] / 10).toFixed(1)} - ${(_feeLevels[i + 1] / 10).toFixed(1)}` : `${_feeLevels[i]} - ${_feeLevels[i + 1]}`,
+          range: this.stateService.isLiquid()
+            ? `${(_feeLevels[i] / 10).toFixed(1)} - ${(
+                _feeLevels[i + 1] / 10
+              ).toFixed(1)}`
+            : `${_feeLevels[i]} - ${_feeLevels[i + 1]}`,
           color: _chartColors[i],
         });
       } else {
         this.feeLevelDropdownData.push({
           fee: fee,
-          range: this.stateService.isLiquid() ? `${(_feeLevels[i] / 10).toFixed(1)} - ${(_feeLevels[i - 1] / 10).toFixed(1)}` : `${_feeLevels[i]} - ${_feeLevels[i - 1]}`,
+          range: this.stateService.isLiquid()
+            ? `${(_feeLevels[i] / 10).toFixed(1)} - ${(
+                _feeLevels[i - 1] / 10
+              ).toFixed(1)}`
+            : `${_feeLevels[i]} - ${_feeLevels[i - 1]}`,
           color: _chartColors[i - 1],
         });
       }
@@ -181,7 +215,9 @@ export class StatisticsComponentBch implements OnInit {
     }
 
     let capRatio = 10;
-    if (['1m', '3m',  '6m', '1y', '2y', '3y'].includes(this.graphWindowPreference)) {
+    if (
+      ['1m', '3m', '6m', '1y', '2y', '3y'].includes(this.graphWindowPreference)
+    ) {
       capRatio = 4;
     }
 
@@ -199,7 +235,10 @@ export class StatisticsComponentBch implements OnInit {
 
     // Cap
     for (const stat of this.mempoolStats) {
-      stat.bytes_per_second = Math.min(median * capRatio, stat.bytes_per_second);
+      stat.bytes_per_second = Math.min(
+        median * capRatio,
+        stat.bytes_per_second
+      );
     }
   }
 
@@ -212,6 +251,6 @@ export class StatisticsComponentBch implements OnInit {
   }
 
   isMobile() {
-    return (window.innerWidth <= 767.98);
+    return window.innerWidth <= 767.98;
   }
 }

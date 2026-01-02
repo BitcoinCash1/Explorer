@@ -1,4 +1,9 @@
-import { Component, ChangeDetectionStrategy, Input, OnChanges } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  Input,
+  OnChanges,
+} from '@angular/core';
 import { BisqTransaction } from '../../bisq/bisq.interfaces';
 
 @Component({
@@ -14,13 +19,21 @@ export class BisqTransactionDetailsComponent implements OnChanges {
   totalOutput: number;
   totalIssued: number;
 
-  constructor() { }
+  constructor() {}
 
   ngOnChanges() {
-    this.totalInput = this.tx.inputs.filter((input) => input.isVerified).reduce((acc, input) => acc + input.bsqAmount, 0);
-    this.totalOutput = this.tx.outputs.filter((output) => output.isVerified).reduce((acc, output) => acc + output.bsqAmount, 0);
+    this.totalInput = this.tx.inputs
+      .filter((input) => input.isVerified)
+      .reduce((acc, input) => acc + input.bsqAmount, 0);
+    this.totalOutput = this.tx.outputs
+      .filter((output) => output.isVerified)
+      .reduce((acc, output) => acc + output.bsqAmount, 0);
     this.totalIssued = this.tx.outputs
-      .filter((output) => output.isVerified && output.txOutputType === 'ISSUANCE_CANDIDATE_OUTPUT')
+      .filter(
+        (output) =>
+          output.isVerified &&
+          output.txOutputType === 'ISSUANCE_CANDIDATE_OUTPUT'
+      )
       .reduce((acc, output) => acc + output.bsqAmount, 0);
   }
 }

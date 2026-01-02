@@ -1,16 +1,31 @@
 const bitcoinNetworks = ['', 'testnet', 'signet'];
 const liquidNetworks = ['liquid', 'liquidtestnet'];
-const miningTimeIntervals = '<code>24h</code>, <code>3d</code>, <code>1w</code>, <code>1m</code>, <code>3m</code>, <code>6m</code>, <code>1y</code>, <code>2y</code>, <code>3y</code>';
+const miningTimeIntervals =
+  '<code>24h</code>, <code>3d</code>, <code>1w</code>, <code>1m</code>, <code>3m</code>, <code>6m</code>, <code>1y</code>, <code>2y</code>, <code>3y</code>';
 
 const emptyCodeSample = {
   esModule: [],
   commonJS: [],
   curl: [],
-  response: ``
+  response: ``,
 };
 
-const showJsExamplesDefault = { '': true, 'testnet': true, 'signet': true, 'liquid': true, 'liquidtestnet': false, 'bisq': true };
-const showJsExamplesDefaultFalse = { '': false, 'testnet': false, 'signet': false, 'liquid': false, 'liquidtestnet': false, 'bisq': false };
+const showJsExamplesDefault = {
+  '': true,
+  testnet: true,
+  signet: true,
+  liquid: true,
+  liquidtestnet: false,
+  bisq: true,
+};
+const showJsExamplesDefaultFalse = {
+  '': false,
+  testnet: false,
+  signet: false,
+  liquid: false,
+  liquidtestnet: false,
+  bisq: false,
+};
 
 export const wsApiDocsData = {
   showJsExamples: showJsExamplesDefault,
@@ -110,7 +125,7 @@ export const restApiDocsData = [
     category: 'general',
     fragment: 'general',
     title: 'General',
-    showConditions: bitcoinNetworks.concat(['bisq'])
+    showConditions: bitcoinNetworks.concat(['bisq']),
   },
   {
     type: 'endpoint',
@@ -119,7 +134,7 @@ export const restApiDocsData = [
     fragment: 'get-difficulty-adjustment',
     title: 'GET Difficulty Adjustment',
     description: {
-      default: 'Returns details about difficulty adjustment.'
+      default: 'Returns details about difficulty adjustment.',
     },
     urlString: '/v1/difficulty-adjustment',
     showConditions: bitcoinNetworks,
@@ -156,7 +171,7 @@ export const restApiDocsData = [
   nextRetargetHeight: 741888,
   timeAvg: 302328,
   timeOffset: 0
-}`
+}`,
         },
         codeSampleTestnet: {
           esModule: [],
@@ -172,7 +187,7 @@ export const restApiDocsData = [
   nextRetargetHeight: 741888,
   timeAvg: 302328,
   timeOffset: 0
-}`
+}`,
         },
         codeSampleSignet: {
           esModule: [],
@@ -188,7 +203,7 @@ export const restApiDocsData = [
   nextRetargetHeight: 741888,
   timeAvg: 302328,
   timeOffset: 0
-}`
+}`,
         },
         codeSampleLiquid: {
           esModule: [],
@@ -204,10 +219,10 @@ export const restApiDocsData = [
   nextRetargetHeight: 741888,
   timeAvg: 302328,
   timeOffset: 0
-}`
-        }
-      }
-    }
+}`,
+        },
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -216,7 +231,7 @@ export const restApiDocsData = [
     fragment: 'get-stats',
     title: 'GET Stats',
     description: {
-      default: 'Returns statistics about all Bisq transactions.'
+      default: 'Returns statistics about all Bisq transactions.',
     },
     urlString: '/stats',
     showConditions: ['bisq'],
@@ -253,17 +268,17 @@ export const restApiDocsData = [
   burnt: 1830262.66,
   spent_txos: 215705,
   unspent_txos: 2572
-}`
+}`,
         },
-      }
-    }
+      },
+    },
   },
   {
     type: 'category',
     category: 'markets',
     fragment: 'markets',
     title: 'Markets',
-    showConditions: ['bisq']
+    showConditions: ['bisq'],
   },
   {
     type: 'endpoint',
@@ -272,7 +287,8 @@ export const restApiDocsData = [
     fragment: 'get-market-currencies',
     title: 'GET Market Currencies',
     description: {
-      default: 'Provides list of available currencies for a given base currency.'
+      default:
+        'Provides list of available currencies for a given base currency.',
     },
     urlString: '/currencies',
     showConditions: ['bisq'],
@@ -313,8 +329,8 @@ export const restApiDocsData = [
   ...
 }`,
         },
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -323,7 +339,7 @@ export const restApiDocsData = [
     fragment: 'get-market-depth',
     title: 'GET Market Depth',
     description: {
-      default: 'Provides list of open offer prices for a single market.'
+      default: 'Provides list of open offer prices for a single market.',
     },
     urlString: '/depth?market=[:market]',
     showConditions: ['bisq'],
@@ -371,8 +387,8 @@ export const restApiDocsData = [
   }
 }`,
         },
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -381,7 +397,8 @@ export const restApiDocsData = [
     fragment: 'get-market-hloc',
     title: 'GET Market HLOC',
     description: {
-      default: 'Provides hi/low/open/close data for a given market. This can be used to generate a candlestick chart.'
+      default:
+        'Provides hi/low/open/close data for a given market. This can be used to generate a candlestick chart.',
     },
     urlString: '/hloc?market=[:market]',
     showConditions: ['bisq'],
@@ -430,8 +447,8 @@ export const restApiDocsData = [
   ...
 ]`,
         },
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -440,7 +457,7 @@ export const restApiDocsData = [
     fragment: 'get-markets',
     title: 'GET Markets',
     description: {
-      default: 'Provides list of available markets.'
+      default: 'Provides list of available markets.',
     },
     urlString: '/markets',
     showConditions: ['bisq'],
@@ -487,8 +504,8 @@ export const restApiDocsData = [
     ...
 }`,
         },
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -497,7 +514,7 @@ export const restApiDocsData = [
     fragment: 'get-market-offers',
     title: 'GET Market Offers',
     description: {
-      default: 'Provides list of open offer details for a single market.'
+      default: 'Provides list of open offer details for a single market.',
     },
     urlString: '/offers?market=[:market]',
     showConditions: ['bisq'],
@@ -565,8 +582,8 @@ export const restApiDocsData = [
   }
 }`,
         },
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -575,7 +592,8 @@ export const restApiDocsData = [
     fragment: 'get-market-ticker',
     title: 'GET Market Ticker',
     description: {
-      default: 'Provides 24-hour price ticker for single market or all markets.'
+      default:
+        'Provides 24-hour price ticker for single market or all markets.',
     },
     urlString: '/ticker?market=[:market]',
     showConditions: ['bisq'],
@@ -620,8 +638,8 @@ export const restApiDocsData = [
   sell: "49555.63750000"
 }`,
         },
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -630,7 +648,7 @@ export const restApiDocsData = [
     fragment: 'get-market-trades',
     title: 'GET Market Trades',
     description: {
-      default: 'Provides list of completed trades for a single market.'
+      default: 'Provides list of completed trades for a single market.',
     },
     urlString: '/trades?market=[:market]&limit=[:limit]',
     showConditions: ['bisq'],
@@ -675,8 +693,8 @@ export const restApiDocsData = [
   }
 ]`,
         },
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -685,7 +703,8 @@ export const restApiDocsData = [
     fragment: 'get-market-volumes',
     title: 'GET Market Volumes',
     description: {
-      default: 'Provides periodic volume data in terms of base currency for one or all markets.'
+      default:
+        'Provides periodic volume data in terms of base currency for one or all markets.',
     },
     urlString: '/volumes?basecurrency=[:basecurrency]',
     showConditions: ['bisq'],
@@ -729,15 +748,15 @@ export const restApiDocsData = [
   ...
 ]`,
         },
-      }
-    }
+      },
+    },
   },
   {
     type: 'category',
     category: 'addresses',
     fragment: 'addresses',
     title: 'Addresses',
-    showConditions: bitcoinNetworks.concat(liquidNetworks).concat(['bisq'])
+    showConditions: bitcoinNetworks.concat(liquidNetworks).concat(['bisq']),
   },
   {
     type: 'endpoint',
@@ -746,7 +765,8 @@ export const restApiDocsData = [
     fragment: 'get-address',
     title: 'GET Address',
     description: {
-      default: 'Returns details about an address. Available fields: <code>address</code>, <code>chain_stats</code>, and <code>mempool_stats</code>. <code>chain_stats</code> and <code>mempool_stats</code> each contain an object with <code>tx_count</code>, <code>funded_txo_count</code>, <code>funded_txo_sum</code>, <code>spent_txo_count</code>, and <code>spent_txo_sum</code>.'
+      default:
+        'Returns details about an address. Available fields: <code>address</code>, <code>chain_stats</code>, and <code>mempool_stats</code>. <code>chain_stats</code> and <code>mempool_stats</code> each contain an object with <code>tx_count</code>, <code>funded_txo_count</code>, <code>funded_txo_sum</code>, <code>spent_txo_count</code>, and <code>spent_txo_sum</code>.',
     },
     urlString: '/address/:address',
     showConditions: bitcoinNetworks.concat(liquidNetworks).concat(['bisq']),
@@ -791,7 +811,7 @@ export const restApiDocsData = [
     spent_txo_sum: 0,
     tx_count: 0
   }
-}`
+}`,
         },
         codeSampleTestnet: {
           esModule: [`tb1qp0we5epypgj4acd2c4au58045ruud2pd6heuee`],
@@ -813,7 +833,7 @@ export const restApiDocsData = [
     spent_txo_sum: 0,
     tx_count: 0
   }
-}`
+}`,
         },
         codeSampleSignet: {
           esModule: [`1wiz18xYmhRX6xStj2b9t1rwWX4GKUgpv`],
@@ -835,7 +855,7 @@ export const restApiDocsData = [
     spent_txo_sum: 0,
     tx_count: 0
   }
-}`
+}`,
         },
         codeSampleLiquid: {
           esModule: [`Go65t19hP2FuhBMYtgbdMDgdmEzNwh1i48`],
@@ -853,12 +873,18 @@ export const restApiDocsData = [
     spent_txo_count: 0,
     tx_count: 0
   }
-}`
+}`,
         },
         codeSampleLiquidTestnet: {
-          esModule: [`vjTwFjtVE7Fy9gjwQSxas9FkrqcnK1SeobPkdD9tghdNmCvxoXhSeCjpgD3ponKJukkD2BNPX25dZL48`],
-          commonJS: [`vjTwFjtVE7Fy9gjwQSxas9FkrqcnK1SeobPkdD9tghdNmCvxoXhSeCjpgD3ponKJukkD2BNPX25dZL48`],
-          curl: [`vjTwFjtVE7Fy9gjwQSxas9FkrqcnK1SeobPkdD9tghdNmCvxoXhSeCjpgD3ponKJukkD2BNPX25dZL48`],
+          esModule: [
+            `vjTwFjtVE7Fy9gjwQSxas9FkrqcnK1SeobPkdD9tghdNmCvxoXhSeCjpgD3ponKJukkD2BNPX25dZL48`,
+          ],
+          commonJS: [
+            `vjTwFjtVE7Fy9gjwQSxas9FkrqcnK1SeobPkdD9tghdNmCvxoXhSeCjpgD3ponKJukkD2BNPX25dZL48`,
+          ],
+          curl: [
+            `vjTwFjtVE7Fy9gjwQSxas9FkrqcnK1SeobPkdD9tghdNmCvxoXhSeCjpgD3ponKJukkD2BNPX25dZL48`,
+          ],
           response: `{
   address: "vjTwFjtVE7Fy9gjwQSxas9FkrqcnK1SeobPkdD9tghdNmCvxoXhSeCjpgD3ponKJukkD2BNPX25dZL48",
   chain_stats: {
@@ -871,7 +897,7 @@ export const restApiDocsData = [
     spent_txo_count: 0,
     tx_count: 0
   }
-}`
+}`,
         },
         codeSampleBisq: {
           esModule: [`B1DgwRN92rdQ9xpEVCdXRfgeqGw9X4YtrZz`],
@@ -893,10 +919,10 @@ export const restApiDocsData = [
     "unlockBlockHeight": 0
   },
   ...
-]`
+]`,
         },
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -905,7 +931,8 @@ export const restApiDocsData = [
     fragment: 'get-address-transactions',
     title: 'GET Address Transactions',
     description: {
-      default: 'Get transaction history for the specified address/scripthash, sorted with newest first. Returns up to 50 mempool transactions plus the first 25 confirmed transactions. You can request more confirmed transactions using <code>:last_seen_txid</code> (see below).'
+      default:
+        'Get transaction history for the specified address/scripthash, sorted with newest first. Returns up to 50 mempool transactions plus the first 25 confirmed transactions. You can request more confirmed transactions using <code>:last_seen_txid</code> (see below).',
     },
     urlString: '/address/:address/txs',
     showConditions: bitcoinNetworks.concat(liquidNetworks),
@@ -952,7 +979,7 @@ export const restApiDocsData = [
     }
   },
   ...
-]`
+]`,
         },
         codeSampleTestnet: {
           esModule: [`tb1qp0we5epypgj4acd2c4au58045ruud2pd6heuee`],
@@ -976,7 +1003,7 @@ export const restApiDocsData = [
     }
   },
   ...
-]`
+]`,
         },
         codeSampleSignet: {
           esModule: [`1wiz18xYmhRX6xStj2b9t1rwWX4GKUgpv`],
@@ -998,7 +1025,7 @@ export const restApiDocsData = [
     spent_txo_sum: 0,
     tx_count: 0
   }
-}`
+}`,
         },
         codeSampleLiquid: {
           esModule: [`Go65t19hP2FuhBMYtgbdMDgdmEzNwh1i48`],
@@ -1022,12 +1049,18 @@ export const restApiDocsData = [
     }
   },
   ...
-]`
+]`,
         },
         codeSampleLiquidTestnet: {
-          esModule: [`vjTwFjtVE7Fy9gjwQSxas9FkrqcnK1SeobPkdD9tghdNmCvxoXhSeCjpgD3ponKJukkD2BNPX25dZL48`],
-          commonJS: [`vjTwFjtVE7Fy9gjwQSxas9FkrqcnK1SeobPkdD9tghdNmCvxoXhSeCjpgD3ponKJukkD2BNPX25dZL48`],
-          curl: [`vjTwFjtVE7Fy9gjwQSxas9FkrqcnK1SeobPkdD9tghdNmCvxoXhSeCjpgD3ponKJukkD2BNPX25dZL48`],
+          esModule: [
+            `vjTwFjtVE7Fy9gjwQSxas9FkrqcnK1SeobPkdD9tghdNmCvxoXhSeCjpgD3ponKJukkD2BNPX25dZL48`,
+          ],
+          commonJS: [
+            `vjTwFjtVE7Fy9gjwQSxas9FkrqcnK1SeobPkdD9tghdNmCvxoXhSeCjpgD3ponKJukkD2BNPX25dZL48`,
+          ],
+          curl: [
+            `vjTwFjtVE7Fy9gjwQSxas9FkrqcnK1SeobPkdD9tghdNmCvxoXhSeCjpgD3ponKJukkD2BNPX25dZL48`,
+          ],
           response: `[
   {
     txid: "67108f445ae3a363452cf7f382f1b71e06126ab958673debbeaad6dab4831434",
@@ -1046,11 +1079,11 @@ export const restApiDocsData = [
     }
   },
   ...
-]`
+]`,
         },
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -1059,7 +1092,8 @@ export const restApiDocsData = [
     fragment: 'get-address-transactions-chain',
     title: 'GET Address Transactions Chain',
     description: {
-      default: 'Get confirmed transaction history for the specified address/scripthash, sorted with newest first. Returns 25 transactions per page. More can be requested by specifying the last txid seen by the previous query.'
+      default:
+        'Get confirmed transaction history for the specified address/scripthash, sorted with newest first. Returns 25 transactions per page. More can be requested by specifying the last txid seen by the previous query.',
     },
     urlString: '/address/:address/txs/chain',
     showConditions: bitcoinNetworks.concat(liquidNetworks),
@@ -1106,7 +1140,7 @@ export const restApiDocsData = [
     }
   },
   ...
-],`
+],`,
         },
         codeSampleTestnet: {
           esModule: [`tb1qp0we5epypgj4acd2c4au58045ruud2pd6heuee`],
@@ -1130,7 +1164,7 @@ export const restApiDocsData = [
     }
   },
   ...
-],`
+],`,
         },
         codeSampleSignet: {
           esModule: [`1wiz18xYmhRX6xStj2b9t1rwWX4GKUgpv`],
@@ -1152,7 +1186,7 @@ export const restApiDocsData = [
     spent_txo_sum: 0,
     tx_count: 0
   }
-}`
+}`,
         },
         codeSampleLiquid: {
           esModule: [`Go65t19hP2FuhBMYtgbdMDgdmEzNwh1i48`],
@@ -1176,12 +1210,18 @@ export const restApiDocsData = [
     }
   },
   ...
-]`
+]`,
         },
         codeSampleLiquidTestnet: {
-          esModule: [`vjTwFjtVE7Fy9gjwQSxas9FkrqcnK1SeobPkdD9tghdNmCvxoXhSeCjpgD3ponKJukkD2BNPX25dZL48`],
-          commonJS: [`vjTwFjtVE7Fy9gjwQSxas9FkrqcnK1SeobPkdD9tghdNmCvxoXhSeCjpgD3ponKJukkD2BNPX25dZL48`],
-          curl: [`vjTwFjtVE7Fy9gjwQSxas9FkrqcnK1SeobPkdD9tghdNmCvxoXhSeCjpgD3ponKJukkD2BNPX25dZL48`],
+          esModule: [
+            `vjTwFjtVE7Fy9gjwQSxas9FkrqcnK1SeobPkdD9tghdNmCvxoXhSeCjpgD3ponKJukkD2BNPX25dZL48`,
+          ],
+          commonJS: [
+            `vjTwFjtVE7Fy9gjwQSxas9FkrqcnK1SeobPkdD9tghdNmCvxoXhSeCjpgD3ponKJukkD2BNPX25dZL48`,
+          ],
+          curl: [
+            `vjTwFjtVE7Fy9gjwQSxas9FkrqcnK1SeobPkdD9tghdNmCvxoXhSeCjpgD3ponKJukkD2BNPX25dZL48`,
+          ],
           response: `[
   {
     txid: "67108f445ae3a363452cf7f382f1b71e06126ab958673debbeaad6dab4831434",
@@ -1200,16 +1240,16 @@ export const restApiDocsData = [
     }
   },
   ...
-]`
+]`,
         },
         codeSampleBisq: {
           esModule: [],
           commonJS: [],
           curl: [],
-          response: ''
+          response: '',
         },
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -1218,7 +1258,8 @@ export const restApiDocsData = [
     fragment: 'get-address-transactions-mempool',
     title: 'GET Address Transactions Mempool',
     description: {
-      default: 'Get unconfirmed transaction history for the specified address/scripthash. Returns up to 50 transactions (no paging).'
+      default:
+        'Get unconfirmed transaction history for the specified address/scripthash. Returns up to 50 transactions (no paging).',
     },
     urlString: '/address/:address/txs/mempool',
     showConditions: bitcoinNetworks.concat(liquidNetworks),
@@ -1259,7 +1300,7 @@ export const restApiDocsData = [
     fee: 6720,
     status: { confirmed: false }
   }
-]`
+]`,
         },
         codeSampleTestnet: {
           esModule: [`tb1qp0we5epypgj4acd2c4au58045ruud2pd6heuee`],
@@ -1277,7 +1318,7 @@ export const restApiDocsData = [
     fee: 6720,
     status: { confirmed: false }
   }
-]`
+]`,
         },
         codeSampleSignet: {
           esModule: [`1wiz18xYmhRX6xStj2b9t1rwWX4GKUgpv`],
@@ -1295,7 +1336,7 @@ export const restApiDocsData = [
     fee: 6720,
     status: { confirmed: false }
   }
-]`
+]`,
         },
         codeSampleLiquid: {
           esModule: [`Go65t19hP2FuhBMYtgbdMDgdmEzNwh1i48`],
@@ -1313,7 +1354,7 @@ export const restApiDocsData = [
     fee: 6720,
     status: { confirmed: false }
   }
-]`
+]`,
         },
         codeSampleLiquidTestnet: {
           esModule: [`928jXZPDqQAt5vzGvBXKWMKCS9vfCa9Rfu`],
@@ -1331,11 +1372,11 @@ export const restApiDocsData = [
     fee: 1496,
     status: { confirmed: false }
   }
-]`
+]`,
         },
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -1344,8 +1385,10 @@ export const restApiDocsData = [
     fragment: 'get-address-utxo',
     title: 'GET Address UTXO',
     description: {
-      default: 'Get the list of unspent transaction outputs associated with the address/scripthash. Available fields: <code>txid</code>, <code>vout</code>, <code>value</code>, and <code>status</code> (with the status of the funding tx).',
-      liquid: 'Get the list of unspent transaction outputs associated with the address/scripthash. Available fields: <code>txid</code>, <code>vout</code>, <code>value</code>, and <code>status</code> (with the status of the funding tx). There is also a <code>valuecommitment</code> field that may appear in place of <code>value</code>, plus the following additional fields: <code>asset</code>/<code>assetcommitment</code>, <code>nonce</code>/<code>noncecommitment</code>, <code>surjection_proof</code>, and <code>range_proof</code>.',
+      default:
+        'Get the list of unspent transaction outputs associated with the address/scripthash. Available fields: <code>txid</code>, <code>vout</code>, <code>value</code>, and <code>status</code> (with the status of the funding tx).',
+      liquid:
+        'Get the list of unspent transaction outputs associated with the address/scripthash. Available fields: <code>txid</code>, <code>vout</code>, <code>value</code>, and <code>status</code> (with the status of the funding tx). There is also a <code>valuecommitment</code> field that may appear in place of <code>value</code>, plus the following additional fields: <code>asset</code>/<code>assetcommitment</code>, <code>nonce</code>/<code>noncecommitment</code>, <code>surjection_proof</code>, and <code>range_proof</code>.',
     },
     urlString: '/address/:address/utxo',
     showConditions: bitcoinNetworks.concat(liquidNetworks),
@@ -1387,7 +1430,7 @@ export const restApiDocsData = [
     value: 644951084
   },
   ...
-]`
+]`,
         },
         codeSampleTestnet: {
           esModule: [`tb1q4kgratttzjvkxfmgd95z54qcq7y6hekdm3w56u`],
@@ -1406,7 +1449,7 @@ export const restApiDocsData = [
     value: 1973787
   },
   ...
-]`
+]`,
         },
         codeSampleSignet: {
           esModule: [`1wiz18xYmhRX6xStj2b9t1rwWX4GKUgpv`],
@@ -1425,7 +1468,7 @@ export const restApiDocsData = [
     value: 642070789
   },
   ...
-]`
+]`,
         },
         codeSampleLiquid: {
           esModule: [`GhkYnB1g6oNSqALtcHgpirYM65EuLZdaNg`],
@@ -1467,15 +1510,15 @@ export const restApiDocsData = [
 ]`,
         },
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'category',
     category: 'assets',
     fragment: 'assets',
     title: 'Assets',
-    showConditions: liquidNetworks
+    showConditions: liquidNetworks,
   },
   {
     type: 'endpoint',
@@ -1484,7 +1527,7 @@ export const restApiDocsData = [
     fragment: 'get-asset',
     title: 'GET Asset',
     description: {
-      default: 'Returns information about a Liquid asset.'
+      default: 'Returns information about a Liquid asset.',
     },
     urlString: '/asset/:asset_id',
     showConditions: liquidNetworks,
@@ -1513,9 +1556,15 @@ export const restApiDocsData = [
         codeSampleTestnet: emptyCodeSample,
         codeSampleSignet: emptyCodeSample,
         codeSampleLiquid: {
-          esModule: [`6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d`],
-          commonJS: [`6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d`],
-          curl: [`6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d`],
+          esModule: [
+            `6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d`,
+          ],
+          commonJS: [
+            `6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d`,
+          ],
+          curl: [
+            `6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d`,
+          ],
           response: `{
   asset_id: "6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d",
   chain_stats: {
@@ -1539,9 +1588,15 @@ export const restApiDocsData = [
 }`,
         },
         codeSampleLiquidTestnet: {
-          esModule: [`ac3e0ff248c5051ffd61e00155b7122e5ebc04fd397a0ecbdd4f4e4a56232926`],
-          commonJS: [`ac3e0ff248c5051ffd61e00155b7122e5ebc04fd397a0ecbdd4f4e4a56232926`],
-          curl: [`ac3e0ff248c5051ffd61e00155b7122e5ebc04fd397a0ecbdd4f4e4a56232926`],
+          esModule: [
+            `ac3e0ff248c5051ffd61e00155b7122e5ebc04fd397a0ecbdd4f4e4a56232926`,
+          ],
+          commonJS: [
+            `ac3e0ff248c5051ffd61e00155b7122e5ebc04fd397a0ecbdd4f4e4a56232926`,
+          ],
+          curl: [
+            `ac3e0ff248c5051ffd61e00155b7122e5ebc04fd397a0ecbdd4f4e4a56232926`,
+          ],
           response: `{
   "asset_id": "ac3e0ff248c5051ffd61e00155b7122e5ebc04fd397a0ecbdd4f4e4a56232926",
   "issuance_txin": {...},
@@ -1575,8 +1630,8 @@ export const restApiDocsData = [
 }`,
         },
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -1585,7 +1640,8 @@ export const restApiDocsData = [
     fragment: 'get-asset-transactions',
     title: 'GET Asset Transactions',
     description: {
-      default: 'Returns transactions associated with the specified Liquid asset. For the network\'s native asset, returns a list of peg in, peg out, and burn transactions. For user-issued assets, returns a list of issuance, reissuance, and burn transactions. Does not include regular transactions transferring this asset.'
+      default:
+        "Returns transactions associated with the specified Liquid asset. For the network's native asset, returns a list of peg in, peg out, and burn transactions. For user-issued assets, returns a list of issuance, reissuance, and burn transactions. Does not include regular transactions transferring this asset.",
     },
     urlString: '/asset/:asset_id/txs[/mempool|/chain]',
     showConditions: liquidNetworks,
@@ -1614,9 +1670,15 @@ export const restApiDocsData = [
         codeSampleTestnet: emptyCodeSample,
         codeSampleSignet: emptyCodeSample,
         codeSampleLiquid: {
-          esModule: [`6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d`],
-          commonJS: [`6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d`],
-          curl: [`6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d`],
+          esModule: [
+            `6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d`,
+          ],
+          commonJS: [
+            `6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d`,
+          ],
+          curl: [
+            `6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d`,
+          ],
           response: `[
   {
     txid: "93fedcc996df43c94f9f12e24b4040b60d47d84ef7a9a66ef05c2e6f4059b685",
@@ -1638,9 +1700,15 @@ export const restApiDocsData = [
 ]`,
         },
         codeSampleLiquidTestnet: {
-          esModule: [`ac3e0ff248c5051ffd61e00155b7122e5ebc04fd397a0ecbdd4f4e4a56232926`],
-          commonJS: [`ac3e0ff248c5051ffd61e00155b7122e5ebc04fd397a0ecbdd4f4e4a56232926`],
-          curl: [`ac3e0ff248c5051ffd61e00155b7122e5ebc04fd397a0ecbdd4f4e4a56232926`],
+          esModule: [
+            `ac3e0ff248c5051ffd61e00155b7122e5ebc04fd397a0ecbdd4f4e4a56232926`,
+          ],
+          commonJS: [
+            `ac3e0ff248c5051ffd61e00155b7122e5ebc04fd397a0ecbdd4f4e4a56232926`,
+          ],
+          curl: [
+            `ac3e0ff248c5051ffd61e00155b7122e5ebc04fd397a0ecbdd4f4e4a56232926`,
+          ],
           response: `[
   {
     txid: "34b9cd013ddf4d4b5e9d09502ca953034fd52a0679845ac8b9d54c63d857a488",
@@ -1662,8 +1730,8 @@ export const restApiDocsData = [
 ]`,
         },
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -1672,7 +1740,8 @@ export const restApiDocsData = [
     fragment: 'get-asset-supply',
     title: 'GET Asset Supply',
     description: {
-      default: 'Get the current total supply of the specified asset. For the native asset (L-BTC), this is calculated as [chain,mempool]_stats.peg_in_amount - [chain,mempool]_stats.peg_out_amount - [chain,mempool]_stats.burned_amount. For issued assets, this is calculated as [chain,mempool]_stats.issued_amount - [chain,mempool]_stats.burned_amount. Not available for assets with blinded issuances. If /decimal is specified, returns the supply as a decimal according to the asset\'s divisibility. Otherwise, returned in base units.'
+      default:
+        "Get the current total supply of the specified asset. For the native asset (L-BTC), this is calculated as [chain,mempool]_stats.peg_in_amount - [chain,mempool]_stats.peg_out_amount - [chain,mempool]_stats.burned_amount. For issued assets, this is calculated as [chain,mempool]_stats.issued_amount - [chain,mempool]_stats.burned_amount. Not available for assets with blinded issuances. If /decimal is specified, returns the supply as a decimal according to the asset's divisibility. Otherwise, returned in base units.",
     },
     urlString: '/asset/:asset_id/supply[/decimal]',
     showConditions: liquidNetworks,
@@ -1701,20 +1770,32 @@ export const restApiDocsData = [
         codeSampleTestnet: emptyCodeSample,
         codeSampleSignet: emptyCodeSample,
         codeSampleLiquid: {
-          esModule: [`6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d`],
-          commonJS: [`6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d`],
-          curl: [`6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d`],
+          esModule: [
+            `6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d`,
+          ],
+          commonJS: [
+            `6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d`,
+          ],
+          curl: [
+            `6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d`,
+          ],
           response: `320878732055`,
         },
         codeSampleLiquidTestnet: {
-          esModule: [`05aa9f02a06da37f2a0a572c49ac381499a16a643ad7c70c51ac94560778c92e`],
-          commonJS: [`05aa9f02a06da37f2a0a572c49ac381499a16a643ad7c70c51ac94560778c92e`],
-          curl: [`05aa9f02a06da37f2a0a572c49ac381499a16a643ad7c70c51ac94560778c92e`],
+          esModule: [
+            `05aa9f02a06da37f2a0a572c49ac381499a16a643ad7c70c51ac94560778c92e`,
+          ],
+          commonJS: [
+            `05aa9f02a06da37f2a0a572c49ac381499a16a643ad7c70c51ac94560778c92e`,
+          ],
+          curl: [
+            `05aa9f02a06da37f2a0a572c49ac381499a16a643ad7c70c51ac94560778c92e`,
+          ],
           response: `1000`,
         },
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -1723,7 +1804,7 @@ export const restApiDocsData = [
     fragment: 'get-asset-icons',
     title: 'GET Asset Icons',
     description: {
-      default: 'Get all the Asset IDs that have icons.'
+      default: 'Get all the Asset IDs that have icons.',
     },
     urlString: '/v1/assets/icons',
     showConditions: liquidNetworks,
@@ -1744,9 +1825,15 @@ export const restApiDocsData = [
           `,
         },
         codeSampleLiquid: {
-          esModule: [`6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d`],
-          commonJS: [`6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d`],
-          curl: [`6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d`],
+          esModule: [
+            `6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d`,
+          ],
+          commonJS: [
+            `6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d`,
+          ],
+          curl: [
+            `6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d`,
+          ],
           response: `[
   "6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d",
   "ce091c998b83c78bb71a632313ba3760f1763d9cfcffae02258ffa9865a37bd2"
@@ -1754,8 +1841,8 @@ export const restApiDocsData = [
 ]`,
         },
         codeSampleLiquidTestnet: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -1764,7 +1851,7 @@ export const restApiDocsData = [
     fragment: 'get-asset-icon',
     title: 'GET Asset Icon',
     description: {
-      default: 'Get the icon of the specified asset.'
+      default: 'Get the icon of the specified asset.',
     },
     urlString: '/v1/asset/:asset_id/icon',
     showConditions: liquidNetworks,
@@ -1777,26 +1864,38 @@ export const restApiDocsData = [
           commonJS: `<img src="https://liquid.place/api/v1/asset/%{1}/icon">`,
         },
         codeSampleLiquid: {
-          esModule: [`6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d`],
-          commonJS: [`6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d`],
-          curl: [`6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d`],
+          esModule: [
+            `6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d`,
+          ],
+          commonJS: [
+            `6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d`,
+          ],
+          curl: [
+            `6f0279e9ed041c3d710a9f57d0c02928416460c4b722ae3457a11eec381c526d`,
+          ],
           response: `PNG`,
         },
         codeSampleLiquidTestnet: {
-          esModule: [`ac3e0ff248c5051ffd61e00155b7122e5ebc04fd397a0ecbdd4f4e4a56232926`],
-          commonJS: [`ac3e0ff248c5051ffd61e00155b7122e5ebc04fd397a0ecbdd4f4e4a56232926`],
-          curl: [`ac3e0ff248c5051ffd61e00155b7122e5ebc04fd397a0ecbdd4f4e4a56232926`],
+          esModule: [
+            `ac3e0ff248c5051ffd61e00155b7122e5ebc04fd397a0ecbdd4f4e4a56232926`,
+          ],
+          commonJS: [
+            `ac3e0ff248c5051ffd61e00155b7122e5ebc04fd397a0ecbdd4f4e4a56232926`,
+          ],
+          curl: [
+            `ac3e0ff248c5051ffd61e00155b7122e5ebc04fd397a0ecbdd4f4e4a56232926`,
+          ],
           response: `PNG`,
         },
-      }
-    }
+      },
+    },
   },
   {
     type: 'category',
     category: 'blocks',
     fragment: 'blocks',
     title: 'Blocks',
-    showConditions: bitcoinNetworks.concat(liquidNetworks).concat(['bisq'])
+    showConditions: bitcoinNetworks.concat(liquidNetworks).concat(['bisq']),
   },
   {
     type: 'endpoint',
@@ -1806,7 +1905,8 @@ export const restApiDocsData = [
     title: 'GET Block',
     description: {
       default: 'Returns details about a block.',
-      liquid: 'Returns details about a block. Available fields: <code>id</code>, <code>height</code>, <code>version</code>, <code>timestamp</code>, <code>bits</code>, <code>nonce</code>, <code>merkle_root</code>, <code>tx_count</code>, <code>size</code>, <code>weight</code>,<code>proof</code>, and <code>previousblockhash</code>.'
+      liquid:
+        'Returns details about a block. Available fields: <code>id</code>, <code>height</code>, <code>version</code>, <code>timestamp</code>, <code>bits</code>, <code>nonce</code>, <code>merkle_root</code>, <code>tx_count</code>, <code>size</code>, <code>weight</code>,<code>proof</code>, and <code>previousblockhash</code>.',
     },
     urlString: '/block/:hash',
     showConditions: bitcoinNetworks.concat(liquidNetworks).concat(['bisq']),
@@ -1832,9 +1932,15 @@ export const restApiDocsData = [
           `,
         },
         codeSampleMainnet: {
-          esModule: ['000000000000000015dc777b3ff2611091336355d3f0ee9766a2cf3be8e4b1ce'],
-          commonJS: ['000000000000000015dc777b3ff2611091336355d3f0ee9766a2cf3be8e4b1ce'],
-          curl: ['000000000000000015dc777b3ff2611091336355d3f0ee9766a2cf3be8e4b1ce'],
+          esModule: [
+            '000000000000000015dc777b3ff2611091336355d3f0ee9766a2cf3be8e4b1ce',
+          ],
+          commonJS: [
+            '000000000000000015dc777b3ff2611091336355d3f0ee9766a2cf3be8e4b1ce',
+          ],
+          curl: [
+            '000000000000000015dc777b3ff2611091336355d3f0ee9766a2cf3be8e4b1ce',
+          ],
           response: `{
   "extras": {
     "reward": 638307429,
@@ -1884,12 +1990,18 @@ export const restApiDocsData = [
   "size": 1709571,
   "weight": 3997770,
   "previousblockhash": "00000000000000000005ef14db0b4befcbbe1e9b8676eec67fcf810a899c4d5e"
-}`
+}`,
         },
         codeSampleTestnet: {
-          esModule: ['000000000000009c08dc77c3f224d9f5bbe335a78b996ec1e0701e065537ca81'],
-          commonJS: ['000000000000009c08dc77c3f224d9f5bbe335a78b996ec1e0701e065537ca81'],
-          curl: ['000000000000009c08dc77c3f224d9f5bbe335a78b996ec1e0701e065537ca81'],
+          esModule: [
+            '000000000000009c08dc77c3f224d9f5bbe335a78b996ec1e0701e065537ca81',
+          ],
+          commonJS: [
+            '000000000000009c08dc77c3f224d9f5bbe335a78b996ec1e0701e065537ca81',
+          ],
+          curl: [
+            '000000000000009c08dc77c3f224d9f5bbe335a78b996ec1e0701e065537ca81',
+          ],
           response: `{
   id: "000000000000009c08dc77c3f224d9f5bbe335a78b996ec1e0701e065537ca81",
   height: 2091140,
@@ -1904,12 +2016,18 @@ export const restApiDocsData = [
   nonce: 1600805744,
   bits: 436273151,
   difficulty: 16777216
-}`
+}`,
         },
         codeSampleSignet: {
-          esModule: ['000000ca66fab8083d4f0370d499c3d602e78af5fa69b2427cda15a3f0d96152'],
-          commonJS: ['000000ca66fab8083d4f0370d499c3d602e78af5fa69b2427cda15a3f0d96152'],
-          curl: ['000000ca66fab8083d4f0370d499c3d602e78af5fa69b2427cda15a3f0d96152'],
+          esModule: [
+            '000000ca66fab8083d4f0370d499c3d602e78af5fa69b2427cda15a3f0d96152',
+          ],
+          commonJS: [
+            '000000ca66fab8083d4f0370d499c3d602e78af5fa69b2427cda15a3f0d96152',
+          ],
+          curl: [
+            '000000ca66fab8083d4f0370d499c3d602e78af5fa69b2427cda15a3f0d96152',
+          ],
           response: `{
   id: "000000ca66fab8083d4f0370d499c3d602e78af5fa69b2427cda15a3f0d96152",
   height: 53745,
@@ -1924,12 +2042,18 @@ export const restApiDocsData = [
   nonce: 19642021,
   bits: 503404179,
   difficulty: 0
-}`
+}`,
         },
         codeSampleLiquid: {
-          esModule: [`86aefdd3cf7be8e5781f783fe5d80513e8b3f52f2f1ef61e8e056b7faffc4b78`],
-          commonJS: [`86aefdd3cf7be8e5781f783fe5d80513e8b3f52f2f1ef61e8e056b7faffc4b78`],
-          curl: [`86aefdd3cf7be8e5781f783fe5d80513e8b3f52f2f1ef61e8e056b7faffc4b78`],
+          esModule: [
+            `86aefdd3cf7be8e5781f783fe5d80513e8b3f52f2f1ef61e8e056b7faffc4b78`,
+          ],
+          commonJS: [
+            `86aefdd3cf7be8e5781f783fe5d80513e8b3f52f2f1ef61e8e056b7faffc4b78`,
+          ],
+          curl: [
+            `86aefdd3cf7be8e5781f783fe5d80513e8b3f52f2f1ef61e8e056b7faffc4b78`,
+          ],
           response: `{
   id: "86aefdd3cf7be8e5781f783fe5d80513e8b3f52f2f1ef61e8e056b7faffc4b78",
   height: 1471971,
@@ -1948,9 +2072,15 @@ export const restApiDocsData = [
 }`,
         },
         codeSampleLiquidTestnet: {
-          esModule: [`8f7cb70f32e2069724212c986f34462fc40180eabf189b44486faf6989824f9a`],
-          commonJS: [`8f7cb70f32e2069724212c986f34462fc40180eabf189b44486faf6989824f9a`],
-          curl: [`8f7cb70f32e2069724212c986f34462fc40180eabf189b44486faf6989824f9a`],
+          esModule: [
+            `8f7cb70f32e2069724212c986f34462fc40180eabf189b44486faf6989824f9a`,
+          ],
+          commonJS: [
+            `8f7cb70f32e2069724212c986f34462fc40180eabf189b44486faf6989824f9a`,
+          ],
+          curl: [
+            `8f7cb70f32e2069724212c986f34462fc40180eabf189b44486faf6989824f9a`,
+          ],
           response: `{
   id: "8f7cb70f32e2069724212c986f34462fc40180eabf189b44486faf6989824f9a",
   height: 154705,
@@ -1966,19 +2096,25 @@ export const restApiDocsData = [
 }`,
         },
         codeSampleBisq: {
-          esModule: ['0000000000000000000b24f70ed27da8b282b050f38e20831923211a1f7266d5'],
-          commonJS: ['0000000000000000000b24f70ed27da8b282b050f38e20831923211a1f7266d5'],
-          curl: ['0000000000000000000b24f70ed27da8b282b050f38e20831923211a1f7266d5'],
+          esModule: [
+            '0000000000000000000b24f70ed27da8b282b050f38e20831923211a1f7266d5',
+          ],
+          commonJS: [
+            '0000000000000000000b24f70ed27da8b282b050f38e20831923211a1f7266d5',
+          ],
+          curl: [
+            '0000000000000000000b24f70ed27da8b282b050f38e20831923211a1f7266d5',
+          ],
           response: `{
   height: 698746,
   time: 1630621494000,
   hash: "0000000000000000000b24f70ed27da8b282b050f38e20831923211a1f7266d5",
   previousBlockHash: "000000000000000000039cd226a99c125ee3004e9d585b04e2ccceccddef7547",
   txs: []
-}`
+}`,
         },
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -1987,7 +2123,7 @@ export const restApiDocsData = [
     fragment: 'get-block-header',
     title: 'GET Block Header',
     description: {
-      default: 'Returns the hex-encoded block header.'
+      default: 'Returns the hex-encoded block header.',
     },
     urlString: '/block/:hash/header',
     showConditions: bitcoinNetworks.concat(liquidNetworks),
@@ -2013,38 +2149,68 @@ export const restApiDocsData = [
           `,
         },
         codeSampleMainnet: {
-          esModule: ['0000000000000000000065bda8f8a88f2e1e00d9a6887a43d640e52a4c7660f2'],
-          commonJS: ['0000000000000000000065bda8f8a88f2e1e00d9a6887a43d640e52a4c7660f2'],
-          curl: ['0000000000000000000065bda8f8a88f2e1e00d9a6887a43d640e52a4c7660f2'],
-          response: `040000202c04d4c450187d1da9b1bc23ba47d67fe028d22486fd0c00000000000000000059a3a33d4642c799af9f54a4dd351fff9130e6a89d4e251130c60064878616e906b5ea60ce9813173a25caf3`
+          esModule: [
+            '0000000000000000000065bda8f8a88f2e1e00d9a6887a43d640e52a4c7660f2',
+          ],
+          commonJS: [
+            '0000000000000000000065bda8f8a88f2e1e00d9a6887a43d640e52a4c7660f2',
+          ],
+          curl: [
+            '0000000000000000000065bda8f8a88f2e1e00d9a6887a43d640e52a4c7660f2',
+          ],
+          response: `040000202c04d4c450187d1da9b1bc23ba47d67fe028d22486fd0c00000000000000000059a3a33d4642c799af9f54a4dd351fff9130e6a89d4e251130c60064878616e906b5ea60ce9813173a25caf3`,
         },
         codeSampleTestnet: {
-          esModule: ['000000000000009c08dc77c3f224d9f5bbe335a78b996ec1e0701e065537ca81'],
-          commonJS: ['000000000000009c08dc77c3f224d9f5bbe335a78b996ec1e0701e065537ca81'],
-          curl: ['000000000000009c08dc77c3f224d9f5bbe335a78b996ec1e0701e065537ca81'],
-          response: `040060201e74d5c4c7c64e26465e630c4154a7829f443da9c01f5df97300000000000000c91ca536f5cce0bfc23d913a0428a0ed10bd35c4ec1fd017b28ebb58d1d8105d7e5d3161ffff001a705b6a5f`
+          esModule: [
+            '000000000000009c08dc77c3f224d9f5bbe335a78b996ec1e0701e065537ca81',
+          ],
+          commonJS: [
+            '000000000000009c08dc77c3f224d9f5bbe335a78b996ec1e0701e065537ca81',
+          ],
+          curl: [
+            '000000000000009c08dc77c3f224d9f5bbe335a78b996ec1e0701e065537ca81',
+          ],
+          response: `040060201e74d5c4c7c64e26465e630c4154a7829f443da9c01f5df97300000000000000c91ca536f5cce0bfc23d913a0428a0ed10bd35c4ec1fd017b28ebb58d1d8105d7e5d3161ffff001a705b6a5f`,
         },
         codeSampleSignet: {
-          esModule: ['000000ca66fab8083d4f0370d499c3d602e78af5fa69b2427cda15a3f0d96152'],
-          commonJS: ['000000ca66fab8083d4f0370d499c3d602e78af5fa69b2427cda15a3f0d96152'],
-          curl: ['000000ca66fab8083d4f0370d499c3d602e78af5fa69b2427cda15a3f0d96152'],
-          response: `000000204aaab6791d8a5b335992841a44ee0efc3a347f644768654723dcff7b490100006213115ade384da4e958f08c77de4a7deb2bb21240277082f9b941281384192c865a31619356011ea5b62b01`
+          esModule: [
+            '000000ca66fab8083d4f0370d499c3d602e78af5fa69b2427cda15a3f0d96152',
+          ],
+          commonJS: [
+            '000000ca66fab8083d4f0370d499c3d602e78af5fa69b2427cda15a3f0d96152',
+          ],
+          curl: [
+            '000000ca66fab8083d4f0370d499c3d602e78af5fa69b2427cda15a3f0d96152',
+          ],
+          response: `000000204aaab6791d8a5b335992841a44ee0efc3a347f644768654723dcff7b490100006213115ade384da4e958f08c77de4a7deb2bb21240277082f9b941281384192c865a31619356011ea5b62b01`,
         },
         codeSampleLiquid: {
-          esModule: [`86aefdd3cf7be8e5781f783fe5d80513e8b3f52f2f1ef61e8e056b7faffc4b78`],
-          commonJS: [`86aefdd3cf7be8e5781f783fe5d80513e8b3f52f2f1ef61e8e056b7faffc4b78`],
-          curl: [`86aefdd3cf7be8e5781f783fe5d80513e8b3f52f2f1ef61e8e056b7faffc4b78`],
+          esModule: [
+            `86aefdd3cf7be8e5781f783fe5d80513e8b3f52f2f1ef61e8e056b7faffc4b78`,
+          ],
+          commonJS: [
+            `86aefdd3cf7be8e5781f783fe5d80513e8b3f52f2f1ef61e8e056b7faffc4b78`,
+          ],
+          curl: [
+            `86aefdd3cf7be8e5781f783fe5d80513e8b3f52f2f1ef61e8e056b7faffc4b78`,
+          ],
           response: `000000222434084f3891352cef8d3c7c65600beffd2d059b3d5ff91a53b306d9ffa84f9448cf0cf8aa684d1b8b11a89cdf260a8c4935b5095d280dc915603d105e73407eee5e3161e3751600fd01025b21026a2a106ec32c8a1e8052e5d02a7b0a150423dbd9b116fc48d46630ff6e6a05b92102791646a8b49c2740352b4495c118d876347bf47d0551c01c4332fdc2df526f1a2102888bda53a424466b0451627df22090143bbf7c060e9eacb1e38426f6b07f2ae12102aee8967150dee220f613de3b239320355a498808084a93eaf39a34dcd62024852102d46e9259d0a0bb2bcbc461a3e68f34adca27b8d08fbe985853992b4b104e27412102e9944e35e5750ab621e098145b8e6cf373c273b7c04747d1aa020be0af40ccd62102f9a9d4b10a6d6c56d8c955c547330c589bb45e774551d46d415e51cd9ad5116321033b421566c124dfde4db9defe4084b7aa4e7f36744758d92806b8f72c2e943309210353dcc6b4cf6ad28aceb7f7b2db92a4bf07ac42d357adf756f3eca790664314b621037f55980af0455e4fb55aad9b85a55068bb6dc4740ea87276dc693f4598db45fa210384001daa88dabd23db878dbb1ce5b4c2a5fa72c3113e3514bf602325d0c37b8e21039056d089f2fe72dbc0a14780b4635b0dc8a1b40b7a59106325dd1bc45cc70493210397ab8ea7b0bf85bc7fc56bb27bf85e75502e94e76a6781c409f3f2ec3d1122192103b00e3b5b77884bf3cae204c4b4eac003601da75f96982ffcb3dcb29c5ee419b92103c1f3c0874cfe34b8131af34699589aacec4093399739ae352e8a46f80a6f68375faefd160300473045022100b572ef7e8a1c5a795d4ca46ab0221f0296ae081870ec25b3eb3f7db4a9e48d6102207863cfcae9776d3fee8fb2f05f06c879cf16c319b633f09cfac9bf041e662f31463044022056e41068e5448c897f80ef864fbbd71690af375afc33d9a52a12efd399a75c0202203f61333e193e0ff3da1ef15fa5c84c3852bd3b4f701e4bf4ebc0dcb68138d227473045022100af50aae198402aa45764a771d3ec23cf86037ea1e3bd682d09f262d057de1a2c02202f46b42ff1062117001af9689fce666bc50cfd479f63969e28670e26b747610f46304402201bb90d72cd58e5198b135828354e8fcc3e73238e412c6e2474f9d67676b12ceb022053f3a6cbeb85abc5e0bc18a83eeffe7785c382746f50c98a29743eb00d474f9e473045022100954d79ddb28c5682a3600cb4f76433f31606064717c700e5ea626807cfb169cf0220365e42d1d07bd8a65b5cb6e449a6bbd3684bf31f0f31ffe9aa13a1f145f28de2473045022100e8a6566fbd8e2829ac24c02ff78794f0122d828e9c1989ed8c077013a2834c6d022016b6833665bbe9ca930247600694f90d40aeb9880fdf95ef62b553efb516997f473045022100c0dca22bfc3a3f64f1ac221796ecd052c153e03732e696ce891be4998c6ae34a0220650ff2e1af0cf3318e249e358738d69de91ebdc81535234a30bdbc4361edc08246304402205f0db67365c3667b93cbcfaa2e5a26a4dbab15a5e39196008fd84b61de358f89022035d5bca676b62028e17f962ef7a33b9f34534f02f3d1ac57b65a666f6d33b3fa473045022100ae711c250c7e4a9d7795e96a4209d05f2b4866473aa2a35b8478b9e3eec883800220514db41ba950cf089cce8fd71cfc41454c80005c2c57401da0e2fb3ce96097bc473045022100bfc416e16fb246cc21a3729359bcf9a752643f4c57190493418dab5df33ff8190220289600af6dc32bffb000f984c8c37f137841e1738c701e05c0a08be53e5eb62b473045022100accf30feb32423e20ddaae3c12584b33ad4eb6492deed1393175a0443832faa0022045b17184460ece57857fe74143166c3692348758054d3d7852fee833cb66e9c4`,
         },
         codeSampleLiquidTestnet: {
-          esModule: [`8f7cb70f32e2069724212c986f34462fc40180eabf189b44486faf6989824f9a`],
-          commonJS: [`8f7cb70f32e2069724212c986f34462fc40180eabf189b44486faf6989824f9a`],
-          curl: [`8f7cb70f32e2069724212c986f34462fc40180eabf189b44486faf6989824f9a`],
+          esModule: [
+            `8f7cb70f32e2069724212c986f34462fc40180eabf189b44486faf6989824f9a`,
+          ],
+          commonJS: [
+            `8f7cb70f32e2069724212c986f34462fc40180eabf189b44486faf6989824f9a`,
+          ],
+          curl: [
+            `8f7cb70f32e2069724212c986f34462fc40180eabf189b44486faf6989824f9a`,
+          ],
           response: `000000a0263542a60466e252dbc301001f2f87cdd232106344209d6c252bbda572fd4527b4b9a8412c0ecaca405241beaa6779e74d505a481941a873be74b0b34511cce7d806d261515c020001220020e9e4117540f7f23b3edd7c2cad660a17fb33c7959b8c37cf61d92b189133929a96000000fbee9cea00d8efdc49cfbec328537e0d7032194de6ebf3cf42e5c05bb89a08b10003004730440220303a6fc365e016422bd5d714e403db237964c9e53c244310a4a03f432583290202206951e82c2ffa028f88d64d9bb4ec7789ced137046bb38a02816617b554efd42b012551210217e403ddb181872c32a0cd468c710040b2f53d8cac69f18dad07985ee37e9a7151ae`,
         },
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -2053,7 +2219,8 @@ export const restApiDocsData = [
     fragment: 'get-block-height',
     title: 'GET Block Height',
     description: {
-      default: 'Returns the hash of the block currently at <code>:height</code>.'
+      default:
+        'Returns the hash of the block currently at <code>:height</code>.',
     },
     urlString: '/block-height/:height',
     showConditions: bitcoinNetworks.concat(liquidNetworks),
@@ -2079,19 +2246,19 @@ export const restApiDocsData = [
           esModule: ['615615'],
           commonJS: ['615615'],
           curl: ['615615'],
-          response: `000000000000000000067bea442af50a91377ac796e63b8d284354feff4042b3`
+          response: `000000000000000000067bea442af50a91377ac796e63b8d284354feff4042b3`,
         },
         codeSampleTestnet: {
           esModule: ['2100100'],
           commonJS: ['2100100'],
           curl: ['2100100'],
-          response: `000000000000001be62f15637e813e1d8ecdf26ee95d1820ef16db9bd8685985`
+          response: `000000000000001be62f15637e813e1d8ecdf26ee95d1820ef16db9bd8685985`,
         },
         codeSampleSignet: {
           esModule: ['48000'],
           commonJS: ['48000'],
           curl: ['48000'],
-          response: `00000009e8322d4b8f74c8bbd04df1dd5a4abce236ae5907cc87f8364fa5e645`
+          response: `00000009e8322d4b8f74c8bbd04df1dd5a4abce236ae5907cc87f8364fa5e645`,
         },
         codeSampleLiquid: {
           esModule: [`1234567`],
@@ -2106,8 +2273,8 @@ export const restApiDocsData = [
           response: `67d5eb1aee63c6c2058a088985503ff0626fd3f7f8022bdc74fab36a359164db`,
         },
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -2116,7 +2283,7 @@ export const restApiDocsData = [
     fragment: 'get-block-raw',
     title: 'GET Block Raw',
     description: {
-      default: 'Returns the raw block representation in binary.'
+      default: 'Returns the raw block representation in binary.',
     },
     urlString: '/block/:hash/raw',
     showConditions: bitcoinNetworks.concat(liquidNetworks),
@@ -2142,38 +2309,68 @@ export const restApiDocsData = [
           `,
         },
         codeSampleMainnet: {
-          esModule: ['0000000000000000000065bda8f8a88f2e1e00d9a6887a43d640e52a4c7660f2'],
-          commonJS: ['0000000000000000000065bda8f8a88f2e1e00d9a6887a43d640e52a4c7660f2'],
-          curl: ['0000000000000000000065bda8f8a88f2e1e00d9a6887a43d640e52a4c7660f2'],
+          esModule: [
+            '0000000000000000000065bda8f8a88f2e1e00d9a6887a43d640e52a4c7660f2',
+          ],
+          commonJS: [
+            '0000000000000000000065bda8f8a88f2e1e00d9a6887a43d640e52a4c7660f2',
+          ],
+          curl: [
+            '0000000000000000000065bda8f8a88f2e1e00d9a6887a43d640e52a4c7660f2',
+          ],
           response: '',
         },
         codeSampleTestnet: {
-          esModule: ['000000000000009c08dc77c3f224d9f5bbe335a78b996ec1e0701e065537ca81'],
-          commonJS: ['000000000000009c08dc77c3f224d9f5bbe335a78b996ec1e0701e065537ca81'],
-          curl: ['000000000000009c08dc77c3f224d9f5bbe335a78b996ec1e0701e065537ca81'],
+          esModule: [
+            '000000000000009c08dc77c3f224d9f5bbe335a78b996ec1e0701e065537ca81',
+          ],
+          commonJS: [
+            '000000000000009c08dc77c3f224d9f5bbe335a78b996ec1e0701e065537ca81',
+          ],
+          curl: [
+            '000000000000009c08dc77c3f224d9f5bbe335a78b996ec1e0701e065537ca81',
+          ],
           response: '',
         },
         codeSampleSignet: {
-          esModule: ['000000ca66fab8083d4f0370d499c3d602e78af5fa69b2427cda15a3f0d96152'],
-          commonJS: ['000000ca66fab8083d4f0370d499c3d602e78af5fa69b2427cda15a3f0d96152'],
-          curl: ['000000ca66fab8083d4f0370d499c3d602e78af5fa69b2427cda15a3f0d96152'],
+          esModule: [
+            '000000ca66fab8083d4f0370d499c3d602e78af5fa69b2427cda15a3f0d96152',
+          ],
+          commonJS: [
+            '000000ca66fab8083d4f0370d499c3d602e78af5fa69b2427cda15a3f0d96152',
+          ],
+          curl: [
+            '000000ca66fab8083d4f0370d499c3d602e78af5fa69b2427cda15a3f0d96152',
+          ],
           response: '',
         },
         codeSampleLiquid: {
-          esModule: [`86aefdd3cf7be8e5781f783fe5d80513e8b3f52f2f1ef61e8e056b7faffc4b78`],
-          commonJS: [`86aefdd3cf7be8e5781f783fe5d80513e8b3f52f2f1ef61e8e056b7faffc4b78`],
-          curl: [`86aefdd3cf7be8e5781f783fe5d80513e8b3f52f2f1ef61e8e056b7faffc4b78`],
+          esModule: [
+            `86aefdd3cf7be8e5781f783fe5d80513e8b3f52f2f1ef61e8e056b7faffc4b78`,
+          ],
+          commonJS: [
+            `86aefdd3cf7be8e5781f783fe5d80513e8b3f52f2f1ef61e8e056b7faffc4b78`,
+          ],
+          curl: [
+            `86aefdd3cf7be8e5781f783fe5d80513e8b3f52f2f1ef61e8e056b7faffc4b78`,
+          ],
           response: '',
         },
         codeSampleLiquidTestnet: {
-          esModule: [`67d5eb1aee63c6c2058a088985503ff0626fd3f7f8022bdc74fab36a359164db`],
-          commonJS: [`67d5eb1aee63c6c2058a088985503ff0626fd3f7f8022bdc74fab36a359164db`],
-          curl: [`67d5eb1aee63c6c2058a088985503ff0626fd3f7f8022bdc74fab36a359164db`],
+          esModule: [
+            `67d5eb1aee63c6c2058a088985503ff0626fd3f7f8022bdc74fab36a359164db`,
+          ],
+          commonJS: [
+            `67d5eb1aee63c6c2058a088985503ff0626fd3f7f8022bdc74fab36a359164db`,
+          ],
+          curl: [
+            `67d5eb1aee63c6c2058a088985503ff0626fd3f7f8022bdc74fab36a359164db`,
+          ],
           response: '',
         },
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -2182,7 +2379,8 @@ export const restApiDocsData = [
     fragment: 'get-block-status',
     title: 'GET Block Status',
     description: {
-      default: 'Returns the confirmation status of a block. Available fields: <code>in_best_chain</code> (boolean, false for orphaned blocks), <code>next_best</code> (the hash of the next block, only available for blocks in the best chain).'
+      default:
+        'Returns the confirmation status of a block. Available fields: <code>in_best_chain</code> (boolean, false for orphaned blocks), <code>next_best</code> (the hash of the next block, only available for blocks in the best chain).',
     },
     urlString: '/block/:hash/status',
     showConditions: bitcoinNetworks.concat(liquidNetworks),
@@ -2208,39 +2406,63 @@ export const restApiDocsData = [
           `,
         },
         codeSampleMainnet: {
-          esModule: ['0000000000000000000065bda8f8a88f2e1e00d9a6887a43d640e52a4c7660f2'],
-          commonJS: ['0000000000000000000065bda8f8a88f2e1e00d9a6887a43d640e52a4c7660f2'],
-          curl: ['0000000000000000000065bda8f8a88f2e1e00d9a6887a43d640e52a4c7660f2'],
+          esModule: [
+            '0000000000000000000065bda8f8a88f2e1e00d9a6887a43d640e52a4c7660f2',
+          ],
+          commonJS: [
+            '0000000000000000000065bda8f8a88f2e1e00d9a6887a43d640e52a4c7660f2',
+          ],
+          curl: [
+            '0000000000000000000065bda8f8a88f2e1e00d9a6887a43d640e52a4c7660f2',
+          ],
           response: `{
   in_best_chain: true,
   height: 690557,
   next_best: "00000000000000000003a59a34c93e39e636c8cd23ead726fdc467fbed0b7c5a"
-}`
+}`,
         },
         codeSampleTestnet: {
-          esModule: ['000000000000009c08dc77c3f224d9f5bbe335a78b996ec1e0701e065537ca81'],
-          commonJS: ['000000000000009c08dc77c3f224d9f5bbe335a78b996ec1e0701e065537ca81'],
-          curl: ['000000000000009c08dc77c3f224d9f5bbe335a78b996ec1e0701e065537ca81'],
+          esModule: [
+            '000000000000009c08dc77c3f224d9f5bbe335a78b996ec1e0701e065537ca81',
+          ],
+          commonJS: [
+            '000000000000009c08dc77c3f224d9f5bbe335a78b996ec1e0701e065537ca81',
+          ],
+          curl: [
+            '000000000000009c08dc77c3f224d9f5bbe335a78b996ec1e0701e065537ca81',
+          ],
           response: `{
   in_best_chain: true,
   height: 2091140,
   next_best: "0000000000000064152f2dc1e13bd70811fbcfa9c1660557233668b98b7b1c2b"
-}`
+}`,
         },
         codeSampleSignet: {
-          esModule: ['000000ca66fab8083d4f0370d499c3d602e78af5fa69b2427cda15a3f0d96152'],
-          commonJS: ['000000ca66fab8083d4f0370d499c3d602e78af5fa69b2427cda15a3f0d96152'],
-          curl: ['000000ca66fab8083d4f0370d499c3d602e78af5fa69b2427cda15a3f0d96152'],
+          esModule: [
+            '000000ca66fab8083d4f0370d499c3d602e78af5fa69b2427cda15a3f0d96152',
+          ],
+          commonJS: [
+            '000000ca66fab8083d4f0370d499c3d602e78af5fa69b2427cda15a3f0d96152',
+          ],
+          curl: [
+            '000000ca66fab8083d4f0370d499c3d602e78af5fa69b2427cda15a3f0d96152',
+          ],
           response: `{
   in_best_chain: true,
   height: 53745,
   next_best: "000000e9c2a969f6a3425ab70851328e878ebdeb90b73f9cfb16241b97c44640"
-}`
+}`,
         },
         codeSampleLiquid: {
-          esModule: [`86aefdd3cf7be8e5781f783fe5d80513e8b3f52f2f1ef61e8e056b7faffc4b78`],
-          commonJS: [`86aefdd3cf7be8e5781f783fe5d80513e8b3f52f2f1ef61e8e056b7faffc4b78`],
-          curl: [`86aefdd3cf7be8e5781f783fe5d80513e8b3f52f2f1ef61e8e056b7faffc4b78`],
+          esModule: [
+            `86aefdd3cf7be8e5781f783fe5d80513e8b3f52f2f1ef61e8e056b7faffc4b78`,
+          ],
+          commonJS: [
+            `86aefdd3cf7be8e5781f783fe5d80513e8b3f52f2f1ef61e8e056b7faffc4b78`,
+          ],
+          curl: [
+            `86aefdd3cf7be8e5781f783fe5d80513e8b3f52f2f1ef61e8e056b7faffc4b78`,
+          ],
           response: `{
   in_best_chain: true,
   height: 1471971,
@@ -2248,9 +2470,15 @@ export const restApiDocsData = [
 }`,
         },
         codeSampleLiquidTestnet: {
-          esModule: [`67d5eb1aee63c6c2058a088985503ff0626fd3f7f8022bdc74fab36a359164db`],
-          commonJS: [`67d5eb1aee63c6c2058a088985503ff0626fd3f7f8022bdc74fab36a359164db`],
-          curl: [`67d5eb1aee63c6c2058a088985503ff0626fd3f7f8022bdc74fab36a359164db`],
+          esModule: [
+            `67d5eb1aee63c6c2058a088985503ff0626fd3f7f8022bdc74fab36a359164db`,
+          ],
+          commonJS: [
+            `67d5eb1aee63c6c2058a088985503ff0626fd3f7f8022bdc74fab36a359164db`,
+          ],
+          curl: [
+            `67d5eb1aee63c6c2058a088985503ff0626fd3f7f8022bdc74fab36a359164db`,
+          ],
           response: `{
   in_best_chain: true,
   height: 150000,
@@ -2258,8 +2486,8 @@ export const restApiDocsData = [
 }`,
         },
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -2268,7 +2496,7 @@ export const restApiDocsData = [
     fragment: 'get-block-tip-height',
     title: 'GET Block Tip Height',
     description: {
-      default: 'Returns the height of the last block.'
+      default: 'Returns the height of the last block.',
     },
     urlString: '/blocks/tip/height',
     showConditions: bitcoinNetworks.concat(liquidNetworks).concat(['bisq']),
@@ -2295,19 +2523,19 @@ export const restApiDocsData = [
           esModule: [''],
           commonJS: [''],
           curl: [''],
-          response: `698767`
+          response: `698767`,
         },
         codeSampleTestnet: {
           esModule: [''],
           commonJS: [''],
           curl: [''],
-          response: `2091168`
+          response: `2091168`,
         },
         codeSampleSignet: {
           esModule: [''],
           commonJS: [''],
           curl: [''],
-          response: `53763`
+          response: `53763`,
         },
         codeSampleLiquid: {
           esModule: [''],
@@ -2325,10 +2553,10 @@ export const restApiDocsData = [
           esModule: [''],
           commonJS: [''],
           curl: [''],
-          response: `698765`
+          response: `698765`,
         },
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -2337,7 +2565,7 @@ export const restApiDocsData = [
     fragment: 'get-block-tip-hash',
     title: 'GET Block Tip Hash',
     description: {
-      default: 'Returns the hash of the last block.'
+      default: 'Returns the hash of the last block.',
     },
     urlString: '/blocks/tip/hash',
     showConditions: bitcoinNetworks.concat(liquidNetworks),
@@ -2364,19 +2592,19 @@ export const restApiDocsData = [
           esModule: [''],
           commonJS: [''],
           curl: [''],
-          response: `0000000000000000000624d76f52661d0f35a0da8b93a87cb93cf08fd9140209`
+          response: `0000000000000000000624d76f52661d0f35a0da8b93a87cb93cf08fd9140209`,
         },
         codeSampleTestnet: {
           esModule: [''],
           commonJS: [''],
           curl: [''],
-          response: `00000000000000a7a5227bb493ffb90d1e63e1c7e8cab2c9a2b98e9f2599a9a9`
+          response: `00000000000000a7a5227bb493ffb90d1e63e1c7e8cab2c9a2b98e9f2599a9a9`,
         },
         codeSampleSignet: {
           esModule: [''],
           commonJS: [''],
           curl: [''],
-          response: `000000c09517efadf7425f7c19543b69768aaa9871a817d192d2c33cebebf3f9`
+          response: `000000c09517efadf7425f7c19543b69768aaa9871a817d192d2c33cebebf3f9`,
         },
         codeSampleLiquid: {
           esModule: [''],
@@ -2391,8 +2619,8 @@ export const restApiDocsData = [
           response: `ff643a1e102b555103d8feb20b296ee5cf3b4a202fa284e5d6ce82945b738ae7`,
         },
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -2401,7 +2629,8 @@ export const restApiDocsData = [
     fragment: 'get-block-transaction-id',
     title: 'GET Block Transaction ID',
     description: {
-      default: 'Returns the transaction at index <code>:index</code> within the specified block.'
+      default:
+        'Returns the transaction at index <code>:index</code> within the specified block.',
     },
     urlString: '/block/:hash/txid/:index',
     showConditions: bitcoinNetworks.concat(liquidNetworks),
@@ -2427,38 +2656,83 @@ export const restApiDocsData = [
           `,
         },
         codeSampleMainnet: {
-          esModule: ['000000000000000015dc777b3ff2611091336355d3f0ee9766a2cf3be8e4b1ce', '218'],
-          commonJS: ['000000000000000015dc777b3ff2611091336355d3f0ee9766a2cf3be8e4b1ce', '218'],
-          curl: ['000000000000000015dc777b3ff2611091336355d3f0ee9766a2cf3be8e4b1ce', '218'],
-          response: `0fa6da60e484941f255cbb025c3d6440e5a7e970119e899b4065c7999360e406`
+          esModule: [
+            '000000000000000015dc777b3ff2611091336355d3f0ee9766a2cf3be8e4b1ce',
+            '218',
+          ],
+          commonJS: [
+            '000000000000000015dc777b3ff2611091336355d3f0ee9766a2cf3be8e4b1ce',
+            '218',
+          ],
+          curl: [
+            '000000000000000015dc777b3ff2611091336355d3f0ee9766a2cf3be8e4b1ce',
+            '218',
+          ],
+          response: `0fa6da60e484941f255cbb025c3d6440e5a7e970119e899b4065c7999360e406`,
         },
         codeSampleTestnet: {
-          esModule: ['000000000000004a3ff1faff12c446f711c650454ff8af7f41d1e8b2564dd74b', '1'],
-          commonJS: ['000000000000004a3ff1faff12c446f711c650454ff8af7f41d1e8b2564dd74b', '1'],
-          curl: ['000000000000004a3ff1faff12c446f711c650454ff8af7f41d1e8b2564dd74b', '1'],
-          response: `7aede67cd9f48c2f77ca9112c27da2583ea41fbb391652777c44ef21d5b1656e`
+          esModule: [
+            '000000000000004a3ff1faff12c446f711c650454ff8af7f41d1e8b2564dd74b',
+            '1',
+          ],
+          commonJS: [
+            '000000000000004a3ff1faff12c446f711c650454ff8af7f41d1e8b2564dd74b',
+            '1',
+          ],
+          curl: [
+            '000000000000004a3ff1faff12c446f711c650454ff8af7f41d1e8b2564dd74b',
+            '1',
+          ],
+          response: `7aede67cd9f48c2f77ca9112c27da2583ea41fbb391652777c44ef21d5b1656e`,
         },
         codeSampleSignet: {
-          esModule: ['0000014b62b53d2550c310208af9d792ab7a9a2487a67d82c06b17b201ee602f', '1'],
-          commonJS: ['0000014b62b53d2550c310208af9d792ab7a9a2487a67d82c06b17b201ee602f', '1'],
-          curl: ['0000014b62b53d2550c310208af9d792ab7a9a2487a67d82c06b17b201ee602f', '1'],
-          response: `b72a9a7cfbb0685e393f86fa1fa1c43c2888b9ad01c9ac48a28b98e2c8721a89`
+          esModule: [
+            '0000014b62b53d2550c310208af9d792ab7a9a2487a67d82c06b17b201ee602f',
+            '1',
+          ],
+          commonJS: [
+            '0000014b62b53d2550c310208af9d792ab7a9a2487a67d82c06b17b201ee602f',
+            '1',
+          ],
+          curl: [
+            '0000014b62b53d2550c310208af9d792ab7a9a2487a67d82c06b17b201ee602f',
+            '1',
+          ],
+          response: `b72a9a7cfbb0685e393f86fa1fa1c43c2888b9ad01c9ac48a28b98e2c8721a89`,
         },
         codeSampleLiquid: {
-          esModule: ['dbbf73007879859f2c55b8605751498ad0d2848db0fdedeadcbdc0cf4f02ee13', '1'],
-          commonJS: ['dbbf73007879859f2c55b8605751498ad0d2848db0fdedeadcbdc0cf4f02ee13', '1'],
-          curl: ['dbbf73007879859f2c55b8605751498ad0d2848db0fdedeadcbdc0cf4f02ee13', '1'],
-          response: `36e47770c306ae5d4ddcc2ce50f6ce6e23d6bdc692b9a9a347fb68d19255f598`
+          esModule: [
+            'dbbf73007879859f2c55b8605751498ad0d2848db0fdedeadcbdc0cf4f02ee13',
+            '1',
+          ],
+          commonJS: [
+            'dbbf73007879859f2c55b8605751498ad0d2848db0fdedeadcbdc0cf4f02ee13',
+            '1',
+          ],
+          curl: [
+            'dbbf73007879859f2c55b8605751498ad0d2848db0fdedeadcbdc0cf4f02ee13',
+            '1',
+          ],
+          response: `36e47770c306ae5d4ddcc2ce50f6ce6e23d6bdc692b9a9a347fb68d19255f598`,
         },
         codeSampleLiquidTestnet: {
-          esModule: ['b6b4aeefa220c6a17da116bda666e869b3146967d2479656448a8bce1e799b8f', '1'],
-          commonJS: ['b6b4aeefa220c6a17da116bda666e869b3146967d2479656448a8bce1e799b8f', '1'],
-          curl: ['b6b4aeefa220c6a17da116bda666e869b3146967d2479656448a8bce1e799b8f', '1'],
-          response: `41493aa0eec8b6d359c2defc90e2fafb42fb5b8633456648553467a4d3a16c4a`
+          esModule: [
+            'b6b4aeefa220c6a17da116bda666e869b3146967d2479656448a8bce1e799b8f',
+            '1',
+          ],
+          commonJS: [
+            'b6b4aeefa220c6a17da116bda666e869b3146967d2479656448a8bce1e799b8f',
+            '1',
+          ],
+          curl: [
+            'b6b4aeefa220c6a17da116bda666e869b3146967d2479656448a8bce1e799b8f',
+            '1',
+          ],
+          response: `41493aa0eec8b6d359c2defc90e2fafb42fb5b8633456648553467a4d3a16c4a`,
         },
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -2467,7 +2741,7 @@ export const restApiDocsData = [
     fragment: 'get-block-transaction-ids',
     title: 'GET Block Transaction IDs',
     description: {
-      default: 'Returns a list of all txids in the block.'
+      default: 'Returns a list of all txids in the block.',
     },
     urlString: '/block/:hash/txids',
     showConditions: bitcoinNetworks.concat(liquidNetworks),
@@ -2493,29 +2767,56 @@ export const restApiDocsData = [
           `,
         },
         codeSampleMainnet: {
-          esModule: ['000000000000000015dc777b3ff2611091336355d3f0ee9766a2cf3be8e4b1ce', '218'],
-          commonJS: ['000000000000000015dc777b3ff2611091336355d3f0ee9766a2cf3be8e4b1ce', '218'],
-          curl: ['000000000000000015dc777b3ff2611091336355d3f0ee9766a2cf3be8e4b1ce', '218'],
+          esModule: [
+            '000000000000000015dc777b3ff2611091336355d3f0ee9766a2cf3be8e4b1ce',
+            '218',
+          ],
+          commonJS: [
+            '000000000000000015dc777b3ff2611091336355d3f0ee9766a2cf3be8e4b1ce',
+            '218',
+          ],
+          curl: [
+            '000000000000000015dc777b3ff2611091336355d3f0ee9766a2cf3be8e4b1ce',
+            '218',
+          ],
           response: `[
   "cfe624ccdd8010cf78dbedd1b25e1ff601b470c4d7d90fa9fc8c1bcc5cdc6e0e",
   "a5ef89881bd5103f223a0fa285dfc75f4718974cb792cf85e623a7de05801bc9",
   ...,
-]`
+]`,
         },
         codeSampleTestnet: {
-          esModule: ['000000000000004a3ff1faff12c446f711c650454ff8af7f41d1e8b2564dd74b', '1'],
-          commonJS: ['000000000000004a3ff1faff12c446f711c650454ff8af7f41d1e8b2564dd74b', '1'],
-          curl: ['000000000000004a3ff1faff12c446f711c650454ff8af7f41d1e8b2564dd74b', '1'],
+          esModule: [
+            '000000000000004a3ff1faff12c446f711c650454ff8af7f41d1e8b2564dd74b',
+            '1',
+          ],
+          commonJS: [
+            '000000000000004a3ff1faff12c446f711c650454ff8af7f41d1e8b2564dd74b',
+            '1',
+          ],
+          curl: [
+            '000000000000004a3ff1faff12c446f711c650454ff8af7f41d1e8b2564dd74b',
+            '1',
+          ],
           response: `[
   "b5d033f57045b76f2f29df0c2469be0153ecf2514717bccd8d52250b3e7ba781",
   "7aede67cd9f48c2f77ca9112c27da2583ea41fbb391652777c44ef21d5b1656e",
   "20827f9a8fb5ec5fa55ce5389b1d7520d7961272492dc3424874887daeea21dc"
-]`
+]`,
         },
         codeSampleSignet: {
-          esModule: ['0000014b62b53d2550c310208af9d792ab7a9a2487a67d82c06b17b201ee602f', '1'],
-          commonJS: ['0000014b62b53d2550c310208af9d792ab7a9a2487a67d82c06b17b201ee602f', '1'],
-          curl: ['0000014b62b53d2550c310208af9d792ab7a9a2487a67d82c06b17b201ee602f', '1'],
+          esModule: [
+            '0000014b62b53d2550c310208af9d792ab7a9a2487a67d82c06b17b201ee602f',
+            '1',
+          ],
+          commonJS: [
+            '0000014b62b53d2550c310208af9d792ab7a9a2487a67d82c06b17b201ee602f',
+            '1',
+          ],
+          curl: [
+            '0000014b62b53d2550c310208af9d792ab7a9a2487a67d82c06b17b201ee602f',
+            '1',
+          ],
           response: `[
   "4220d4fe0ec4beb9313e15fa225fb0bbdf2c17d74b56615e07263aed32d4fdb2",
   "b72a9a7cfbb0685e393f86fa1fa1c43c2888b9ad01c9ac48a28b98e2c8721a89",
@@ -2530,30 +2831,48 @@ export const restApiDocsData = [
   "43082dda77028f2ccab3639c919aea6049fd3917a5f3f413f0ee12ca4daf4ad6",
   "13e4c56fdc40928e8639d19aefff23270ea5555c6e8887fd95b609c50297cbe0",
   "99bcab11aab1ccb4b2881e5fb0e9b788b8ee0064caa0915e3de62ff8ea65adf5"
-]`
+]`,
         },
         codeSampleLiquid: {
-          esModule: ['dbbf73007879859f2c55b8605751498ad0d2848db0fdedeadcbdc0cf4f02ee13', '1'],
-          commonJS: ['dbbf73007879859f2c55b8605751498ad0d2848db0fdedeadcbdc0cf4f02ee13', '1'],
-          curl: ['dbbf73007879859f2c55b8605751498ad0d2848db0fdedeadcbdc0cf4f02ee13', '1'],
+          esModule: [
+            'dbbf73007879859f2c55b8605751498ad0d2848db0fdedeadcbdc0cf4f02ee13',
+            '1',
+          ],
+          commonJS: [
+            'dbbf73007879859f2c55b8605751498ad0d2848db0fdedeadcbdc0cf4f02ee13',
+            '1',
+          ],
+          curl: [
+            'dbbf73007879859f2c55b8605751498ad0d2848db0fdedeadcbdc0cf4f02ee13',
+            '1',
+          ],
           response: `[
   "45abcc4572f519155cd65686c3be9cc744d79d6f36c928b0aa3c989f8ee094be",
   "36e47770c306ae5d4ddcc2ce50f6ce6e23d6bdc692b9a9a347fb68d19255f598"
-]`
+]`,
         },
         codeSampleLiquidTestnet: {
-          esModule: ['b6b4aeefa220c6a17da116bda666e869b3146967d2479656448a8bce1e799b8f', '1'],
-          commonJS: ['b6b4aeefa220c6a17da116bda666e869b3146967d2479656448a8bce1e799b8f', '1'],
-          curl: ['b6b4aeefa220c6a17da116bda666e869b3146967d2479656448a8bce1e799b8f', '1'],
+          esModule: [
+            'b6b4aeefa220c6a17da116bda666e869b3146967d2479656448a8bce1e799b8f',
+            '1',
+          ],
+          commonJS: [
+            'b6b4aeefa220c6a17da116bda666e869b3146967d2479656448a8bce1e799b8f',
+            '1',
+          ],
+          curl: [
+            'b6b4aeefa220c6a17da116bda666e869b3146967d2479656448a8bce1e799b8f',
+            '1',
+          ],
           response: `[
   "95422f140e3d88e6ddaf0625ee523dbf9d38934d67ce32baf6c162d83a08f89f",
   "41493aa0eec8b6d359c2defc90e2fafb42fb5b8633456648553467a4d3a16c4a",
   "fa6b8dda9037f8284a659627005ad32dbb81e22b102c1d3d8a9bab0893ce2ab7"
-]`
+]`,
         },
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -2562,7 +2881,8 @@ export const restApiDocsData = [
     fragment: 'get-block-transactions',
     title: 'GET Block Transactions',
     description: {
-      default: 'Returns a list of transactions in the block (up to 25 transactions beginning at <code>start_index</code>). Transactions returned here do not have the <code>status</code> field, since all the transactions share the same block and confirmation status.'
+      default:
+        'Returns a list of transactions in the block (up to 25 transactions beginning at <code>start_index</code>). Transactions returned here do not have the <code>status</code> field, since all the transactions share the same block and confirmation status.',
     },
     urlString: '/block/:hash/txs[/:start_index]',
     showConditions: bitcoinNetworks.concat(liquidNetworks),
@@ -2588,9 +2908,15 @@ export const restApiDocsData = [
           `,
         },
         codeSampleMainnet: {
-          esModule: ['000000000000000015dc777b3ff2611091336355d3f0ee9766a2cf3be8e4b1ce'],
-          commonJS: ['000000000000000015dc777b3ff2611091336355d3f0ee9766a2cf3be8e4b1ce'],
-          curl: ['000000000000000015dc777b3ff2611091336355d3f0ee9766a2cf3be8e4b1ce'],
+          esModule: [
+            '000000000000000015dc777b3ff2611091336355d3f0ee9766a2cf3be8e4b1ce',
+          ],
+          commonJS: [
+            '000000000000000015dc777b3ff2611091336355d3f0ee9766a2cf3be8e4b1ce',
+          ],
+          curl: [
+            '000000000000000015dc777b3ff2611091336355d3f0ee9766a2cf3be8e4b1ce',
+          ],
           response: `[
   {
     txid: "cfe624ccdd8010cf78dbedd1b25e1ff601b470c4d7d90fa9fc8c1bcc5cdc6e0e",
@@ -2609,12 +2935,18 @@ export const restApiDocsData = [
     }
   },
   ...
-]`
+]`,
         },
         codeSampleTestnet: {
-          esModule: ['000000000000004a3ff1faff12c446f711c650454ff8af7f41d1e8b2564dd74b'],
-          commonJS: ['000000000000004a3ff1faff12c446f711c650454ff8af7f41d1e8b2564dd74b'],
-          curl: ['000000000000004a3ff1faff12c446f711c650454ff8af7f41d1e8b2564dd74b'],
+          esModule: [
+            '000000000000004a3ff1faff12c446f711c650454ff8af7f41d1e8b2564dd74b',
+          ],
+          commonJS: [
+            '000000000000004a3ff1faff12c446f711c650454ff8af7f41d1e8b2564dd74b',
+          ],
+          curl: [
+            '000000000000004a3ff1faff12c446f711c650454ff8af7f41d1e8b2564dd74b',
+          ],
           response: `[
   {
     txid: "b5d033f57045b76f2f29df0c2469be0153ecf2514717bccd8d52250b3e7ba781",
@@ -2633,12 +2965,18 @@ export const restApiDocsData = [
     }
   },
   ...
-],`
+],`,
         },
         codeSampleSignet: {
-          esModule: ['0000014b62b53d2550c310208af9d792ab7a9a2487a67d82c06b17b201ee602f'],
-          commonJS: ['0000004b62b53d2550c300208af9d792ab7a9a2487a67d82c06b17b201ee602f'],
-          curl: ['0000014b60b53d2550c310200af9d792ab7a9a2487a67d82c06b17b201ee602f'],
+          esModule: [
+            '0000014b62b53d2550c310208af9d792ab7a9a2487a67d82c06b17b201ee602f',
+          ],
+          commonJS: [
+            '0000004b62b53d2550c300208af9d792ab7a9a2487a67d82c06b17b201ee602f',
+          ],
+          curl: [
+            '0000014b60b53d2550c310200af9d792ab7a9a2487a67d82c06b17b201ee602f',
+          ],
           response: `[
   {
     txid: "4220d4fe0ec4beb9313e15fa225fb0bbdf2c17d74b56615e07263aed32d4fdb2",
@@ -2660,9 +2998,18 @@ export const restApiDocsData = [
 ]`,
         },
         codeSampleLiquid: {
-          esModule: ['dbbf73007879859f2c55b8605751498ad0d2848db0fdedeadcbdc0cf4f02ee13', '1'],
-          commonJS: ['dbbf73007879859f2c55b8605751498ad0d2848db0fdedeadcbdc0cf4f02ee13', '1'],
-          curl: ['dbbf73007879859f2c55b8605751498ad0d2848db0fdedeadcbdc0cf4f02ee13', '1'],
+          esModule: [
+            'dbbf73007879859f2c55b8605751498ad0d2848db0fdedeadcbdc0cf4f02ee13',
+            '1',
+          ],
+          commonJS: [
+            'dbbf73007879859f2c55b8605751498ad0d2848db0fdedeadcbdc0cf4f02ee13',
+            '1',
+          ],
+          curl: [
+            'dbbf73007879859f2c55b8605751498ad0d2848db0fdedeadcbdc0cf4f02ee13',
+            '1',
+          ],
           response: `[
   {
     txid: "45abcc4572f519155cd65686c3be9cc744d79d6f36c928b0aa3c989f8ee094be",
@@ -2681,12 +3028,21 @@ export const restApiDocsData = [
     }
   },
   ...
-]`
+]`,
         },
         codeSampleLiquidTestnet: {
-          esModule: ['b6b4aeefa220c6a17da116bda666e869b3146967d2479656448a8bce1e799b8f', '1'],
-          commonJS: ['b6b4aeefa220c6a17da116bda666e869b3146967d2479656448a8bce1e799b8f', '1'],
-          curl: ['b6b4aeefa220c6a17da116bda666e869b3146967d2479656448a8bce1e799b8f', '1'],
+          esModule: [
+            'b6b4aeefa220c6a17da116bda666e869b3146967d2479656448a8bce1e799b8f',
+            '1',
+          ],
+          commonJS: [
+            'b6b4aeefa220c6a17da116bda666e869b3146967d2479656448a8bce1e799b8f',
+            '1',
+          ],
+          curl: [
+            'b6b4aeefa220c6a17da116bda666e869b3146967d2479656448a8bce1e799b8f',
+            '1',
+          ],
           response: `[
   {
     txid: "95422f140e3d88e6ddaf0625ee523dbf9d38934d67ce32baf6c162d83a08f89f",
@@ -2705,11 +3061,11 @@ export const restApiDocsData = [
     }
   },
   ...
-]`
+]`,
         },
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -2718,7 +3074,8 @@ export const restApiDocsData = [
     fragment: 'get-blocks',
     title: 'GET Blocks',
     description: {
-      default: 'Returns details on the past 15 blocks with fee and mining details in an <code>extras</code> field. If <code>:startHeight</code> is specified, the past 15 blocks before (and including) <code>:startHeight</code> are returned.'
+      default:
+        'Returns details on the past 15 blocks with fee and mining details in an <code>extras</code> field. If <code>:startHeight</code> is specified, the past 15 blocks before (and including) <code>:startHeight</code> are returned.',
     },
     urlString: '/v1/blocks[/:startHeight]',
     showConditions: bitcoinNetworks,
@@ -2863,7 +3220,7 @@ export const restApiDocsData = [
     }
   },
   ...
-]`
+]`,
         },
         codeSampleSignet: {
           esModule: ['53783'],
@@ -2907,13 +3264,13 @@ export const restApiDocsData = [
     }
   },
   ...
-]`
+]`,
         },
         codeSampleLiquid: emptyCodeSample,
         codeSampleLiquidTestnet: emptyCodeSample,
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -2922,7 +3279,8 @@ export const restApiDocsData = [
     fragment: 'get-blocks',
     title: 'GET Blocks',
     description: {
-      default: 'Returns details on the past 10 blocks with fee and mining details in an <code>extras</code> field. If <code>:startHeight</code> is specified, the past 10 blocks before (and including) <code>:startHeight</code> are returned.'
+      default:
+        'Returns details on the past 10 blocks with fee and mining details in an <code>extras</code> field. If <code>:startHeight</code> is specified, the past 10 blocks before (and including) <code>:startHeight</code> are returned.',
     },
     urlString: '/blocks[/:startHeight]',
     showConditions: liquidNetworks,
@@ -2966,7 +3324,7 @@ export const restApiDocsData = [
     mediantime: 1630641718
   },
   ...
-]`
+]`,
         },
         codeSampleLiquidTestnet: {
           esModule: ['150000'],
@@ -2986,11 +3344,11 @@ export const restApiDocsData = [
     mediantime: 1640871614
   },
   ...
-]`
+]`,
         },
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -2999,7 +3357,8 @@ export const restApiDocsData = [
     fragment: 'get-blocks',
     title: 'GET Blocks',
     description: {
-      default: '<p>Returns the past <code>n</code> blocks with BSQ transactions starting <code>m</code> blocks ago.</p><p>Assume a block height of 700,000. Query <code>/blocks/0/10</code> for the past 10 blocks before 700,000 with BSQ transactions. Query <code>/blocks/1000/10</code> for the past 10 blocks before 699,000 with BSQ transactions.'
+      default:
+        '<p>Returns the past <code>n</code> blocks with BSQ transactions starting <code>m</code> blocks ago.</p><p>Assume a block height of 700,000. Query <code>/blocks/0/10</code> for the past 10 blocks before 700,000 with BSQ transactions. Query <code>/blocks/1000/10</code> for the past 10 blocks before 699,000 with BSQ transactions.',
     },
     urlString: '/blocks/:m/:n',
     showConditions: ['bisq'],
@@ -3067,26 +3426,29 @@ export const restApiDocsData = [
     "previousBlockHash": "000000000000000000073f1c49b4c4895f3fa6b866d1e21ab8b22f3f9318b42f",
     "txs": [ ... ]
   }
-]`
+]`,
         },
-      }
-    }
+      },
+    },
   },
   {
     type: 'category',
     category: 'mining',
     fragment: 'mining',
     title: 'Mining',
-    showConditions: bitcoinNetworks
+    showConditions: bitcoinNetworks,
   },
- {
+  {
     type: 'endpoint',
     category: 'mining',
     httpRequestMethod: 'GET',
     fragment: 'get-mining-pools',
     title: 'GET Mining Pools',
     description: {
-      default: 'Returns a list of all known mining pools ordered by blocks found over the specified trailing <code>:timePeriod</code>.</p><p>Leave <code>:timePeriod</code> unspecified to get all available data, or specify one of the following values: ' + miningTimeIntervals + '.'
+      default:
+        'Returns a list of all known mining pools ordered by blocks found over the specified trailing <code>:timePeriod</code>.</p><p>Leave <code>:timePeriod</code> unspecified to get all available data, or specify one of the following values: ' +
+        miningTimeIntervals +
+        '.',
     },
     urlString: '/v1/mining/pools[/:timePeriod]',
     showConditions: bitcoinNetworks,
@@ -3096,7 +3458,7 @@ export const restApiDocsData = [
         codeTemplate: {
           curl: `/api/v1/mining/pools/%{1}`,
           commonJS: ``,
-          esModule: ``
+          esModule: ``,
         },
         codeSampleMainnet: {
           esModule: [],
@@ -3134,7 +3496,7 @@ export const restApiDocsData = [
   ...
   "blockCount": 1005,
   "lastEstimatedHashrate": 230086716765559200000
-}`
+}`,
         },
         codeSampleTestnet: {
           esModule: [],
@@ -3164,19 +3526,19 @@ export const restApiDocsData = [
   ],
   "blockCount": 2226180,
   "lastEstimatedHashrate": 602244182177430.8
-}`
+}`,
         },
         codeSampleSignet: {
           esModule: [],
           commonJS: [],
           curl: [`3y`],
-          response: `{}`
+          response: `{}`,
         },
         codeSampleLiquid: emptyCodeSample,
         codeSampleLiquidTestnet: emptyCodeSample,
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -3185,7 +3547,8 @@ export const restApiDocsData = [
     fragment: 'get-mining-pool',
     title: 'GET Mining Pool',
     description: {
-      default: '<p>Returns details about the mining pool specified by <code>:slug</code>.</p>'
+      default:
+        '<p>Returns details about the mining pool specified by <code>:slug</code>.</p>',
     },
     urlString: '/v1/mining/pool/:slug',
     showConditions: bitcoinNetworks,
@@ -3195,7 +3558,7 @@ export const restApiDocsData = [
         codeTemplate: {
           curl: `/api/v1/mining/pool/%{1}`,
           commonJS: ``,
-          esModule: ``
+          esModule: ``,
         },
         codeSampleMainnet: {
           esModule: [],
@@ -3227,7 +3590,7 @@ export const restApiDocsData = [
   },
   "estimatedHashrate": 12448077385930390000,
   "reportedHashrate": null
-}`
+}`,
         },
         codeSampleTestnet: {
           esModule: [],
@@ -3257,19 +3620,19 @@ export const restApiDocsData = [
   },
   "estimatedHashrate": 2617854550633.5283,
   "reportedHashrate": null
-}`
+}`,
         },
         codeSampleSignet: {
           esModule: [],
           commonJS: [],
           curl: [`unknown`],
-          response: `{}`
+          response: `{}`,
         },
         codeSampleLiquid: emptyCodeSample,
         codeSampleLiquidTestnet: emptyCodeSample,
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -3278,7 +3641,10 @@ export const restApiDocsData = [
     fragment: 'get-mining-pool-hashrates',
     title: 'GET Mining Pool Hashrates',
     description: {
-      default: '<p>Returns average hashrates (and share of total hashrate) of mining pools active in the specified trailing <code>:timePeriod</code>, in descending order of hashrate.</p><p>Leave <code>:timePeriod</code> unspecified to get all available data, or specify any of the following time periods: ' + miningTimeIntervals.substr(52) + '.</p>'
+      default:
+        '<p>Returns average hashrates (and share of total hashrate) of mining pools active in the specified trailing <code>:timePeriod</code>, in descending order of hashrate.</p><p>Leave <code>:timePeriod</code> unspecified to get all available data, or specify any of the following time periods: ' +
+        miningTimeIntervals.substr(52) +
+        '.</p>',
     },
     urlString: '/v1/mining/hashrate/pools/[:timePeriod]',
     showConditions: bitcoinNetworks,
@@ -3288,7 +3654,7 @@ export const restApiDocsData = [
         codeTemplate: {
           curl: `/api/v1/mining/hashrate/pools/%{1}`,
           commonJS: ``,
-          esModule: ``
+          esModule: ``,
         },
         codeSampleMainnet: {
           esModule: [],
@@ -3338,7 +3704,7 @@ export const restApiDocsData = [
     "poolName": "SlushPool"
   },
   ...
-]`
+]`,
         },
         codeSampleTestnet: {
           esModule: [],
@@ -3357,7 +3723,7 @@ export const restApiDocsData = [
     "share": 0,
     "poolName": "Binance Pool"
   }
-]`
+]`,
         },
         codeSampleSignet: {
           esModule: [],
@@ -3370,13 +3736,13 @@ export const restApiDocsData = [
     "share": 1,
     "poolName": "Unknown"
   }
-]`
+]`,
         },
         codeSampleLiquid: emptyCodeSample,
         codeSampleLiquidTestnet: emptyCodeSample,
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -3385,7 +3751,8 @@ export const restApiDocsData = [
     fragment: 'get-mining-pool-hashrate',
     title: 'GET Mining Pool Hashrate',
     description: {
-      default: 'Returns all known hashrate data for the mining pool specified by <code>:slug</code>. Hashrate values are weekly averages.'
+      default:
+        'Returns all known hashrate data for the mining pool specified by <code>:slug</code>. Hashrate values are weekly averages.',
     },
     urlString: '/v1/mining/pool/:slug/hashrate',
     showConditions: bitcoinNetworks,
@@ -3395,7 +3762,7 @@ export const restApiDocsData = [
         codeTemplate: {
           curl: `/api/v1/mining/pool/%{1}/hashrate`,
           commonJS: ``,
-          esModule: ``
+          esModule: ``,
         },
         codeSampleMainnet: {
           esModule: [],
@@ -3439,7 +3806,7 @@ export const restApiDocsData = [
     "poolName": "Foundry USA"
   },
   ...
-]`
+]`,
         },
         codeSampleTestnet: {
           esModule: [],
@@ -3465,7 +3832,7 @@ export const restApiDocsData = [
     "poolName": "KnCMiner"
   },
   ...
-]`
+]`,
         },
         codeSampleSignet: {
           esModule: [],
@@ -3491,13 +3858,13 @@ export const restApiDocsData = [
     "poolName": "Unknown"
   },
   ...
-]`
+]`,
         },
         codeSampleLiquid: emptyCodeSample,
         codeSampleLiquidTestnet: emptyCodeSample,
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -3506,7 +3873,8 @@ export const restApiDocsData = [
     fragment: 'get-mining-pool-blocks',
     title: 'GET Mining Pool Blocks',
     description: {
-      default: 'Returns past 10 blocks mined by the specified mining pool (<code>:slug</code>) before the specified <code>:blockHeight</code>. If no <code>:blockHeight</code> is specified, the mining pool\'s 10 most recent blocks are returned.'
+      default:
+        "Returns past 10 blocks mined by the specified mining pool (<code>:slug</code>) before the specified <code>:blockHeight</code>. If no <code>:blockHeight</code> is specified, the mining pool's 10 most recent blocks are returned.",
     },
     urlString: '/v1/mining/pool/:slug/blocks/[:blockHeight]',
     showConditions: bitcoinNetworks,
@@ -3516,12 +3884,12 @@ export const restApiDocsData = [
         codeTemplate: {
           curl: `/api/v1/mining/pool/%{1}/blocks/%{2}`,
           commonJS: ``,
-          esModule: ``
+          esModule: ``,
         },
         codeSampleMainnet: {
           esModule: [],
           commonJS: [],
-          curl: [`luxor`,`730000`],
+          curl: [`luxor`, `730000`],
           response: `[
   {
     "id": "0000000000000000000572c6eb693c51b728593139079c613c8ea0bc6384e362",
@@ -3593,12 +3961,12 @@ export const restApiDocsData = [
     }
   },
   ...
-]`
+]`,
         },
         codeSampleTestnet: {
           esModule: [],
           commonJS: [],
-          curl: [`bitcoincom`,`2226000`],
+          curl: [`bitcoincom`, `2226000`],
           response: `[
   {
     "id": "00000000000000ed428cdb70dfdeb0f3927912131cb96e7b1fe274b1bb1181b2",
@@ -3647,12 +4015,12 @@ export const restApiDocsData = [
     }
   },
   ...
-]`
+]`,
         },
         codeSampleSignet: {
           esModule: [],
           commonJS: [],
-          curl: [`unknown`,`45000`],
+          curl: [`unknown`, `45000`],
           response: `[
   {
     "id": "00000002440c34e403b2b4e10f390ab105c825dd6285cd6f4050db23cf7e3e46",
@@ -3701,13 +4069,13 @@ export const restApiDocsData = [
     }
   },
   ...
-]`
+]`,
         },
         codeSampleLiquid: emptyCodeSample,
         codeSampleLiquidTestnet: emptyCodeSample,
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -3716,7 +4084,10 @@ export const restApiDocsData = [
     fragment: 'get-hashrate',
     title: 'GET Hashrate',
     description: {
-      default: '<p>Returns network-wide hashrate and difficulty figures over the specified trailing <code>:timePeriod</code>:</p><ul><li>Current (real-time) hashrate</li><li>Current (real-time) difficulty</li><li>Historical daily average hashrates</li><li>Historical difficulty</li></ul><p>Valid values for <code>:timePeriod</code> are ' + miningTimeIntervals.substr(52) + '. If no time interval is specified, all available data is returned.</p><p>Be sure that <code>INDEXING_BLOCKS_AMOUNT</code> is set properly in your backend config so that enough blocks are indexed to properly serve your request.</p>'
+      default:
+        '<p>Returns network-wide hashrate and difficulty figures over the specified trailing <code>:timePeriod</code>:</p><ul><li>Current (real-time) hashrate</li><li>Current (real-time) difficulty</li><li>Historical daily average hashrates</li><li>Historical difficulty</li></ul><p>Valid values for <code>:timePeriod</code> are ' +
+        miningTimeIntervals.substr(52) +
+        '. If no time interval is specified, all available data is returned.</p><p>Be sure that <code>INDEXING_BLOCKS_AMOUNT</code> is set properly in your backend config so that enough blocks are indexed to properly serve your request.</p>',
     },
     urlString: '/v1/mining/hashrate/[:timePeriod]',
     showConditions: bitcoinNetworks,
@@ -3726,7 +4097,7 @@ export const restApiDocsData = [
         codeTemplate: {
           curl: `/api/v1/mining/hashrate/3d`,
           commonJS: ``,
-          esModule: ``
+          esModule: ``,
         },
         codeSampleMainnet: {
           esModule: [],
@@ -3756,7 +4127,7 @@ export const restApiDocsData = [
   ],
   "currentHashrate": 252033247355212300000,
   "currentDifficulty": 31251101365711.12
-}`
+}`,
         },
         codeSampleTestnet: {
           esModule: [],
@@ -3786,7 +4157,7 @@ export const restApiDocsData = [
   ],
   "currentHashrate": 781149965464814.4,
   "currentDifficulty": 55580658.55098472
-}`
+}`,
         },
         codeSampleSignet: {
           esModule: [],
@@ -3821,13 +4192,13 @@ export const restApiDocsData = [
   ],
   "currentHashrate": 23490.95654668005,
   "currentDifficulty": 0.00286032350920122
-}`
+}`,
         },
         codeSampleLiquid: emptyCodeSample,
         codeSampleLiquidTestnet: emptyCodeSample,
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -3836,7 +4207,8 @@ export const restApiDocsData = [
     fragment: 'get-reward-stats',
     title: 'GET Reward Stats',
     description: {
-      default: 'Returns block reward and total transactions confirmed for the past <code>:blockCount</code> blocks.'
+      default:
+        'Returns block reward and total transactions confirmed for the past <code>:blockCount</code> blocks.',
     },
     urlString: '/v1/mining/reward-stats/:blockCount',
     showConditions: bitcoinNetworks,
@@ -3846,7 +4218,7 @@ export const restApiDocsData = [
         codeTemplate: {
           curl: `/api/v1/mining/reward-stats/%{1}`,
           commonJS: ``,
-          esModule: ``
+          esModule: ``,
         },
         codeSampleMainnet: {
           esModule: [],
@@ -3858,7 +4230,7 @@ export const restApiDocsData = [
   "totalReward": "63811748254",
   "totalFee": "1311748254",
   "totalTx": "164216"
-}`
+}`,
         },
         codeSampleTestnet: {
           esModule: [],
@@ -3870,7 +4242,7 @@ export const restApiDocsData = [
   "totalReward": "513462793",
   "totalFee": "25181593",
   "totalTx": "2366"
-}`
+}`,
         },
         codeSampleSignet: {
           esModule: [],
@@ -3882,13 +4254,13 @@ export const restApiDocsData = [
   "totalReward": "500001245259",
   "totalFee": "1245259",
   "totalTx": "1112"
-}`
+}`,
         },
         codeSampleLiquid: emptyCodeSample,
         codeSampleLiquidTestnet: emptyCodeSample,
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -3897,7 +4269,10 @@ export const restApiDocsData = [
     fragment: 'get-block-fees',
     title: 'GET Block Fees',
     description: {
-      default: '<p>Returns average total fees for blocks in the specified <code>:timePeriod</code>, ordered oldest to newest. <code>:timePeriod</code> can be any of the following: ' + miningTimeIntervals + '.</p><p>For <code>24h</code> and <code>3d</code> time periods, every block is included and fee amounts are exact (not averages). For the <code>1w</code> time period, fees may be averages depending on how fast blocks were found around a particular timestamp. For other time periods, fees are averages.</p>'
+      default:
+        '<p>Returns average total fees for blocks in the specified <code>:timePeriod</code>, ordered oldest to newest. <code>:timePeriod</code> can be any of the following: ' +
+        miningTimeIntervals +
+        '.</p><p>For <code>24h</code> and <code>3d</code> time periods, every block is included and fee amounts are exact (not averages). For the <code>1w</code> time period, fees may be averages depending on how fast blocks were found around a particular timestamp. For other time periods, fees are averages.</p>',
     },
     urlString: '/v1/mining/blocks/fees/:timePeriod',
     showConditions: bitcoinNetworks,
@@ -3907,7 +4282,7 @@ export const restApiDocsData = [
         codeTemplate: {
           curl: `/api/v1/mining/blocks/fees/%{1}`,
           commonJS: ``,
-          esModule: ``
+          esModule: ``,
         },
         codeSampleMainnet: {
           esModule: [],
@@ -3945,7 +4320,7 @@ export const restApiDocsData = [
     "avgFees": 17620723
   },
   ...
-]`
+]`,
         },
         codeSampleTestnet: {
           esModule: [],
@@ -3963,7 +4338,7 @@ export const restApiDocsData = [
     "avgFees": 2565952
   },
   ...
-]`
+]`,
         },
         codeSampleSignet: {
           esModule: [],
@@ -3981,13 +4356,13 @@ export const restApiDocsData = [
     "avgFees": 1224
   },
   ...
-]`
+]`,
         },
         codeSampleLiquid: emptyCodeSample,
         codeSampleLiquidTestnet: emptyCodeSample,
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -3996,7 +4371,10 @@ export const restApiDocsData = [
     fragment: 'get-block-rewards',
     title: 'GET Block Rewards',
     description: {
-      default: '<p>Returns average block rewards for blocks in the specified <code>:timePeriod</code>, ordered oldest to newest. <code>:timePeriod</code> can be any of the following: ' + miningTimeIntervals + '.</p><p>For <code>24h</code> and <code>3d</code> time periods, every block is included and block rewards are exact (not averages). For the <code>1w</code> time period, block rewards may be averages depending on how fast blocks were found around a particular timestamp. For other time periods, block rewards are averages.</p>'
+      default:
+        '<p>Returns average block rewards for blocks in the specified <code>:timePeriod</code>, ordered oldest to newest. <code>:timePeriod</code> can be any of the following: ' +
+        miningTimeIntervals +
+        '.</p><p>For <code>24h</code> and <code>3d</code> time periods, every block is included and block rewards are exact (not averages). For the <code>1w</code> time period, block rewards may be averages depending on how fast blocks were found around a particular timestamp. For other time periods, block rewards are averages.</p>',
     },
     urlString: '/v1/mining/blocks/rewards/:timePeriod',
     showConditions: bitcoinNetworks,
@@ -4006,7 +4384,7 @@ export const restApiDocsData = [
         codeTemplate: {
           curl: `/api/v1/mining/blocks/rewards/%{1}`,
           commonJS: ``,
-          esModule: ``
+          esModule: ``,
         },
         codeSampleMainnet: {
           esModule: [],
@@ -4039,7 +4417,7 @@ export const restApiDocsData = [
     "avgRewards": 638709605
   },
   ...
-]`
+]`,
         },
         codeSampleTestnet: {
           esModule: [],
@@ -4057,7 +4435,7 @@ export const restApiDocsData = [
     "avgRewards": 5000091820
   },
   ...
-]`
+]`,
         },
         codeSampleSignet: {
           esModule: [],
@@ -4075,13 +4453,13 @@ export const restApiDocsData = [
     "avgRewards": 5000000000
   },
   ...
-]`
+]`,
         },
         codeSampleLiquid: emptyCodeSample,
         codeSampleLiquidTestnet: emptyCodeSample,
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -4090,7 +4468,10 @@ export const restApiDocsData = [
     fragment: 'get-block-feerates',
     title: 'GET Block Feerates',
     description: {
-      default: 'Returns average feerate percentiles for blocks in the specified <code>:timePeriod</code>, ordered oldest to newest. <code>:timePeriod</code> can be any of the following: ' + miningTimeIntervals + '.</p><p>For <code>24h</code> and <code>3d</code> time periods, every block is included and percentiles are exact (not averages). For the <code>1w</code> time period, percentiles may be averages depending on how fast blocks were found around a particular timestamp. For other time periods, percentiles are averages.'
+      default:
+        'Returns average feerate percentiles for blocks in the specified <code>:timePeriod</code>, ordered oldest to newest. <code>:timePeriod</code> can be any of the following: ' +
+        miningTimeIntervals +
+        '.</p><p>For <code>24h</code> and <code>3d</code> time periods, every block is included and percentiles are exact (not averages). For the <code>1w</code> time period, percentiles may be averages depending on how fast blocks were found around a particular timestamp. For other time periods, percentiles are averages.',
     },
     urlString: '/v1/mining/blocks/fee-rates/:timePeriod',
     showConditions: bitcoinNetworks,
@@ -4100,7 +4481,7 @@ export const restApiDocsData = [
         codeTemplate: {
           curl: `/api/v1/mining/blocks/fee-rates/%{1}`,
           commonJS: ``,
-          esModule: ``
+          esModule: ``,
         },
         codeSampleMainnet: {
           esModule: [],
@@ -4141,7 +4522,7 @@ export const restApiDocsData = [
     "avgFee_100": 251
   },
   ...
-]`
+]`,
         },
         codeSampleTestnet: {
           esModule: [],
@@ -4171,7 +4552,7 @@ export const restApiDocsData = [
     "avgFee_100": 102
   },
   ...
-]`
+]`,
         },
         codeSampleSignet: {
           esModule: [],
@@ -4202,13 +4583,13 @@ export const restApiDocsData = [
     "avgFee_100": 1
   },
   ...
-]`
+]`,
         },
         codeSampleLiquid: emptyCodeSample,
         codeSampleLiquidTestnet: emptyCodeSample,
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -4217,7 +4598,10 @@ export const restApiDocsData = [
     fragment: 'get-sizes-weights',
     title: 'GET Block Sizes and Weights',
     description: {
-      default: '<p>Returns average size (bytes) and average weight (weight units) for blocks in the specified <code>:timePeriod</code>, ordered oldest to newest. <code>:timePeriod</code> can be any of the following: ' + miningTimeIntervals + '.</p><p>For <code>24h</code> and <code>3d</code> time periods, every block is included and figures are exact (not averages). For the <code>1w</code> time period, figures may be averages depending on how fast blocks were found around a particular timestamp. For other time periods, figures are averages.</p>'
+      default:
+        '<p>Returns average size (bytes) and average weight (weight units) for blocks in the specified <code>:timePeriod</code>, ordered oldest to newest. <code>:timePeriod</code> can be any of the following: ' +
+        miningTimeIntervals +
+        '.</p><p>For <code>24h</code> and <code>3d</code> time periods, every block is included and figures are exact (not averages). For the <code>1w</code> time period, figures may be averages depending on how fast blocks were found around a particular timestamp. For other time periods, figures are averages.</p>',
     },
     urlString: '/v1/mining/blocks/sizes-weights/:timePeriod',
     showConditions: bitcoinNetworks,
@@ -4227,7 +4611,7 @@ export const restApiDocsData = [
         codeTemplate: {
           curl: `/api/v1/mining/blocks/sizes-weights/%{1}`,
           commonJS: ``,
-          esModule: ``
+          esModule: ``,
         },
         codeSampleMainnet: {
           esModule: [],
@@ -4280,7 +4664,7 @@ export const restApiDocsData = [
     },
     ...
   ]
-}`
+}`,
         },
         codeSampleTestnet: {
           esModule: [],
@@ -4313,7 +4697,7 @@ export const restApiDocsData = [
     },
     ...
   ]
-}`
+}`,
         },
         codeSampleSignet: {
           esModule: [],
@@ -4346,20 +4730,20 @@ export const restApiDocsData = [
     },
     ...
   ]
-}`
+}`,
         },
         codeSampleLiquid: emptyCodeSample,
         codeSampleLiquidTestnet: emptyCodeSample,
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'category',
     category: 'fees',
     fragment: 'fees',
     title: 'Fees',
-    showConditions: bitcoinNetworks.concat(liquidNetworks)
+    showConditions: bitcoinNetworks.concat(liquidNetworks),
   },
   {
     type: 'endpoint',
@@ -4368,7 +4752,7 @@ export const restApiDocsData = [
     fragment: 'get-mempool-blocks-fees',
     title: 'GET Mempool Blocks Fees',
     description: {
-      default: 'Returns current mempool as projected blocks.'
+      default: 'Returns current mempool as projected blocks.',
     },
     urlString: '/v1/fees/mempool-blocks',
     showConditions: bitcoinNetworks.concat(liquidNetworks),
@@ -4413,7 +4797,7 @@ export const restApiDocsData = [
       302.11480362537765
     ]
   }
-]`
+]`,
         },
         codeSampleTestnet: {
           esModule: [],
@@ -4437,7 +4821,7 @@ export const restApiDocsData = [
       5.0271041369472185
     ]
   }
-]`
+]`,
         },
         codeSampleSignet: {
           esModule: [],
@@ -4461,7 +4845,7 @@ export const restApiDocsData = [
       1.3123359580052494
     ]
   }
-]`
+]`,
         },
         codeSampleLiquid: {
           esModule: [],
@@ -4485,7 +4869,7 @@ export const restApiDocsData = [
       0.1882045417415455
     ]
   }
-]`
+]`,
         },
         codeSampleLiquidTestnet: {
           esModule: [],
@@ -4509,11 +4893,11 @@ export const restApiDocsData = [
       0.11385199240986717
     ]
   }
-]`
+]`,
         },
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -4522,7 +4906,7 @@ export const restApiDocsData = [
     fragment: 'get-recommended-fees',
     title: 'GET Recommended Fees',
     description: {
-      default: 'Returns our currently suggested fees for new transactions.'
+      default: 'Returns our currently suggested fees for new transactions.',
     },
     urlString: '/v1/fees/recommended',
     showConditions: bitcoinNetworks.concat(liquidNetworks),
@@ -4555,7 +4939,7 @@ export const restApiDocsData = [
   hourFee: 1,
   economyFee: 1,
   minimumFee: 1
-}`
+}`,
         },
         codeSampleTestnet: {
           esModule: [],
@@ -4567,7 +4951,7 @@ export const restApiDocsData = [
   hourFee: 1,
   economyFee: 1,
   minimumFee: 1
-}`
+}`,
         },
         codeSampleSignet: {
           esModule: [],
@@ -4579,7 +4963,7 @@ export const restApiDocsData = [
   hourFee: 1,
   economyFee: 1,
   minimumFee: 1
-}`
+}`,
         },
         codeSampleLiquid: {
           esModule: [],
@@ -4591,7 +4975,7 @@ export const restApiDocsData = [
   hourFee: 0.1,
   economyFee: 0.1,
   minimumFee: 0.1
-}`
+}`,
         },
         codeSampleLiquidTestnet: {
           esModule: [],
@@ -4603,18 +4987,18 @@ export const restApiDocsData = [
   hourFee: 0.1,
   economyFee: 0.1,
   minimumFee: 0.1
-}`
+}`,
         },
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'category',
     category: 'mempool',
     fragment: 'mempool',
     title: 'Mempool',
-    showConditions: bitcoinNetworks.concat(liquidNetworks)
+    showConditions: bitcoinNetworks.concat(liquidNetworks),
   },
   {
     type: 'endpoint',
@@ -4623,7 +5007,7 @@ export const restApiDocsData = [
     fragment: 'get-mempool',
     title: 'GET Mempool',
     description: {
-      default: 'Returns current mempool backlog statistics.'
+      default: 'Returns current mempool backlog statistics.',
     },
     urlString: '/mempool',
     showConditions: bitcoinNetworks.concat(liquidNetworks),
@@ -4655,7 +5039,7 @@ export const restApiDocsData = [
   vsize: 1891542,
   total_fee: 20317481,
   fee_histogram: []
-}`
+}`,
         },
         codeSampleTestnet: {
           esModule: [],
@@ -4671,7 +5055,7 @@ export const restApiDocsData = [
       2692
     ]
   ]
-}`
+}`,
         },
         codeSampleSignet: {
           esModule: [],
@@ -4687,7 +5071,7 @@ export const restApiDocsData = [
       8008
     ]
   ]
-}`
+}`,
         },
         codeSampleLiquid: {
           esModule: [],
@@ -4698,7 +5082,7 @@ export const restApiDocsData = [
   vsize: 0,
   total_fee: 0,
   fee_histogram: [ ]
-}`
+}`,
         },
         codeSampleLiquidTestnet: {
           esModule: [],
@@ -4714,11 +5098,11 @@ export const restApiDocsData = [
       20457
     ]
   ]
-}`
+}`,
         },
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -4727,7 +5111,8 @@ export const restApiDocsData = [
     fragment: 'get-mempool-transaction-ids',
     title: 'GET Mempool Transaction IDs',
     description: {
-      default: 'Get the full list of txids in the mempool as an array. The order of the txids is arbitrary and does not match bitcoind.'
+      default:
+        'Get the full list of txids in the mempool as an array. The order of the txids is arbitrary and does not match bitcoind.',
     },
     urlString: '/mempool/txids',
     showConditions: bitcoinNetworks.concat(liquidNetworks),
@@ -4759,7 +5144,7 @@ export const restApiDocsData = [
   "4a3ebe804f273b4c7a96e63f6b963e812ef7e6e0e8381c2d662715bcf5bfa846",
   "1ef9df26fab649183b591d148011ce809756f9cd9e6be3d383e80808b1929724",
   ...
-]`
+]`,
         },
         codeSampleTestnet: {
           esModule: [],
@@ -4771,7 +5156,7 @@ export const restApiDocsData = [
   "c4c0630b18e910be0a70ebd5d4897b379168b0f357a6536188a28e38d2cf8b43",
   "c6c9c44ca17ff8c1ebfe27978e57277be6098f0fb5129840370c013fe503db24",
   ...
-]`
+]`,
         },
         codeSampleSignet: {
           esModule: [],
@@ -4783,7 +5168,7 @@ export const restApiDocsData = [
   "b7cd3be4de533db392bb5bd8aaedd8b25607514502c60c0c6d54358931a6d95f",
   "7786de8ee4fe0b11410658866800b90e5a798e3721dd6031c6b5094474bd80c1",
   ...
-]`
+]`,
         },
         codeSampleLiquid: {
           esModule: [],
@@ -4791,7 +5176,7 @@ export const restApiDocsData = [
           curl: [],
           response: `[
   "f3f3acdaa6a823efcbbbbcc607ec4d1c2c40d618135ec09d8ed96e4d9b37db38"
-]`
+]`,
         },
         codeSampleLiquidTestnet: {
           esModule: [],
@@ -4801,11 +5186,11 @@ export const restApiDocsData = [
   "b644716cb1aeb3e6e9fb4258b0b95dfad8b8e4cd1ec8649bf1116a500cc870e5",
   "3ab8bc068ee05c1114647dc5196b3b954b00e5af3b03d470d1ef8a8953737357",
   "dfbe66e6e71e775c9529a822c14286de0ee1066c2760a53552615d05e17006f3"
-]`
+]`,
         },
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -4814,7 +5199,8 @@ export const restApiDocsData = [
     fragment: 'get-mempool-recent',
     title: 'GET Mempool Recent',
     description: {
-      default: 'Get a list of the last 10 transactions to enter the mempool. Each transaction object contains simplified overview data, with the following fields: <code>txid</code>, <code>fee</code>, <code>vsize</code>, and <code>value</code>.'
+      default:
+        'Get a list of the last 10 transactions to enter the mempool. Each transaction object contains simplified overview data, with the following fields: <code>txid</code>, <code>fee</code>, <code>vsize</code>, and <code>value</code>.',
     },
     urlString: '/mempool/recent',
     showConditions: bitcoinNetworks.concat(liquidNetworks),
@@ -4849,7 +5235,7 @@ export const restApiDocsData = [
     value: 4972029
   },
   ...
-]`
+]`,
         },
         codeSampleTestnet: {
           esModule: [],
@@ -4863,7 +5249,7 @@ export const restApiDocsData = [
     value: 944960
   },
   ...
-]`
+]`,
         },
         codeSampleSignet: {
           esModule: [],
@@ -4877,7 +5263,7 @@ export const restApiDocsData = [
     value: 4369990908
   },
   ...
-]`
+]`,
         },
         codeSampleLiquid: {
           esModule: [],
@@ -4890,7 +5276,7 @@ export const restApiDocsData = [
     vsize: 2515
   },
   ...
-]`
+]`,
         },
         codeSampleLiquidTestnet: {
           esModule: [],
@@ -4908,18 +5294,18 @@ export const restApiDocsData = [
     vsize: 1379
   },
   ...
-]`
+]`,
         },
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'category',
     category: 'transactions',
     fragment: 'transactions',
     title: 'Transactions',
-    showConditions: bitcoinNetworks.concat(liquidNetworks).concat(['bisq'])
+    showConditions: bitcoinNetworks.concat(liquidNetworks).concat(['bisq']),
   },
   {
     type: 'endpoint',
@@ -4928,7 +5314,8 @@ export const restApiDocsData = [
     fragment: 'get-cpfp',
     title: 'GET Children Pay for Parent',
     description: {
-      default: 'Returns the ancestors and the best descendant fees for a transaction.'
+      default:
+        'Returns the ancestors and the best descendant fees for a transaction.',
     },
     urlString: '/v1/fees/cpfp',
     showConditions: bitcoinNetworks.concat(liquidNetworks),
@@ -4957,35 +5344,35 @@ export const restApiDocsData = [
           esModule: ['txid'],
           commonJS: ['txid'],
           curl: ['txid'],
-          response: ``
+          response: ``,
         },
         codeSampleTestnet: {
           esModule: ['txid'],
           commonJS: ['txid'],
           curl: ['txid'],
-          response: ``
+          response: ``,
         },
         codeSampleSignet: {
           esModule: ['txid'],
           commonJS: ['txid'],
           curl: ['txid'],
-          response: ``
+          response: ``,
         },
         codeSampleLiquid: {
           esModule: ['txid'],
           commonJS: ['txid'],
           curl: ['txid'],
-          response: ``
+          response: ``,
         },
         codeSampleLiquidTestnet: {
           esModule: ['txid'],
           commonJS: ['txid'],
           curl: ['txid'],
-          response: ``
+          response: ``,
         },
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -4994,7 +5381,8 @@ export const restApiDocsData = [
     fragment: 'get-transaction',
     title: 'GET Transaction',
     description: {
-      default: 'Returns details about a transaction. Available fields: <code>txid</code>, <code>version</code>, <code>locktime</code>, <code>size</code>, <code>weight</code>, <code>fee</code>, <code>vin</code>, <code>vout</code>, and <code>status</code>.'
+      default:
+        'Returns details about a transaction. Available fields: <code>txid</code>, <code>version</code>, <code>locktime</code>, <code>size</code>, <code>weight</code>, <code>fee</code>, <code>vin</code>, <code>vout</code>, and <code>status</code>.',
     },
     urlString: '/tx/:txid',
     showConditions: bitcoinNetworks.concat(liquidNetworks).concat(['bisq']),
@@ -5020,9 +5408,15 @@ export const restApiDocsData = [
           `,
         },
         codeSampleMainnet: {
-          esModule: ['15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521'],
-          commonJS: ['15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521'],
-          curl: ['15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521'],
+          esModule: [
+            '15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521',
+          ],
+          commonJS: [
+            '15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521',
+          ],
+          curl: [
+            '15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521',
+          ],
           response: `{
   txid: "15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521",
   version: 1,
@@ -5038,12 +5432,18 @@ export const restApiDocsData = [
     block_hash: "0000000000000000139385d7aa78ffb45469e0c715b8d6ea6cb2ffa98acc7171",
     block_time: 1435754650
   }
-}`
+}`,
         },
         codeSampleTestnet: {
-          esModule: ['eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d'],
-          commonJS: ['eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d'],
-          curl: ['eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d'],
+          esModule: [
+            'eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d',
+          ],
+          commonJS: [
+            'eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d',
+          ],
+          curl: [
+            'eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d',
+          ],
           response: `{
   txid: "eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d",
   version: 2,
@@ -5059,12 +5459,18 @@ export const restApiDocsData = [
     block_hash: "000000000000004d36632fda8180ff16855d606e5515aab0750d9d4fe55fe7d6",
     block_time: 1630648992
   }
-}`
+}`,
         },
         codeSampleSignet: {
-          esModule: ['fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025'],
-          commonJS: ['fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025'],
-          curl: ['fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025'],
+          esModule: [
+            'fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025',
+          ],
+          commonJS: [
+            'fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025',
+          ],
+          curl: [
+            'fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025',
+          ],
           response: `{
   txid: "fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025",
   version: 2,
@@ -5080,12 +5486,18 @@ export const restApiDocsData = [
     block_hash: "0000012a49f15fdbec49f647800d26dabc4027ade9739f398f618d167128b225",
     block_time: 1630648988
   }
-}`
+}`,
         },
         codeSampleLiquid: {
-          esModule: [`801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a`],
-          commonJS: [`801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a`],
-          curl: [`801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a`],
+          esModule: [
+            `801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a`,
+          ],
+          commonJS: [
+            `801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a`,
+          ],
+          curl: [
+            `801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a`,
+          ],
           response: `{
   txid: "801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a",
   version: 2,
@@ -5104,9 +5516,15 @@ export const restApiDocsData = [
 }`,
         },
         codeSampleLiquidTestnet: {
-          esModule: [`59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4`],
-          commonJS: [`59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4`],
-          curl: [`59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4`],
+          esModule: [
+            `59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4`,
+          ],
+          commonJS: [
+            `59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4`,
+          ],
+          curl: [
+            `59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4`,
+          ],
           response: `{
   txid: "59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4",
   version: 2,
@@ -5125,9 +5543,15 @@ export const restApiDocsData = [
 }`,
         },
         codeSampleBisq: {
-          esModule: [`98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`],
-          commonJS: [`98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`],
-          curl: [`98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`],
+          esModule: [
+            `98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`,
+          ],
+          commonJS: [
+            `98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`,
+          ],
+          curl: [
+            `98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`,
+          ],
           response: `{
   txid: "98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e",
   version: 1,
@@ -5145,8 +5569,8 @@ export const restApiDocsData = [
   }
 }`,
         },
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -5155,7 +5579,7 @@ export const restApiDocsData = [
     fragment: 'get-transaction-hex',
     title: 'GET Transaction Hex',
     description: {
-      default: 'Returns a transaction serialized as hex.'
+      default: 'Returns a transaction serialized as hex.',
     },
     urlString: '/tx/:txid/hex',
     showConditions: bitcoinNetworks.concat(liquidNetworks),
@@ -5181,42 +5605,78 @@ export const restApiDocsData = [
           `,
         },
         codeSampleMainnet: {
-          esModule: ['15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521'],
-          commonJS: ['15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521'],
-          curl: ['15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521'],
-          response: `010000000536a007284bd52ee826680a7f43536472f1bcce1e76cd76b826b88c5884eddf1f0c0000006b483045022100bcdf40fb3b5ebfa2c158ac8d1a41c03eb3dba4e180b00e81836bafd56d946efd022005cc40e35022b614275c1e485c409599667cbd41f6e5d78f421cb260a020a24f01210255ea3f53ce3ed1ad2c08dfc23b211b15b852afb819492a9a0f3f99e5747cb5f0ffffffffee08cb90c4e84dd7952b2cfad81ed3b088f5b...`
+          esModule: [
+            '15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521',
+          ],
+          commonJS: [
+            '15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521',
+          ],
+          curl: [
+            '15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521',
+          ],
+          response: `010000000536a007284bd52ee826680a7f43536472f1bcce1e76cd76b826b88c5884eddf1f0c0000006b483045022100bcdf40fb3b5ebfa2c158ac8d1a41c03eb3dba4e180b00e81836bafd56d946efd022005cc40e35022b614275c1e485c409599667cbd41f6e5d78f421cb260a020a24f01210255ea3f53ce3ed1ad2c08dfc23b211b15b852afb819492a9a0f3f99e5747cb5f0ffffffffee08cb90c4e84dd7952b2cfad81ed3b088f5b...`,
         },
         codeSampleTestnet: {
-          esModule: ['eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d'],
-          commonJS: ['eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d'],
-          curl: ['eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d'],
-          response: `0200000000010146c398e70cceaf9d8f734e603bc53e4c4c0605ab46cb1b5807a62c90f5aed50d0100000000feffffff023c0fc10c010000001600145033f65b590f2065fe55414213f1d25ab20b6c4f487d1700000000001600144b812d5ef41fc433654d186463d41b458821ff740247304402202438dc18801919baa64eb18f7e925a...`
+          esModule: [
+            'eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d',
+          ],
+          commonJS: [
+            'eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d',
+          ],
+          curl: [
+            'eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d',
+          ],
+          response: `0200000000010146c398e70cceaf9d8f734e603bc53e4c4c0605ab46cb1b5807a62c90f5aed50d0100000000feffffff023c0fc10c010000001600145033f65b590f2065fe55414213f1d25ab20b6c4f487d1700000000001600144b812d5ef41fc433654d186463d41b458821ff740247304402202438dc18801919baa64eb18f7e925a...`,
         },
         codeSampleSignet: {
-          esModule: ['fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025'],
-          commonJS: ['fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025'],
-          curl: ['fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025'],
-          response: `02000000000101b7913f140f19850975352064a7ccfd7e96e1ed9a847c463309839a37c9d01e530000000000ffffffff017d65a61d000000002200204ae81572f06e1b88fd5ced7a1a000945432e83e1551e6f721ee9c00b8cc3326001015100000000`
+          esModule: [
+            'fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025',
+          ],
+          commonJS: [
+            'fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025',
+          ],
+          curl: [
+            'fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025',
+          ],
+          response: `02000000000101b7913f140f19850975352064a7ccfd7e96e1ed9a847c463309839a37c9d01e530000000000ffffffff017d65a61d000000002200204ae81572f06e1b88fd5ced7a1a000945432e83e1551e6f721ee9c00b8cc3326001015100000000`,
         },
         codeSampleLiquid: {
-          esModule: [`801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a`],
-          commonJS: [`801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a`],
-          curl: [`801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a`],
+          esModule: [
+            `801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a`,
+          ],
+          commonJS: [
+            `801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a`,
+          ],
+          curl: [
+            `801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a`,
+          ],
           response: `020000000101730fb6b65e115f4ec15690b3539311becd3ef8d1ed4c2b7e53ec3934b4254f65010000001716001436b178e63ed841263f7b82a97d2e783791394432feffffff020b5ff1f5c8059fc270bdeb196c5f38e3da2de8fd9034c34427b70fa66d2f388efe083745b65e4c6e029b020d74df709c5842737c4d50873ef4ec8e0579a3c41f09130274bf768af8b1c462b1e5b7ffb1bb496a019a0ed090e4ce26283a946542280c6f17a...`,
         },
         codeSampleLiquidTestnet: {
-          esModule: [`59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4`],
-          commonJS: [`59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4`],
-          curl: [`59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4`],
+          esModule: [
+            `59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4`,
+          ],
+          commonJS: [
+            `59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4`,
+          ],
+          curl: [
+            `59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4`,
+          ],
           response: `020000000102fa567669f73a314138aa6dbe74e3935612895df273d20ccbbedbecd44a04d3ce0000000000fdffffff8412fed07b8316dd4304df90af6f20292d3b2950133711c0ee43eb94fe12cc4f0100000000fdffffff040b801035010192095b8d9316f28450e98a85c915994c3f80ecc493adf505d73e9609a51e48bc0f35e34f88c482654d659fa779dcbf0457dc71053f3edcf76bd3667f03821ffcc4fc4ae5c2668685fec678e4...`,
         },
         codeSampleBisq: {
-          esModule: [`98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`],
-          commonJS: [`98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`],
-          curl: [`98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`],
+          esModule: [
+            `98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`,
+          ],
+          commonJS: [
+            `98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`,
+          ],
+          curl: [
+            `98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`,
+          ],
           response: `0100000000010222ae3642a9300262f6e730e8bfb7979b15852c8836f3835beef9cd58c464e5f70000000000ffffffff22ae3642a9300262f6e730e8bfb7979b15852c8836f3835beef9cd58c464e5f70200000000ffffffff03de0900000000000016001490f9ee145d7b1c9352b793350741da97f3e4d795aca80500000000001600144168859b4b74a09277969fb8152115aea9d33a159c960600000000001600146534b1859209d8ae8f1a8...`,
         },
-      }
+      },
     },
   },
   {
@@ -5226,7 +5686,8 @@ export const restApiDocsData = [
     fragment: 'get-transaction-merkleblock-proof',
     title: 'GET Transaction Merkleblock Proof',
     description: {
-      default: 'Returns a merkle inclusion proof for the transaction using <a href=\'https://bitcoin.org/en/glossary/merkle-block\'>bitcoind\'s merkleblock</a> format.'
+      default:
+        "Returns a merkle inclusion proof for the transaction using <a href='https://bitcoin.org/en/glossary/merkle-block'>bitcoind's merkleblock</a> format.",
     },
     urlString: '/tx/:txid/merkleblock-proof',
     showConditions: bitcoinNetworks,
@@ -5252,33 +5713,57 @@ export const restApiDocsData = [
           `,
         },
         codeSampleMainnet: {
-          esModule: ['15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521'],
-          commonJS: ['15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521'],
-          curl: ['15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521'],
-          response: `0300000058f6dd09ac5aea942c01d12e75b351e73f4304cc442741000000000000000000ef0c2fa8517414b742094a020da7eba891b47d660ef66f126ad01e5be99a2fd09ae093558e411618c14240df820700000ce4d15e17594f257b22d1ddf47d07b3b88779a8374fcd515ad883d79726c6027da6abfcbc1341a049b30277d3bf14e4663...`
+          esModule: [
+            '15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521',
+          ],
+          commonJS: [
+            '15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521',
+          ],
+          curl: [
+            '15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521',
+          ],
+          response: `0300000058f6dd09ac5aea942c01d12e75b351e73f4304cc442741000000000000000000ef0c2fa8517414b742094a020da7eba891b47d660ef66f126ad01e5be99a2fd09ae093558e411618c14240df820700000ce4d15e17594f257b22d1ddf47d07b3b88779a8374fcd515ad883d79726c6027da6abfcbc1341a049b30277d3bf14e4663...`,
         },
         codeSampleTestnet: {
-          esModule: ['eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d'],
-          commonJS: ['eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d'],
-          curl: ['eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d'],
-          response: `0000602002bf77bbb098f90f149430c314e71ef4e2671ea5e04a2503e0000000000000000406ffb54f2925360aae81bd3199f456928bbe6ae83a877902da9d9ffb08215da0ba3161ffff001a545a850bb80000000906e0c62f68fdf4865a46889e2e12d66f03cc537225d612aa77b08a38936b4d435d73544598d93174314d75e5833...`
+          esModule: [
+            'eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d',
+          ],
+          commonJS: [
+            'eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d',
+          ],
+          curl: [
+            'eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d',
+          ],
+          response: `0000602002bf77bbb098f90f149430c314e71ef4e2671ea5e04a2503e0000000000000000406ffb54f2925360aae81bd3199f456928bbe6ae83a877902da9d9ffb08215da0ba3161ffff001a545a850bb80000000906e0c62f68fdf4865a46889e2e12d66f03cc537225d612aa77b08a38936b4d435d73544598d93174314d75e5833...`,
         },
         codeSampleSignet: {
-          esModule: ['fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025'],
-          commonJS: ['fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025'],
-          curl: ['fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025'],
-          response: `00000020d356e0a14120d45653120a7bd53280ffce2aa2ced301682a1f2867687f000000298ef149a1675866dbdde315b22c24c63fd7670fdc5b86b588007fa187fa85089cba31619356011eaedd8800180000000656e9b938241cb350316cd9155167f3bce7370aa1095143c304ef7a44da4984e02550c48f3e01648dd65f5e3e290432c...`
+          esModule: [
+            'fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025',
+          ],
+          commonJS: [
+            'fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025',
+          ],
+          curl: [
+            'fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025',
+          ],
+          response: `00000020d356e0a14120d45653120a7bd53280ffce2aa2ced301682a1f2867687f000000298ef149a1675866dbdde315b22c24c63fd7670fdc5b86b588007fa187fa85089cba31619356011eaedd8800180000000656e9b938241cb350316cd9155167f3bce7370aa1095143c304ef7a44da4984e02550c48f3e01648dd65f5e3e290432c...`,
         },
         codeSampleLiquid: emptyCodeSample,
         codeSampleLiquidTestnet: emptyCodeSample,
         codeSampleBisq: {
-          esModule: [`98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`],
-          commonJS: [`98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`],
-          curl: [`98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`],
+          esModule: [
+            `98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`,
+          ],
+          commonJS: [
+            `98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`,
+          ],
+          curl: [
+            `98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`,
+          ],
           response: `04000020e05c5f176bdb7966b44388ca223bef6e548fb390a9f202000000000000000000f10d5017f8e98200ea6e9d9a90d48e8078a49f2ee1da2cae9f80f48a0badfdaaeaad3161a0fa0f174d163a5daa0400000c77d2b87749e72de52feacaab57134c40172ae247c9de1f8f180736a8ef64a024542ab6b22b2c1fc961eae3d7d7d6c5f...`,
         },
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -5287,7 +5772,8 @@ export const restApiDocsData = [
     fragment: 'get-transaction-merkle-proof',
     title: 'GET Transaction Merkle Proof',
     description: {
-      default: 'Returns a merkle inclusion proof for the transaction using <a href=\'https://electrumx.readthedocs.io/en/latest/protocol-methods.html#blockchain-transaction-get-merkle\'>Electrum\'s blockchain.transaction.get_merkle format.'
+      default:
+        "Returns a merkle inclusion proof for the transaction using <a href='https://electrumx.readthedocs.io/en/latest/protocol-methods.html#blockchain-transaction-get-merkle'>Electrum's blockchain.transaction.get_merkle format.",
     },
     urlString: '/tx/:txid/merkle-proof',
     showConditions: bitcoinNetworks.concat(liquidNetworks),
@@ -5313,9 +5799,15 @@ export const restApiDocsData = [
           `,
         },
         codeSampleMainnet: {
-          esModule: ['15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521'],
-          commonJS: ['15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521'],
-          curl: ['15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521'],
+          esModule: [
+            '15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521',
+          ],
+          commonJS: [
+            '15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521',
+          ],
+          curl: [
+            '15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521',
+          ],
           response: `{
   block_height: 363348,
   merkle: [
@@ -5332,12 +5824,18 @@ export const restApiDocsData = [
     "7d02c62697d783d85a51cd4f37a87987b8b3077df4ddd1227b254f59175ed1e4"
   ],
   pos: 1465
-}`
+}`,
         },
         codeSampleTestnet: {
-          esModule: ['eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d'],
-          commonJS: ['eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d'],
-          curl: ['eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d'],
+          esModule: [
+            'eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d',
+          ],
+          commonJS: [
+            'eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d',
+          ],
+          curl: [
+            'eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d',
+          ],
           response: `{
   block_height: 2091199,
   merkle: [
@@ -5351,12 +5849,18 @@ export const restApiDocsData = [
     "e0d2733bd7bce4e5690b71bc8f7cedb1edbc49a5ff85c3678ecdec894ea1c023"
   ],
   pos: 1
-}`
+}`,
         },
         codeSampleSignet: {
-          esModule: ['fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025'],
-          commonJS: ['fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025'],
-          curl: ['fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025'],
+          esModule: [
+            'fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025',
+          ],
+          commonJS: [
+            'fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025',
+          ],
+          curl: [
+            'fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025',
+          ],
           response: `{
   block_height: 53788,
   merkle: [
@@ -5367,12 +5871,18 @@ export const restApiDocsData = [
     "76a86eb801f1884b99389af3cd41a7994679c3f93c53f9fcf0505ab1340b329f"
   ],
   pos: 1
-}`
+}`,
         },
         codeSampleLiquid: {
-          esModule: ['801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a'],
-          commonJS: ['801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a'],
-          curl: ['801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a'],
+          esModule: [
+            '801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a',
+          ],
+          commonJS: [
+            '801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a',
+          ],
+          curl: [
+            '801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a',
+          ],
           response: `{
   block_height: 1472366,
   merkle: [
@@ -5383,9 +5893,15 @@ export const restApiDocsData = [
 }`,
         },
         codeSampleLiquidTestnet: {
-          esModule: ['59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4'],
-          commonJS: ['59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4'],
-          curl: ['59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4'],
+          esModule: [
+            '59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4',
+          ],
+          commonJS: [
+            '59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4',
+          ],
+          curl: [
+            '59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4',
+          ],
           response: `{
   block_height: 168765,
   merkle: [
@@ -5395,9 +5911,15 @@ export const restApiDocsData = [
 }`,
         },
         codeSampleBisq: {
-          esModule: [`98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`],
-          commonJS: [`98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`],
-          curl: [`98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`],
+          esModule: [
+            `98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`,
+          ],
+          commonJS: [
+            `98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`,
+          ],
+          curl: [
+            `98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`,
+          ],
           response: `{
   block_height: 698788,
   merkle: [
@@ -5416,8 +5938,8 @@ export const restApiDocsData = [
   pos: 546
 }`,
         },
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -5426,7 +5948,8 @@ export const restApiDocsData = [
     fragment: 'get-transaction-outspend',
     title: 'GET Transaction Outspend',
     description: {
-      default: 'Returns the spending status of a transaction output. Available fields: <code>spent</code> (boolean), <code>txid</code> (optional), <code>vin</code> (optional), and <code>status</code> (optional, the status of the spending tx).'
+      default:
+        'Returns the spending status of a transaction output. Available fields: <code>spent</code> (boolean), <code>txid</code> (optional), <code>vin</code> (optional), and <code>status</code> (optional, the status of the spending tx).',
     },
     urlString: '/tx/:txid/outspend/:vout',
     showConditions: bitcoinNetworks.concat(liquidNetworks),
@@ -5458,9 +5981,18 @@ export const restApiDocsData = [
           `,
         },
         codeSampleMainnet: {
-          esModule: ['15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521', '3'],
-          commonJS: ['15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521', '3'],
-          curl: ['15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521', '3'],
+          esModule: [
+            '15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521',
+            '3',
+          ],
+          commonJS: [
+            '15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521',
+            '3',
+          ],
+          curl: [
+            '15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521',
+            '3',
+          ],
           response: `{
   spent: true,
   txid: "2a1b8ec06d68096911da82b02806c3848c415b0044a0046850c4a97cbffac7b1",
@@ -5471,12 +6003,21 @@ export const restApiDocsData = [
     block_hash: "000000000000000012e6130dec174ca877bf39ead6e3d04a8ba3b0cd683c1661",
     block_time: 1435758032
   }
-}`
+}`,
         },
         codeSampleTestnet: {
-          esModule: ['eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d', '0'],
-          commonJS: ['eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d', '0'],
-          curl: ['eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d', '0'],
+          esModule: [
+            'eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d',
+            '0',
+          ],
+          commonJS: [
+            'eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d',
+            '0',
+          ],
+          curl: [
+            'eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d',
+            '0',
+          ],
           response: `{
   spent: true,
   txid: "37e867526abb7cde3f64f86f60b42bee1f989aa8514730ae2e741dd05bbc286b",
@@ -5487,12 +6028,21 @@ export const restApiDocsData = [
     block_hash: "000000000000004d36632fda8180ff16855d606e5515aab0750d9d4fe55fe7d6",
     block_time: 1630648992
   }
-}`
+}`,
         },
         codeSampleSignet: {
-          esModule: ['fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025', '0'],
-          commonJS: ['fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025', '0'],
-          curl: ['fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025', '0'],
+          esModule: [
+            'fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025',
+            '0',
+          ],
+          commonJS: [
+            'fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025',
+            '0',
+          ],
+          curl: [
+            'fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025',
+            '0',
+          ],
           response: `{
   spent: true,
   txid: "ad9cb0f6770219f0a2325d77466d30ff2ddd18b0f7f68b1deb547c4b3b972623",
@@ -5503,12 +6053,21 @@ export const restApiDocsData = [
     block_hash: "000000372e6b34e56866b4e4c75a372454e956bc42f6760b1b119bfa5ce58223",
     block_time: 1630649351
   }
-}`
+}`,
         },
         codeSampleLiquid: {
-          esModule: ['801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a', '0'],
-          commonJS: ['801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a', '0'],
-          curl: ['801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a', '0'],
+          esModule: [
+            '801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a',
+            '0',
+          ],
+          commonJS: [
+            '801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a',
+            '0',
+          ],
+          curl: [
+            '801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a',
+            '0',
+          ],
           response: `{
   spent: true,
   txid: "c02e132181dfc5f65ea16eadf53b346915b9f3937179c49e209b995e57c319c2",
@@ -5522,9 +6081,18 @@ export const restApiDocsData = [
 }`,
         },
         codeSampleLiquidTestnet: {
-          esModule: ['59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4', '0'],
-          commonJS: ['59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4', '0'],
-          curl: ['59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4', '0'],
+          esModule: [
+            '59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4',
+            '0',
+          ],
+          commonJS: [
+            '59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4',
+            '0',
+          ],
+          curl: [
+            '59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4',
+            '0',
+          ],
           response: `{
   spent: true,
   txid: "814d9d285970dd55ea5b2f06f5d11fb895a2b78d61defbcd489477441e544f95",
@@ -5538,9 +6106,18 @@ export const restApiDocsData = [
 }`,
         },
         codeSampleBisq: {
-          esModule: [`98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`, '1'],
-          commonJS: [`98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`, '1'],
-          curl: [`98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`, '1'],
+          esModule: [
+            `98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`,
+            '1',
+          ],
+          commonJS: [
+            `98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`,
+            '1',
+          ],
+          curl: [
+            `98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`,
+            '1',
+          ],
           response: `{
   spent: true,
   txid: "455eb8942edf5444f0130194353185705e891fb328b47fd5c43c0f5260de8121",
@@ -5553,8 +6130,8 @@ export const restApiDocsData = [
   }
 }`,
         },
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -5563,7 +6140,7 @@ export const restApiDocsData = [
     fragment: 'get-transaction-outspends',
     title: 'GET Transaction Outspends',
     description: {
-      default: 'Returns the spending status of all transaction outputs.'
+      default: 'Returns the spending status of all transaction outputs.',
     },
     urlString: '/tx/:txid/outspends',
     showConditions: bitcoinNetworks.concat(liquidNetworks),
@@ -5589,9 +6166,15 @@ export const restApiDocsData = [
           `,
         },
         codeSampleMainnet: {
-          esModule: ['15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521'],
-          commonJS: ['15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521'],
-          curl: ['15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521'],
+          esModule: [
+            '15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521',
+          ],
+          commonJS: [
+            '15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521',
+          ],
+          curl: [
+            '15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521',
+          ],
           response: `[
   {
     spent: true,
@@ -5605,12 +6188,18 @@ export const restApiDocsData = [
     }
   },
   ...
-]`
+]`,
         },
         codeSampleTestnet: {
-          esModule: ['eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d'],
-          commonJS: ['eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d'],
-          curl: ['eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d'],
+          esModule: [
+            'eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d',
+          ],
+          commonJS: [
+            'eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d',
+          ],
+          curl: [
+            'eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d',
+          ],
           response: `[
   {
     spent: true,
@@ -5626,12 +6215,18 @@ export const restApiDocsData = [
   {
     spent: false
   }
-]`
+]`,
         },
         codeSampleSignet: {
-          esModule: ['fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025'],
-          commonJS: ['fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025'],
-          curl: ['fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025'],
+          esModule: [
+            'fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025',
+          ],
+          commonJS: [
+            'fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025',
+          ],
+          curl: [
+            'fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025',
+          ],
           response: `[
   {
     spent: true,
@@ -5644,12 +6239,18 @@ export const restApiDocsData = [
       block_time: 1630649351
     }
   }
-]`
+]`,
         },
         codeSampleLiquid: {
-          esModule: ['801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a'],
-          commonJS: ['801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a'],
-          curl: ['801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a'],
+          esModule: [
+            '801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a',
+          ],
+          commonJS: [
+            '801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a',
+          ],
+          curl: [
+            '801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a',
+          ],
           response: `{
   spent: true,
   txid: "c02e132181dfc5f65ea16eadf53b346915b9f3937179c49e209b995e57c319c2",
@@ -5663,9 +6264,15 @@ export const restApiDocsData = [
 }`,
         },
         codeSampleLiquidTestnet: {
-          esModule: ['59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4'],
-          commonJS: ['59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4'],
-          curl: ['59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4'],
+          esModule: [
+            '59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4',
+          ],
+          commonJS: [
+            '59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4',
+          ],
+          curl: [
+            '59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4',
+          ],
           response: `[
   {
     spent: false
@@ -5690,9 +6297,15 @@ export const restApiDocsData = [
 ]`,
         },
         codeSampleBisq: {
-          esModule: [`98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`],
-          commonJS: [`98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`],
-          curl: [`98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`],
+          esModule: [
+            `98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`,
+          ],
+          commonJS: [
+            `98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`,
+          ],
+          curl: [
+            `98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`,
+          ],
           response: `[
   {
     spent: false
@@ -5713,8 +6326,8 @@ export const restApiDocsData = [
   }
 ]`,
         },
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -5723,7 +6336,7 @@ export const restApiDocsData = [
     fragment: 'get-transaction-raw',
     title: 'GET Transaction Raw',
     description: {
-      default: 'Returns a transaction as binary data.'
+      default: 'Returns a transaction as binary data.',
     },
     urlString: '/tx/:txid/raw',
     showConditions: bitcoinNetworks.concat(liquidNetworks),
@@ -5749,43 +6362,79 @@ export const restApiDocsData = [
           `,
         },
         codeSampleMainnet: {
-          esModule: ['15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521'],
-          commonJS: ['15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521'],
-          curl: ['15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521'],
-          response: ``
+          esModule: [
+            '15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521',
+          ],
+          commonJS: [
+            '15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521',
+          ],
+          curl: [
+            '15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521',
+          ],
+          response: ``,
         },
         codeSampleTestnet: {
-          esModule: ['eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d'],
-          commonJS: ['eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d'],
-          curl: ['eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d'],
-          response: ``
+          esModule: [
+            'eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d',
+          ],
+          commonJS: [
+            'eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d',
+          ],
+          curl: [
+            'eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d',
+          ],
+          response: ``,
         },
         codeSampleSignet: {
-          esModule: ['fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025'],
-          commonJS: ['fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025'],
-          curl: ['fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025'],
-          response: ``
+          esModule: [
+            'fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025',
+          ],
+          commonJS: [
+            'fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025',
+          ],
+          curl: [
+            'fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025',
+          ],
+          response: ``,
         },
         codeSampleLiquid: {
-          esModule: ['801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a'],
-          commonJS: ['801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a'],
-          curl: ['801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a'],
+          esModule: [
+            '801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a',
+          ],
+          commonJS: [
+            '801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a',
+          ],
+          curl: [
+            '801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a',
+          ],
           response: ``,
         },
         codeSampleLiquidTestnet: {
-          esModule: ['59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4'],
-          commonJS: ['59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4'],
-          curl: ['59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4'],
+          esModule: [
+            '59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4',
+          ],
+          commonJS: [
+            '59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4',
+          ],
+          curl: [
+            '59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4',
+          ],
           response: ``,
         },
         codeSampleBisq: {
-          esModule: [`98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`],
-          commonJS: [`98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`],
-          curl: [`98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`],
+          esModule: [
+            `98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`,
+          ],
+          commonJS: [
+            `98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`,
+          ],
+          curl: [
+            `98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`,
+          ],
           response: ``,
         },
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -5794,7 +6443,8 @@ export const restApiDocsData = [
     fragment: 'get-transaction-status',
     title: 'GET Transaction Status',
     description: {
-      default: 'Returns the confirmation status of a transaction. Available fields: <code>confirmed</code> (boolean), <code>block_height</code> (optional), and <code>block_hash</code> (optional).'
+      default:
+        'Returns the confirmation status of a transaction. Available fields: <code>confirmed</code> (boolean), <code>block_height</code> (optional), and <code>block_hash</code> (optional).',
     },
     urlString: '/tx/:txid/status',
     showConditions: bitcoinNetworks.concat(liquidNetworks),
@@ -5820,39 +6470,63 @@ export const restApiDocsData = [
           `,
         },
         codeSampleMainnet: {
-          esModule: ['15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521'],
-          commonJS: ['15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521'],
-          curl: ['15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521'],
+          esModule: [
+            '15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521',
+          ],
+          commonJS: [
+            '15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521',
+          ],
+          curl: [
+            '15e10745f15593a899cef391191bdd3d7c12412cc4696b7bcb669d0feadc8521',
+          ],
           response: `{
   confirmed: true,
   block_height: 363348,
   block_hash: "0000000000000000139385d7aa78ffb45469e0c715b8d6ea6cb2ffa98acc7171",
   block_time: 1435754650
-}`
+}`,
         },
         codeSampleTestnet: {
-          esModule: ['eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d'],
-          commonJS: ['eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d'],
-          curl: ['eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d'],
+          esModule: [
+            'eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d',
+          ],
+          commonJS: [
+            'eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d',
+          ],
+          curl: [
+            'eefbafa4006e77099db059eebe14687965813283e5754d317431d9984554735d',
+          ],
           response: `{
   confirmed: false
-}`
+}`,
         },
         codeSampleSignet: {
-          esModule: ['fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025'],
-          commonJS: ['fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025'],
-          curl: ['fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025'],
+          esModule: [
+            'fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025',
+          ],
+          commonJS: [
+            'fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025',
+          ],
+          curl: [
+            'fe80c0c2439d41d301f35570018b4239ca3204293e5e5fd68d64013e8fc45025',
+          ],
           response: `{
   confirmed: true,
   block_height: 53788,
   block_hash: "0000012a49f15fdbec49f647800d26dabc4027ade9739f398f618d167128b225",
   block_time: 1630648988
-}`
+}`,
         },
         codeSampleLiquid: {
-          esModule: ['801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a'],
-          commonJS: ['801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a'],
-          curl: ['801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a'],
+          esModule: [
+            '801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a',
+          ],
+          commonJS: [
+            '801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a',
+          ],
+          curl: [
+            '801c8cccdfb1cac41f97d290e00e3e608753bb5b8fbc5ba39f3ab6feef13dd4a',
+          ],
           response: `{
   confirmed: true,
   block_height: 1472366,
@@ -5861,9 +6535,15 @@ export const restApiDocsData = [
 }`,
         },
         codeSampleLiquidTestnet: {
-          esModule: ['59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4'],
-          commonJS: ['59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4'],
-          curl: ['59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4'],
+          esModule: [
+            '59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4',
+          ],
+          commonJS: [
+            '59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4',
+          ],
+          curl: [
+            '59dd7a0bce4f3310272ff352402291bc555f141149812d8f573f62e7fdc19cc4',
+          ],
           response: `{
   confirmed: true,
   block_height: 168765,
@@ -5872,9 +6552,15 @@ export const restApiDocsData = [
 }`,
         },
         codeSampleBisq: {
-          esModule: [`98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`],
-          commonJS: [`98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`],
-          curl: [`98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`],
+          esModule: [
+            `98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`,
+          ],
+          commonJS: [
+            `98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`,
+          ],
+          curl: [
+            `98a598aeea121ea061dc713d1547363358974191c257d3b563bbf2a1706ff44e`,
+          ],
           response: `{
   confirmed: true,
   block_height: 698788,
@@ -5882,8 +6568,8 @@ export const restApiDocsData = [
   block_time: 1630645738
 }`,
         },
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -5892,7 +6578,8 @@ export const restApiDocsData = [
     fragment: 'get-transactions',
     title: 'GET Transactions',
     description: {
-      default: 'Returns :length of latest Bisq transactions, starting from :index.'
+      default:
+        'Returns :length of latest Bisq transactions, starting from :index.',
     },
     urlString: '/txs/:index/:length',
     showConditions: ['bisq'],
@@ -5940,8 +6627,8 @@ export const restApiDocsData = [
   }
 ]`,
         },
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -5950,7 +6637,8 @@ export const restApiDocsData = [
     fragment: 'post-transaction',
     title: 'POST Transaction',
     description: {
-      default: 'Broadcast a raw transaction to the network. The transaction should be provided as hex in the request body. The <code>txid</code> will be returned on success.'
+      default:
+        'Broadcast a raw transaction to the network. The transaction should be provided as hex in the request body. The <code>txid</code> will be returned on success.',
     },
     urlString: '/api/tx',
     showConditions: bitcoinNetworks.concat(liquidNetworks),
@@ -5978,45 +6666,75 @@ export const restApiDocsData = [
           `,
         },
         codeSampleMainnet: {
-          esModule: ['0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000'],
-          commonJS: ['0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000'],
-          curl: ['0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000'],
-          response: ``
+          esModule: [
+            '0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000',
+          ],
+          commonJS: [
+            '0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000',
+          ],
+          curl: [
+            '0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000',
+          ],
+          response: ``,
         },
         codeSampleTestnet: {
-          esModule: ['0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000'],
-          commonJS: ['0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000'],
-          curl: ['0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000'],
-          response: ``
+          esModule: [
+            '0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000',
+          ],
+          commonJS: [
+            '0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000',
+          ],
+          curl: [
+            '0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000',
+          ],
+          response: ``,
         },
         codeSampleSignet: {
-          esModule: ['0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000'],
-          commonJS: ['0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000'],
-          curl: ['0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000'],
-          response: ``
+          esModule: [
+            '0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000',
+          ],
+          commonJS: [
+            '0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000',
+          ],
+          curl: [
+            '0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000',
+          ],
+          response: ``,
         },
         codeSampleLiquid: {
-          esModule: [`0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000`],
-          commonJS: [`0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000`],
-          curl: [`0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000`],
+          esModule: [
+            `0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000`,
+          ],
+          commonJS: [
+            `0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000`,
+          ],
+          curl: [
+            `0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000`,
+          ],
           response: ``,
         },
         codeSampleLiquidTestnet: {
-          esModule: [`0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000`],
-          commonJS: [`0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000`],
-          curl: [`0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000`],
+          esModule: [
+            `0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000`,
+          ],
+          commonJS: [
+            `0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000`,
+          ],
+          curl: [
+            `0200000001fd5b5fcd1cb066c27cfc9fda5428b9be850b81ac440ea51f1ddba2f987189ac1010000008a4730440220686a40e9d2dbffeab4ca1ff66341d06a17806767f12a1fc4f55740a7af24c6b5022049dd3c9a85ac6c51fecd5f4baff7782a518781bbdd94453c8383755e24ba755c01410436d554adf4a3eb03a317c77aa4020a7bba62999df633bba0ea8f83f48b9e01b0861d3b3c796840f982ee6b14c3c4b7ad04fcfcc3774f81bff9aaf52a15751fedfdffffff02416c00000000000017a914bc791b2afdfe1e1b5650864a9297b20d74c61f4787d71d0000000000001976a9140a59837ccd4df25adc31cdad39be6a8d97557ed688ac00000000`,
+          ],
           response: ``,
         },
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'category',
     category: 'lightning',
     fragment: 'lightning',
     title: 'Lightning',
-    showConditions: bitcoinNetworks
+    showConditions: bitcoinNetworks,
   },
   {
     type: 'endpoint',
@@ -6025,7 +6743,8 @@ export const restApiDocsData = [
     fragment: 'get-lightning-network-stats',
     title: 'GET Network Stats',
     description: {
-      default: '<p>Returns network-wide stats such as total number of channels and nodes, total capacity, and average/median fee figures.</p><p>Pass one of the following for <code>:interval</code>: <code>latest</code>, <code>24h</code>, <code>3d</code>, <code>1w</code>, <code>1m</code>, <code>3m</code>, <code>6m</code>, <code>1y</code>, <code>2y</code>, <code>3y</code>.</p>'
+      default:
+        '<p>Returns network-wide stats such as total number of channels and nodes, total capacity, and average/median fee figures.</p><p>Pass one of the following for <code>:interval</code>: <code>latest</code>, <code>24h</code>, <code>3d</code>, <code>1w</code>, <code>1m</code>, <code>3m</code>, <code>6m</code>, <code>1y</code>, <code>2y</code>, <code>3y</code>.</p>',
     },
     urlString: '/v1/lightning/statistics/:interval',
     showConditions: bitcoinNetworks,
@@ -6035,7 +6754,7 @@ export const restApiDocsData = [
         codeTemplate: {
           curl: `/api/v1/lightning/statistics/%{1}`,
           commonJS: ``,
-          esModule: ``
+          esModule: ``,
         },
         codeSampleMainnet: {
           esModule: [],
@@ -6059,7 +6778,7 @@ export const restApiDocsData = [
     "med_base_fee_mtokens": 100,
     "clearnet_tor_nodes": 1117
   }
-}`
+}`,
         },
         codeSampleTestnet: {
           esModule: [],
@@ -6083,7 +6802,7 @@ export const restApiDocsData = [
     "med_base_fee_mtokens": 1000,
     "clearnet_tor_nodes": 126
   }
-}`
+}`,
         },
         codeSampleSignet: {
           esModule: [],
@@ -6107,13 +6826,13 @@ export const restApiDocsData = [
     "med_base_fee_mtokens": 1000,
     "clearnet_tor_nodes": 2
   }
-}`
+}`,
         },
         codeSampleLiquid: emptyCodeSample,
         codeSampleLiquidTestnet: emptyCodeSample,
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -6122,7 +6841,8 @@ export const restApiDocsData = [
     fragment: 'get-lightning-nodes-channels',
     title: 'GET Nodes/Channels',
     description: {
-      default: '<p>Returns Lightning nodes and channels that match a full-text, case-insensitive search <code>:query</code> across node aliases, node pubkeys, channel IDs, and short channel IDs.</p>'
+      default:
+        '<p>Returns Lightning nodes and channels that match a full-text, case-insensitive search <code>:query</code> across node aliases, node pubkeys, channel IDs, and short channel IDs.</p>',
     },
     urlString: '/v1/lightning/search?searchText=:query',
     showConditions: bitcoinNetworks,
@@ -6132,7 +6852,7 @@ export const restApiDocsData = [
         codeTemplate: {
           curl: `/api/v1/lightning/search?searchText=%{1}`,
           commonJS: ``,
-          esModule: ``
+          esModule: ``,
         },
         codeSampleMainnet: {
           esModule: [],
@@ -6154,7 +6874,7 @@ export const restApiDocsData = [
     }
   ],
   "channels": []
-}`
+}`,
         },
         codeSampleTestnet: {
           esModule: [],
@@ -6176,7 +6896,7 @@ export const restApiDocsData = [
     }
   ],
   "channels": []
-}`
+}`,
         },
         codeSampleSignet: {
           esModule: [],
@@ -6193,13 +6913,13 @@ export const restApiDocsData = [
     }
   ],
   "channels": []
-}`
+}`,
         },
         codeSampleLiquid: emptyCodeSample,
         codeSampleLiquidTestnet: emptyCodeSample,
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -6208,7 +6928,8 @@ export const restApiDocsData = [
     fragment: 'get-lightning-nodes-country',
     title: 'GET Nodes in Country',
     description: {
-      default: '<p>Returns a list of Lightning nodes running on clearnet in the requested <code>:country</code>, where <code>:country</code> is an ISO Alpha-2 country code.</p>'
+      default:
+        '<p>Returns a list of Lightning nodes running on clearnet in the requested <code>:country</code>, where <code>:country</code> is an ISO Alpha-2 country code.</p>',
     },
     urlString: '/v1/lightning/nodes/country/:country',
     showConditions: bitcoinNetworks,
@@ -6218,7 +6939,7 @@ export const restApiDocsData = [
         codeTemplate: {
           curl: `/api/v1/lightning/nodes/country/%{1}`,
           commonJS: ``,
-          esModule: ``
+          esModule: ``,
         },
         codeSampleMainnet: {
           esModule: [],
@@ -6272,7 +6993,7 @@ export const restApiDocsData = [
     },
     ...
   ]
-}`
+}`,
         },
         codeSampleTestnet: {
           esModule: [],
@@ -6326,7 +7047,7 @@ export const restApiDocsData = [
     },
     ...
   ]
-}`
+}`,
         },
         codeSampleSignet: {
           esModule: [],
@@ -6416,13 +7137,13 @@ export const restApiDocsData = [
     },
     ...
   ]
-}`
+}`,
         },
         codeSampleLiquid: emptyCodeSample,
         codeSampleLiquidTestnet: emptyCodeSample,
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -6431,7 +7152,8 @@ export const restApiDocsData = [
     fragment: 'get-country-node-stats',
     title: 'GET Node Stats Per Country',
     description: {
-      default: '<p>Returns aggregate capacity and number of clearnet nodes per country. Capacity figures are in satoshis.</p>'
+      default:
+        '<p>Returns aggregate capacity and number of clearnet nodes per country. Capacity figures are in satoshis.</p>',
     },
     urlString: '/v1/lightning/nodes/countries',
     showConditions: bitcoinNetworks,
@@ -6441,7 +7163,7 @@ export const restApiDocsData = [
         codeTemplate: {
           curl: `/api/v1/lightning/nodes/countries`,
           commonJS: ``,
-          esModule: ``
+          esModule: ``,
         },
         codeSampleMainnet: {
           esModule: [],
@@ -6481,7 +7203,7 @@ export const restApiDocsData = [
     "capacity": "7740713270"
   },
   ...
-]`
+]`,
         },
         codeSampleTestnet: {
           esModule: [],
@@ -6521,7 +7243,7 @@ export const restApiDocsData = [
     "capacity": "1878052329"
   },
   ...
-]`
+]`,
         },
         codeSampleSignet: {
           esModule: [],
@@ -6561,13 +7283,13 @@ export const restApiDocsData = [
     "capacity": "107710417"
   },
   ...
-]`
+]`,
         },
         codeSampleLiquid: emptyCodeSample,
         codeSampleLiquidTestnet: emptyCodeSample,
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -6576,7 +7298,8 @@ export const restApiDocsData = [
     fragment: 'get-isp-nodes',
     title: 'GET ISP Nodes',
     description: {
-      default: '<p>Returns a list of nodes hosted by a specified <code>:isp</code>, where <code>:isp</code> is an ISP\'s ASN.</p>'
+      default:
+        "<p>Returns a list of nodes hosted by a specified <code>:isp</code>, where <code>:isp</code> is an ISP's ASN.</p>",
     },
     urlString: '/v1/lightning/nodes/isp/:isp',
     showConditions: bitcoinNetworks,
@@ -6586,7 +7309,7 @@ export const restApiDocsData = [
         codeTemplate: {
           curl: `/api/v1/lightning/nodes/isp/%{1}`,
           commonJS: ``,
-          esModule: ``
+          esModule: ``,
         },
         codeSampleMainnet: {
           esModule: [],
@@ -6618,7 +7341,7 @@ export const restApiDocsData = [
     },
     ...
   ]
-}`
+}`,
         },
         codeSampleTestnet: {
           esModule: [],
@@ -6650,7 +7373,7 @@ export const restApiDocsData = [
     },
     ...
   ]
-}`
+}`,
         },
         codeSampleSignet: {
           esModule: [],
@@ -6681,13 +7404,13 @@ export const restApiDocsData = [
       "subdivision": null
     }
   ]
-}`
+}`,
         },
         codeSampleLiquid: emptyCodeSample,
         codeSampleLiquidTestnet: emptyCodeSample,
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -6696,7 +7419,8 @@ export const restApiDocsData = [
     fragment: 'get-isp-node-stats',
     title: 'GET Node Stats Per ISP',
     description: {
-      default: '<p>Returns aggregate capacity, number of nodes, and number of channels per ISP. Capacity figures are in satoshis.</p>'
+      default:
+        '<p>Returns aggregate capacity, number of nodes, and number of channels per ISP. Capacity figures are in satoshis.</p>',
     },
     urlString: '/v1/lightning/nodes/isp-ranking',
     showConditions: bitcoinNetworks,
@@ -6706,7 +7430,7 @@ export const restApiDocsData = [
         codeTemplate: {
           curl: `/api/v1/lightning/nodes/isp-ranking`,
           commonJS: ``,
-          esModule: ``
+          esModule: ``,
         },
         codeSampleMainnet: {
           esModule: [],
@@ -6740,7 +7464,7 @@ export const restApiDocsData = [
     ],
     ...
   ]
-}`
+}`,
         },
         codeSampleTestnet: {
           esModule: [],
@@ -6767,7 +7491,7 @@ export const restApiDocsData = [
     ],
     ...
   ]
-}`
+}`,
         },
         codeSampleSignet: {
           esModule: [],
@@ -6794,13 +7518,13 @@ export const restApiDocsData = [
     ],
     ...
   ]
-}`
+}`,
         },
         codeSampleLiquid: emptyCodeSample,
         codeSampleLiquidTestnet: emptyCodeSample,
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -6809,7 +7533,8 @@ export const restApiDocsData = [
     fragment: 'get-top-100-nodes',
     title: 'GET Top 100 Nodes',
     description: {
-      default: '<p>Returns two lists of the top 100 nodes: one ordered by liquidity (aggregate channel capacity) and the other ordered by connectivity (number of open channels).</p>'
+      default:
+        '<p>Returns two lists of the top 100 nodes: one ordered by liquidity (aggregate channel capacity) and the other ordered by connectivity (number of open channels).</p>',
     },
     urlString: '/v1/lightning/nodes/rankings',
     showConditions: bitcoinNetworks,
@@ -6819,7 +7544,7 @@ export const restApiDocsData = [
         codeTemplate: {
           curl: `/api/v1/lightning/nodes/rankings`,
           commonJS: ``,
-          esModule: ``
+          esModule: ``,
         },
         codeSampleMainnet: {
           esModule: [],
@@ -6852,7 +7577,7 @@ export const restApiDocsData = [
     },
     ...
   ]
-}`
+}`,
         },
         codeSampleTestnet: {
           esModule: [],
@@ -6885,7 +7610,7 @@ export const restApiDocsData = [
     },
     ...
   ]
-}`
+}`,
         },
         codeSampleSignet: {
           esModule: [],
@@ -6918,13 +7643,13 @@ export const restApiDocsData = [
     },
     ...
   ]
-}`
+}`,
         },
         codeSampleLiquid: emptyCodeSample,
         codeSampleLiquidTestnet: emptyCodeSample,
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -6933,7 +7658,8 @@ export const restApiDocsData = [
     fragment: 'get-top-100-nodes-liquidity',
     title: 'GET Top 100 Nodes by Liquidity',
     description: {
-      default: '<p>Returns a list of the top 100 nodes by liquidity (aggregate channel capacity).</p>'
+      default:
+        '<p>Returns a list of the top 100 nodes by liquidity (aggregate channel capacity).</p>',
     },
     urlString: '/v1/lightning/nodes/rankings/liquidity',
     showConditions: bitcoinNetworks,
@@ -6943,7 +7669,7 @@ export const restApiDocsData = [
         codeTemplate: {
           curl: `/api/v1/lightning/nodes/rankings/liquidity`,
           commonJS: ``,
-          esModule: ``
+          esModule: ``,
         },
         codeSampleMainnet: {
           esModule: [],
@@ -6998,7 +7724,7 @@ export const restApiDocsData = [
     }
   },
   ...
-]`
+]`,
         },
         codeSampleTestnet: {
           esModule: [],
@@ -7062,7 +7788,7 @@ export const restApiDocsData = [
     }
   },
   ...
-]`
+]`,
         },
         codeSampleSignet: {
           esModule: [],
@@ -7116,13 +7842,13 @@ export const restApiDocsData = [
     }
   },
   ...
-]`
+]`,
         },
         codeSampleLiquid: emptyCodeSample,
         codeSampleLiquidTestnet: emptyCodeSample,
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -7131,7 +7857,8 @@ export const restApiDocsData = [
     fragment: 'get-top-100-nodes-connectivity',
     title: 'GET Top 100 Nodes by Connectivity',
     description: {
-      default: '<p>Returns a list of the top 100 nodes by connectivity (number of open channels).</p>'
+      default:
+        '<p>Returns a list of the top 100 nodes by connectivity (number of open channels).</p>',
     },
     urlString: '/v1/lightning/nodes/rankings/connectivity',
     showConditions: bitcoinNetworks,
@@ -7141,7 +7868,7 @@ export const restApiDocsData = [
         codeTemplate: {
           curl: `/api/v1/lightning/nodes/rankings/connectivity`,
           commonJS: ``,
-          esModule: ``
+          esModule: ``,
         },
         codeSampleMainnet: {
           esModule: [],
@@ -7195,7 +7922,7 @@ export const restApiDocsData = [
     }
   },
   ...
-]`
+]`,
         },
         codeSampleTestnet: {
           esModule: [],
@@ -7267,7 +7994,7 @@ export const restApiDocsData = [
     }
   },
   ...
-]`
+]`,
         },
         codeSampleSignet: {
           esModule: [],
@@ -7313,13 +8040,13 @@ export const restApiDocsData = [
     }
   },
   ...
-]`
+]`,
         },
         codeSampleLiquid: emptyCodeSample,
         codeSampleLiquidTestnet: emptyCodeSample,
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -7328,7 +8055,7 @@ export const restApiDocsData = [
     fragment: 'get-top-100-oldest-nodes',
     title: 'GET Top 100 Oldest Nodes',
     description: {
-      default: '<p>Returns a list of the top 100 oldest nodes.</p>'
+      default: '<p>Returns a list of the top 100 oldest nodes.</p>',
     },
     urlString: '/v1/lightning/nodes/rankings/age',
     showConditions: bitcoinNetworks,
@@ -7338,7 +8065,7 @@ export const restApiDocsData = [
         codeTemplate: {
           curl: `/api/v1/lightning/nodes/rankings/age`,
           commonJS: ``,
-          esModule: ``
+          esModule: ``,
         },
         codeSampleMainnet: {
           esModule: [],
@@ -7400,7 +8127,7 @@ export const restApiDocsData = [
     }
   },
   ...
-]`
+]`,
         },
         codeSampleTestnet: {
           esModule: [],
@@ -7464,7 +8191,7 @@ export const restApiDocsData = [
     }
   },
   ...
-]`
+]`,
         },
         codeSampleSignet: {
           esModule: [],
@@ -7501,13 +8228,13 @@ export const restApiDocsData = [
     "country": null
   },
   ...
-]`
+]`,
         },
         codeSampleLiquid: emptyCodeSample,
         codeSampleLiquidTestnet: emptyCodeSample,
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -7516,7 +8243,8 @@ export const restApiDocsData = [
     fragment: 'get-node-stats',
     title: 'GET Node Stats',
     description: {
-      default: '<p>Returns details about a node with the given <code>:pubKey</code>.</p>'
+      default:
+        '<p>Returns details about a node with the given <code>:pubKey</code>.</p>',
     },
     urlString: '/v1/lightning/nodes/:pubKey',
     showConditions: bitcoinNetworks,
@@ -7526,12 +8254,14 @@ export const restApiDocsData = [
         codeTemplate: {
           curl: `/api/v1/lightning/nodes/%{1}`,
           commonJS: ``,
-          esModule: ``
+          esModule: ``,
         },
         codeSampleMainnet: {
           esModule: [],
           commonJS: [],
-          curl: [`033ac2f9f7ff643c235cc247c521663924aff73b26b38118a6c6821460afcde1b3`],
+          curl: [
+            `033ac2f9f7ff643c235cc247c521663924aff73b26b38118a6c6821460afcde1b3`,
+          ],
           response: `{
   "public_key": "033ac2f9f7ff643c235cc247c521663924aff73b26b38118a6c6821460afcde1b3",
   "alias": "Red.de.Rayos",
@@ -7578,12 +8308,14 @@ export const restApiDocsData = [
   "capacity": "31505027",
   "opened_channel_count": 55,
   "closed_channel_count": 111
-}`
+}`,
         },
         codeSampleTestnet: {
           esModule: [],
           commonJS: [],
-          curl: [`03f060953bef5b777dc77e44afa3859d022fc1a77c55138deb232ad7255e869c00`],
+          curl: [
+            `03f060953bef5b777dc77e44afa3859d022fc1a77c55138deb232ad7255e869c00`,
+          ],
           response: `{
   "public_key": "03f060953bef5b777dc77e44afa3859d022fc1a77c55138deb232ad7255e869c00",
   "alias": "Boltz",
@@ -7629,12 +8361,14 @@ export const restApiDocsData = [
   "capacity": "111724126",
   "opened_channel_count": 165,
   "closed_channel_count": 1
-}`
+}`,
         },
         codeSampleSignet: {
           esModule: [],
           commonJS: [],
-          curl: [`02ad48db0d1a7f7c3d186ddc57f8e62c49a1234fb829af9ccd3be1a4596bc39120`],
+          curl: [
+            `02ad48db0d1a7f7c3d186ddc57f8e62c49a1234fb829af9ccd3be1a4596bc39120`,
+          ],
           response: `{
   "public_key": "02ad48db0d1a7f7c3d186ddc57f8e62c49a1234fb829af9ccd3be1a4596bc39120",
   "alias": "guggero",
@@ -7666,13 +8400,13 @@ export const restApiDocsData = [
   "capacity": "66577093",
   "opened_channel_count": 16,
   "closed_channel_count": 0
-}`
+}`,
         },
         codeSampleLiquid: emptyCodeSample,
         codeSampleLiquidTestnet: emptyCodeSample,
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -7681,7 +8415,8 @@ export const restApiDocsData = [
     fragment: 'get-historical-node-stats',
     title: 'GET Historical Node Stats',
     description: {
-      default: '<p>Returns historical stats for a node with the given <code>:pubKey</code>.</p>'
+      default:
+        '<p>Returns historical stats for a node with the given <code>:pubKey</code>.</p>',
     },
     urlString: '/v1/lightning/nodes/:pubKey/statistics',
     showConditions: bitcoinNetworks,
@@ -7691,12 +8426,14 @@ export const restApiDocsData = [
         codeTemplate: {
           curl: `/api/v1/lightning/nodes/%{1}/statistics`,
           commonJS: ``,
-          esModule: ``
+          esModule: ``,
         },
         codeSampleMainnet: {
           esModule: [],
           commonJS: [],
-          curl: [`033ac2f9f7ff643c235cc247c521663924aff73b26b38118a6c6821460afcde1b3`],
+          curl: [
+            `033ac2f9f7ff643c235cc247c521663924aff73b26b38118a6c6821460afcde1b3`,
+          ],
           response: `[
   {
     "added": 1661817600,
@@ -7724,12 +8461,14 @@ export const restApiDocsData = [
     "channels": 57
   },
   ...
-]`
+]`,
         },
         codeSampleTestnet: {
           esModule: [],
           commonJS: [],
-          curl: [`0225ff2ae6a3d9722b625072503c2f64f6eddb78d739379d2ee55a16b3b0ed0a17`],
+          curl: [
+            `0225ff2ae6a3d9722b625072503c2f64f6eddb78d739379d2ee55a16b3b0ed0a17`,
+          ],
           response: `[
   {
     "added": 1662422400,
@@ -7747,12 +8486,14 @@ export const restApiDocsData = [
     "channels": 95
   },
   ...
-]`
+]`,
         },
         codeSampleSignet: {
           esModule: [],
           commonJS: [],
-          curl: [`02ad48db0d1a7f7c3d186ddc57f8e62c49a1234fb829af9ccd3be1a4596bc39120`],
+          curl: [
+            `02ad48db0d1a7f7c3d186ddc57f8e62c49a1234fb829af9ccd3be1a4596bc39120`,
+          ],
           response: `[
   {
     "added": 1662422400,
@@ -7765,13 +8506,13 @@ export const restApiDocsData = [
     "channels": 9
   },
   ...
-]`
+]`,
         },
         codeSampleLiquid: emptyCodeSample,
         codeSampleLiquidTestnet: emptyCodeSample,
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -7780,7 +8521,8 @@ export const restApiDocsData = [
     fragment: 'get-channel',
     title: 'GET Channel',
     description: {
-      default: '<p>Returns info about a Lightning channel with the given <code>:channelId</code>.</p>'
+      default:
+        '<p>Returns info about a Lightning channel with the given <code>:channelId</code>.</p>',
     },
     urlString: '/v1/lightning/channels/:channelId',
     showConditions: bitcoinNetworks,
@@ -7790,7 +8532,7 @@ export const restApiDocsData = [
         codeTemplate: {
           curl: `/api/v1/lightning/channels/%{1}`,
           commonJS: ``,
-          esModule: ``
+          esModule: ``,
         },
         codeSampleMainnet: {
           esModule: [],
@@ -7837,7 +8579,7 @@ export const restApiDocsData = [
     "longitude": 9.491,
     "latitude": 51.2993
   }
-}`
+}`,
         },
         codeSampleTestnet: {
           esModule: [],
@@ -7884,7 +8626,7 @@ export const restApiDocsData = [
     "longitude": 144.9669,
     "latitude": -37.8159
   }
-}`
+}`,
         },
         codeSampleSignet: {
           esModule: [],
@@ -7931,13 +8673,13 @@ export const restApiDocsData = [
     "longitude": 9.491,
     "latitude": 51.2993
   }
-}`
+}`,
         },
         codeSampleLiquid: emptyCodeSample,
         codeSampleLiquidTestnet: emptyCodeSample,
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -7946,7 +8688,8 @@ export const restApiDocsData = [
     fragment: 'get-channels-from-txid',
     title: 'GET Channels from TXID',
     description: {
-      default: '<p>Returns channels that correspond to the given <code>:txid</code> (multiple transaction IDs can be specified).</p>'
+      default:
+        '<p>Returns channels that correspond to the given <code>:txid</code> (multiple transaction IDs can be specified).</p>',
     },
     urlString: '/v1/lightning/channels/txids?txId[]=:txid',
     showConditions: bitcoinNetworks,
@@ -7956,12 +8699,15 @@ export const restApiDocsData = [
         codeTemplate: {
           curl: `/api/v1/lightning/channels/txids?txId[]=%{1}&txId[]=%{2}`,
           commonJS: ``,
-          esModule: ``
+          esModule: ``,
         },
         codeSampleMainnet: {
           esModule: [],
           commonJS: [],
-          curl: [`c3173549f502ede6440d5c48ea74af5607d88484c7a912bbef73d430049f8af4`,`d78f0b41a263af3df91fa4171cc2f60c40196aaf8f4bde5d1c8ff4474cfe753b`],
+          curl: [
+            `c3173549f502ede6440d5c48ea74af5607d88484c7a912bbef73d430049f8af4`,
+            `d78f0b41a263af3df91fa4171cc2f60c40196aaf8f4bde5d1c8ff4474cfe753b`,
+          ],
           response: `[
   {
     "inputs": {},
@@ -8041,12 +8787,14 @@ export const restApiDocsData = [
       }
     }
   }
-]`
+]`,
         },
         codeSampleTestnet: {
           esModule: [],
           commonJS: [],
-          curl: [`6b711b07b019d73ad432f401c01ac6ea253fbe2778388e5a686b5777678556c7`],
+          curl: [
+            `6b711b07b019d73ad432f401c01ac6ea253fbe2778388e5a686b5777678556c7`,
+          ],
           response: `[
   {
     "inputs": {},
@@ -8087,12 +8835,14 @@ export const restApiDocsData = [
       }
     }
   }
-]`
+]`,
         },
         codeSampleSignet: {
           esModule: [],
           commonJS: [],
-          curl: [`cbb18e4b23c2a27736fa5be559fee7efcc855f2dfb1f16b125f686c307513ef3`],
+          curl: [
+            `cbb18e4b23c2a27736fa5be559fee7efcc855f2dfb1f16b125f686c307513ef3`,
+          ],
           response: `[
   {
     "inputs": {},
@@ -8133,13 +8883,13 @@ export const restApiDocsData = [
       }
     }
   }
-]`
+]`,
         },
         codeSampleLiquid: emptyCodeSample,
         codeSampleLiquidTestnet: emptyCodeSample,
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -8148,9 +8898,11 @@ export const restApiDocsData = [
     fragment: 'get-channels-from-pubkey',
     title: 'GET Channels from Node Pubkey',
     description: {
-      default: '<p>Returns a list of a node\'s channels given its <code>:pubKey</code>. Ten channels are returned at a time. Use <code>:index</code> for paging. <code>:channelStatus</code> can be <code>open</code>, <code>active</code>, or <code>closed</code>.</p>'
+      default:
+        "<p>Returns a list of a node's channels given its <code>:pubKey</code>. Ten channels are returned at a time. Use <code>:index</code> for paging. <code>:channelStatus</code> can be <code>open</code>, <code>active</code>, or <code>closed</code>.</p>",
     },
-    urlString: '/v1/lightning/channels?public_key=:pubKey&status=:channelStatus',
+    urlString:
+      '/v1/lightning/channels?public_key=:pubKey&status=:channelStatus',
     showConditions: bitcoinNetworks,
     showJsExamples: showJsExamplesDefaultFalse,
     codeExample: {
@@ -8158,12 +8910,15 @@ export const restApiDocsData = [
         codeTemplate: {
           curl: `/api/v1/lightning/channels?public_key=%{1}&status=%{2}`,
           commonJS: ``,
-          esModule: ``
+          esModule: ``,
         },
         codeSampleMainnet: {
           esModule: [],
           commonJS: [],
-          curl: [`026165850492521f4ac8abd9bd8088123446d126f648ca35e60f88177dc149ceb2`,`open`],
+          curl: [
+            `026165850492521f4ac8abd9bd8088123446d126f648ca35e60f88177dc149ceb2`,
+            `open`,
+          ],
           response: `[
   {
     "status": 1,
@@ -8194,12 +8949,15 @@ export const restApiDocsData = [
     }
   },
   ...
-]`
+]`,
         },
         codeSampleTestnet: {
           esModule: [],
           commonJS: [],
-          curl: [`0200202c1f23899d03bf3f37c87d348e6847bbd91e407df91a713c7dcf3442738b`, `open`],
+          curl: [
+            `0200202c1f23899d03bf3f37c87d348e6847bbd91e407df91a713c7dcf3442738b`,
+            `open`,
+          ],
           response: `[
   {
     "status": 1,
@@ -8232,12 +8990,15 @@ export const restApiDocsData = [
     }
   },
   ...
-]`
+]`,
         },
         codeSampleSignet: {
           esModule: [],
           commonJS: [],
-          curl: [`02ad48db0d1a7f7c3d186ddc57f8e62c49a1234fb829af9ccd3be1a4596bc39120`, `open`],
+          curl: [
+            `02ad48db0d1a7f7c3d186ddc57f8e62c49a1234fb829af9ccd3be1a4596bc39120`,
+            `open`,
+          ],
           response: `[
   {
     "status": 1,
@@ -8270,13 +9031,13 @@ export const restApiDocsData = [
     }
   },
   ...
-]`
+]`,
         },
         codeSampleLiquid: emptyCodeSample,
         codeSampleLiquidTestnet: emptyCodeSample,
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -8285,7 +9046,8 @@ export const restApiDocsData = [
     fragment: 'get-channel-geodata',
     title: 'GET Channel Geodata',
     description: {
-      default: '<p>Returns a list of channels with corresponding node geodata.</p>'
+      default:
+        '<p>Returns a list of channels with corresponding node geodata.</p>',
     },
     urlString: '/v1/lightning/channels-geo',
     showConditions: bitcoinNetworks,
@@ -8295,7 +9057,7 @@ export const restApiDocsData = [
         codeTemplate: {
           curl: `/api/v1/lightning/channels-geo`,
           commonJS: ``,
-          esModule: ``
+          esModule: ``,
         },
         codeSampleMainnet: {
           esModule: [],
@@ -8323,7 +9085,7 @@ export const restApiDocsData = [
     39.9625
   ],
   ...
-]`
+]`,
         },
         codeSampleTestnet: {
           esModule: [],
@@ -8351,7 +9113,7 @@ export const restApiDocsData = [
     32.8608
   ],
   ...
-]`
+]`,
         },
         codeSampleSignet: {
           esModule: [],
@@ -8379,13 +9141,13 @@ export const restApiDocsData = [
     51.2993
   ],
   ...
-]`
+]`,
         },
         codeSampleLiquid: emptyCodeSample,
         codeSampleLiquidTestnet: emptyCodeSample,
         codeSampleBisq: emptyCodeSample,
-      }
-    }
+      },
+    },
   },
   {
     type: 'endpoint',
@@ -8394,7 +9156,8 @@ export const restApiDocsData = [
     fragment: 'get-channel-geodata-node',
     title: 'GET Channel Geodata for Node',
     description: {
-      default: '<p>Returns a list of channels with corresponding geodata for a node with the given <code>:pubKey</code>.</p>'
+      default:
+        '<p>Returns a list of channels with corresponding geodata for a node with the given <code>:pubKey</code>.</p>',
     },
     urlString: '/v1/lightning/channels-geo/:pubKey',
     showConditions: bitcoinNetworks,
@@ -8404,12 +9167,14 @@ export const restApiDocsData = [
         codeTemplate: {
           curl: `/api/v1/lightning/channels-geo/%{1}`,
           commonJS: ``,
-          esModule: ``
+          esModule: ``,
         },
         codeSampleMainnet: {
           esModule: [],
           commonJS: [],
-          curl: [`03d607f3e69fd032524a867b288216bfab263b6eaee4e07783799a6fe69bb84fac`],
+          curl: [
+            `03d607f3e69fd032524a867b288216bfab263b6eaee4e07783799a6fe69bb84fac`,
+          ],
           response: `[
   [
     "03d607f3e69fd032524a867b288216bfab263b6eaee4e07783799a6fe69bb84fac",
@@ -8432,12 +9197,14 @@ export const restApiDocsData = [
     53.3379
   ],
   ...
-]`
+]`,
         },
         codeSampleTestnet: {
           esModule: [],
           commonJS: [],
-          curl: [`0273ec4a4c80e767aca1477592649ad6e709ad31e7435668043a9dceccb3020f35`],
+          curl: [
+            `0273ec4a4c80e767aca1477592649ad6e709ad31e7435668043a9dceccb3020f35`,
+          ],
           response: `[
   [
     "039b1717db1193eb332d3c0bfdcce90a6aab60efa478b60963d3b406a8fc45134a",
@@ -8460,12 +9227,14 @@ export const restApiDocsData = [
     37.751
   ],
   ...
-]`
+]`,
         },
         codeSampleSignet: {
           esModule: [],
           commonJS: [],
-          curl: [`02ad48db0d1a7f7c3d186ddc57f8e62c49a1234fb829af9ccd3be1a4596bc39120`],
+          curl: [
+            `02ad48db0d1a7f7c3d186ddc57f8e62c49a1234fb829af9ccd3be1a4596bc39120`,
+          ],
           response: `[
   [
     "02ad48db0d1a7f7c3d186ddc57f8e62c49a1234fb829af9ccd3be1a4596bc39120",
@@ -8488,14 +9257,14 @@ export const restApiDocsData = [
     51.2993
   ],
   ...
-]`
+]`,
         },
         codeSampleLiquid: emptyCodeSample,
         codeSampleLiquidTestnet: emptyCodeSample,
         codeSampleBisq: emptyCodeSample,
-      }
-    }
-  }
+      },
+    },
+  },
 ];
 
 export const faqData = [
@@ -8504,7 +9273,7 @@ export const faqData = [
     category: 'basics',
     fragment: 'basics',
     title: 'Basics',
-    showConditions: bitcoinNetworks
+    showConditions: bitcoinNetworks,
   },
   {
     type: 'endpoint',
@@ -8567,14 +9336,14 @@ export const faqData = [
     category: 'help',
     fragment: 'help-stuck-transaction',
     title: 'Help! My transaction is stuck',
-    showConditions: bitcoinNetworks
+    showConditions: bitcoinNetworks,
   },
   {
     type: 'endpoint',
     category: 'help',
     showConditions: bitcoinNetworks,
     fragment: 'why-is-transaction-stuck-in-mempool',
-    title: 'Why isn\'t my transaction confirming?',
+    title: "Why isn't my transaction confirming?",
   },
   {
     type: 'endpoint',
@@ -8595,7 +9364,7 @@ export const faqData = [
     category: 'using',
     fragment: 'using-this-website',
     title: 'Using this website',
-    showConditions: bitcoinNetworks
+    showConditions: bitcoinNetworks,
   },
   {
     type: 'endpoint',
@@ -8637,7 +9406,7 @@ export const faqData = [
     category: 'advanced',
     fragment: 'advanced',
     title: 'Advanced',
-    showConditions: bitcoinNetworks
+    showConditions: bitcoinNetworks,
   },
   {
     type: 'endpoint',
@@ -8658,21 +9427,22 @@ export const faqData = [
     category: 'advanced',
     showConditions: bitcoinNetworks,
     fragment: 'why-block-timestamps-dont-always-increase',
-    title: 'Why don\'t block timestamps always increase?',
+    title: "Why don't block timestamps always increase?",
   },
   {
     type: 'endpoint',
     category: 'advanced',
     showConditions: bitcoinNetworks,
     fragment: 'why-dont-fee-ranges-match',
-    title: 'Why doesn\'t the fee range shown for a block match the feerates of transactions within the block?',
+    title:
+      "Why doesn't the fee range shown for a block match the feerates of transactions within the block?",
   },
   {
     type: 'category',
     category: 'self-hosting',
     fragment: 'self-hosting',
     title: 'Self-Hosting',
-    showConditions: bitcoinNetworks
+    showConditions: bitcoinNetworks,
   },
   {
     type: 'endpoint',
@@ -8707,6 +9477,7 @@ export const faqData = [
     category: 'self-hosting',
     showConditions: bitcoinNetworks,
     fragment: 'address-lookup-issues',
-    title: 'Why do I get an error for certain address lookups on my Mempool instance?',
-  }
+    title:
+      'Why do I get an error for certain address lookups on my Mempool instance?',
+  },
 ];

@@ -1,4 +1,10 @@
-import { Component, ElementRef, ViewChild, Input, OnChanges } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  ViewChild,
+  Input,
+  OnChanges,
+} from '@angular/core';
 import { TransactionStripped } from '../../interfaces-bch/websocket.interface';
 import { Position } from '../../components/block-overview-graph/sprite-types.js';
 
@@ -29,9 +35,11 @@ export class BlockOverviewTooltipComponentBch implements OnChanges {
       let x = changes.cursorPosition.currentValue.x + 10;
       let y = changes.cursorPosition.currentValue.y + 10;
       if (this.tooltipElement) {
-        const elementBounds = this.tooltipElement.nativeElement.getBoundingClientRect();
-        const parentBounds = this.tooltipElement.nativeElement.offsetParent.getBoundingClientRect();
-        if ((parentBounds.left + x + elementBounds.width) > parentBounds.right) {
+        const elementBounds =
+          this.tooltipElement.nativeElement.getBoundingClientRect();
+        const parentBounds =
+          this.tooltipElement.nativeElement.offsetParent.getBoundingClientRect();
+        if (parentBounds.left + x + elementBounds.width > parentBounds.right) {
           x = Math.max(0, parentBounds.width - elementBounds.width - 10);
         }
         if (y + elementBounds.height > parentBounds.height) {

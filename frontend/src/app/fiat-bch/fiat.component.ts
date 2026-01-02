@@ -1,4 +1,9 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  Input,
+} from '@angular/core';
 import { Observable } from 'rxjs';
 import { StateService } from '../services/state-bch.service';
 
@@ -14,12 +19,9 @@ export class FiatComponent implements OnInit {
   @Input() value: number;
   @Input() digitsInfo = '1.2-2';
 
-  constructor(
-    private stateService: StateService,
-  ) { }
+  constructor(private stateService: StateService) {}
 
   ngOnInit(): void {
     this.conversions$ = this.stateService.conversions$.asObservable();
   }
-
 }

@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
-import { WebsocketResponse, IBackendInfo } from '../interfaces/websocket.interface';
+import {
+  WebsocketResponse,
+  IBackendInfo,
+} from '../interfaces/websocket.interface';
 import { StateService } from './state.service';
 import { Transaction } from '../interfaces/electrs.interface';
 import { Subscription } from 'rxjs';
@@ -16,11 +19,18 @@ const EXPECT_PING_RESPONSE_AFTER_MS = 5000;
 const initData = makeStateKey('/api/v1/init-data');
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class WebsocketService {
-  private webSocketProtocol = (document.location.protocol === 'https:') ? 'wss:' : 'ws:';
-  private webSocketUrl = this.webSocketProtocol + '//' + document.location.hostname + ':' + document.location.port + '{network}/api/v1/ws';
+  private webSocketProtocol =
+    document.location.protocol === 'https:' ? 'wss:' : 'ws:';
+  private webSocketUrl =
+    this.webSocketProtocol +
+    '//' +
+    document.location.hostname +
+    ':' +
+    document.location.port +
+    '{network}/api/v1/ws';
 
   private websocketSubject: WebSocketSubject<WebsocketResponse>;
   private goneOffline = false;
@@ -38,18 +48,28 @@ export class WebsocketService {
   constructor(
     private stateService: StateService,
     private apiService: ApiService,
-    private transferState: TransferState,
+    private transferState: TransferState
   ) {
     if (!this.stateService.isBrowser) {
       // @ts-ignore
-      this.websocketSubject = { next: () => {}};
+      this.websocketSubject = { next: () => {} };
       this.stateService.isLoadingWebSocket$.next(false);
-      this.apiService.getInitData$()
+      this.apiService
+        .getInitData$()
         .pipe(take(1))
         .subscribe((response) => this.handleResponse(response));
     } else {
-      this.network = this.stateService.network === 'bisq' && !this.stateService.env.BISQ_SEPARATE_BACKEND ? '' : this.stateService.network;
-      this.websocketSubject = webSocket<WebsocketResponse>(this.webSocketUrl.replace('{network}', this.network ? '/' + this.network : ''));
+      this.network =
+        this.stateService.network === 'bisq' &&
+        !this.stateService.env.BISQ_SEPARATE_BACKEND
+          ? ''
+          : this.stateService.network;
+      this.websocketSubject = webSocket<WebsocketResponse>(
+        this.webSocketUrl.replace(
+          '{network}',
+          this.network ? '/' + this.network : ''
+        )
+      );
 
       const theInitData = this.transferState.get<any>(initData, null);
       if (theInitData) {
@@ -60,7 +80,10 @@ export class WebsocketService {
       }
 
       this.stateService.networkChanged$.subscribe((network) => {
-        if (network === 'bisq' && !this.stateService.env.BISQ_SEPARATE_BACKEND) {
+        if (
+          network === 'bisq' &&
+          !this.stateService.env.BISQ_SEPARATE_BACKEND
+        ) {
           network = '';
         }
         if (network === this.network) {
@@ -75,7 +98,10 @@ export class WebsocketService {
         this.websocketSubject.complete();
         this.subscription.unsubscribe();
         this.websocketSubject = webSocket<WebsocketResponse>(
-          this.webSocketUrl.replace('{network}', this.network ? '/' + this.network : '')
+          this.webSocketUrl.replace(
+            '{network}',
+            this.network ? '/' + this.network : ''
+          )
         );
 
         this.startSubscription();
@@ -86,13 +112,13 @@ export class WebsocketService {
   startSubscription(retrying = false, hasInitData = false) {
     if (!hasInitData) {
       this.stateService.isLoadingWebSocket$.next(true);
-      this.websocketSubject.next({'action': 'init'});
+      this.websocketSubject.next({ action: 'init' });
     }
     if (retrying) {
       this.stateService.connectionState$.next(1);
     }
-    this.subscription = this.websocketSubject
-      .subscribe((response: WebsocketResponse) => {
+    this.subscription = this.websocketSubject.subscribe(
+      (response: WebsocketResponse) => {
         this.stateService.isLoadingWebSocket$.next(false);
         this.handleResponse(response);
 
@@ -118,9 +144,12 @@ export class WebsocketService {
       },
       (err: Error) => {
         console.log(err);
-        console.log(`WebSocket error, trying to reconnect in ${OFFLINE_RETRY_AFTER_MS} seconds`);
+        console.log(
+          `WebSocket error, trying to reconnect in ${OFFLINE_RETRY_AFTER_MS} seconds`
+        );
         this.goOffline();
-      });
+      }
+    );
   }
 
   startTrackTransaction(txId: string) {
@@ -192,7 +221,7 @@ export class WebsocketService {
     if (JSON.stringify(data) === this.lastWant && !force) {
       return;
     }
-    this.websocketSubject.next({action: 'want', data: data});
+    this.websocketSubject.next({ action: 'want', data: data });
     this.lastWant = JSON.stringify(data);
   }
 
@@ -209,10 +238,12 @@ export class WebsocketService {
     clearTimeout(this.onlineCheckTimeoutTwo);
 
     this.onlineCheckTimeout = window.setTimeout(() => {
-      this.websocketSubject.next({action: 'ping'});
+      this.websocketSubject.next({ action: 'ping' });
       this.onlineCheckTimeoutTwo = window.setTimeout(() => {
         if (!this.goneOffline) {
-          console.log('WebSocket response timeout, force closing, trying to reconnect in 10 seconds');
+          console.log(
+            'WebSocket response timeout, force closing, trying to reconnect in 10 seconds'
+          );
           this.websocketSubject.complete();
           this.subscription.unsubscribe();
           this.goOffline();
@@ -239,7 +270,10 @@ export class WebsocketService {
     if (response.block) {
       if (response.block.height > this.stateService.latestBlockHeight) {
         this.stateService.latestBlockHeight = response.block.height;
-        this.stateService.blocks$.next([response.block, !!response.txConfirmed]);
+        this.stateService.blocks$.next([
+          response.block,
+          !!response.txConfirmed,
+        ]);
       }
 
       if (response.txConfirmed) {
@@ -264,7 +298,9 @@ export class WebsocketService {
     }
 
     if (response.transactions) {
-      response.transactions.forEach((tx) => this.stateService.transactions$.next(tx));
+      response.transactions.forEach((tx) =>
+        this.stateService.transactions$.next(tx)
+      );
     }
 
     if (response['bsq-price']) {
@@ -280,7 +316,7 @@ export class WebsocketService {
     }
 
     if (response.fees) {
-     this.stateService.recommendedFees$.next(response.fees); 
+      this.stateService.recommendedFees$.next(response.fees);
     }
 
     if (response.backendInfo) {
@@ -298,23 +334,34 @@ export class WebsocketService {
     }
 
     if (response['address-transactions']) {
-      response['address-transactions'].forEach((addressTransaction: Transaction) => {
-        this.stateService.mempoolTransactions$.next(addressTransaction);
-      });
+      response['address-transactions'].forEach(
+        (addressTransaction: Transaction) => {
+          this.stateService.mempoolTransactions$.next(addressTransaction);
+        }
+      );
     }
 
     if (response['block-transactions']) {
-      response['block-transactions'].forEach((addressTransaction: Transaction) => {
-        this.stateService.blockTransactions$.next(addressTransaction);
-      });
+      response['block-transactions'].forEach(
+        (addressTransaction: Transaction) => {
+          this.stateService.blockTransactions$.next(addressTransaction);
+        }
+      );
     }
 
     if (response['projected-block-transactions']) {
-      if (response['projected-block-transactions'].index == this.trackingMempoolBlock) {
+      if (
+        response['projected-block-transactions'].index ==
+        this.trackingMempoolBlock
+      ) {
         if (response['projected-block-transactions'].blockTransactions) {
-          this.stateService.mempoolBlockTransactions$.next(response['projected-block-transactions'].blockTransactions);
+          this.stateService.mempoolBlockTransactions$.next(
+            response['projected-block-transactions'].blockTransactions
+          );
         } else if (response['projected-block-transactions'].delta) {
-          this.stateService.mempoolBlockDelta$.next(response['projected-block-transactions'].delta);
+          this.stateService.mempoolBlockDelta$.next(
+            response['projected-block-transactions'].delta
+          );
         }
       }
     }

@@ -15,11 +15,13 @@ export class NodesRankingsDashboard implements OnInit {
 
   constructor(
     private lightningApiService: LightningApiService,
-    private seoService: SeoService,
+    private seoService: SeoService
   ) {}
 
   ngOnInit(): void {
     this.seoService.setTitle($localize`Top lightning nodes`);
-    this.nodesRanking$ = this.lightningApiService.getNodesRanking$().pipe(share());
+    this.nodesRanking$ = this.lightningApiService
+      .getNodesRanking$()
+      .pipe(share());
   }
 }

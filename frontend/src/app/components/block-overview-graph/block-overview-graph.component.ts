@@ -1,4 +1,16 @@
-import { Component, ElementRef, ViewChild, HostListener, Input, Output, EventEmitter, NgZone, AfterViewInit, OnDestroy, OnChanges } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  ViewChild,
+  HostListener,
+  Input,
+  Output,
+  EventEmitter,
+  NgZone,
+  AfterViewInit,
+  OnDestroy,
+  OnChanges,
+} from '@angular/core';
 import { TransactionStripped } from '../../interfaces/websocket.interface';
 import { FastVertexArray } from './fast-vertex-array';
 import BlockScene from './block-scene';
@@ -11,7 +23,9 @@ import { Position } from './sprite-types';
   templateUrl: './block-overview-graph.component.html',
   styleUrls: ['./block-overview-graph.component.scss'],
 })
-export class BlockOverviewGraphComponent implements AfterViewInit, OnDestroy, OnChanges {
+export class BlockOverviewGraphComponent
+  implements AfterViewInit, OnDestroy, OnChanges
+{
   @Input() isLoading: boolean;
   @Input() resolution: number;
   @Input() blockLimit: number;
@@ -44,16 +58,21 @@ export class BlockOverviewGraphComponent implements AfterViewInit, OnDestroy, On
 
   readyNextFrame = false;
 
-  constructor(
-    readonly ngZone: NgZone,
-    readonly elRef: ElementRef,
-  ) {
+  constructor(readonly ngZone: NgZone, readonly elRef: ElementRef) {
     this.vertexArray = new FastVertexArray(512, TxSprite.dataSize);
   }
 
   ngAfterViewInit(): void {
-    this.canvas.nativeElement.addEventListener('webglcontextlost', this.handleContextLost, false);
-    this.canvas.nativeElement.addEventListener('webglcontextrestored', this.handleContextRestored, false);
+    this.canvas.nativeElement.addEventListener(
+      'webglcontextlost',
+      this.handleContextLost,
+      false
+    );
+    this.canvas.nativeElement.addEventListener(
+      'webglcontextrestored',
+      this.handleContextRestored,
+      false
+    );
     this.gl = this.canvas.nativeElement.getContext('webgl');
     this.initCanvas();
 
@@ -116,14 +135,23 @@ export class BlockOverviewGraphComponent implements AfterViewInit, OnDestroy, On
     }
   }
 
-  replace(transactions: TransactionStripped[], direction: string, sort: boolean = true): void {
+  replace(
+    transactions: TransactionStripped[],
+    direction: string,
+    sort: boolean = true
+  ): void {
     if (this.scene) {
       this.scene.replace(transactions || [], direction, sort);
       this.start();
     }
   }
 
-  update(add: TransactionStripped[], remove: string[], direction: string = 'left', resetLayout: boolean = false): void {
+  update(
+    add: TransactionStripped[],
+    remove: string[],
+    direction: string = 'left',
+    resetLayout: boolean = false
+  ): void {
     if (this.scene) {
       this.scene.update(add, remove, direction, resetLayout);
       this.start();
@@ -137,12 +165,12 @@ export class BlockOverviewGraphComponent implements AfterViewInit, OnDestroy, On
     const shaderSet = [
       {
         type: this.gl.VERTEX_SHADER,
-        src: vertShaderSrc
+        src: vertShaderSrc,
       },
       {
         type: this.gl.FRAGMENT_SHADER,
-        src: fragShaderSrc
-      }
+        src: fragShaderSrc,
+      },
     ];
 
     this.shaderProgram = this.buildShaderProgram(shaderSet);
@@ -188,11 +216,22 @@ export class BlockOverviewGraphComponent implements AfterViewInit, OnDestroy, On
       this.gl.viewport(0, 0, this.displayWidth, this.displayHeight);
     }
     if (this.scene) {
-      this.scene.resize({ width: this.displayWidth, height: this.displayHeight, animate: false });
+      this.scene.resize({
+        width: this.displayWidth,
+        height: this.displayHeight,
+        animate: false,
+      });
       this.start();
     } else {
-      this.scene = new BlockScene({ width: this.displayWidth, height: this.displayHeight, resolution: this.resolution,
-        blockLimit: this.blockLimit, orientation: this.orientation, flip: this.flip, vertexArray: this.vertexArray });
+      this.scene = new BlockScene({
+        width: this.displayWidth,
+        height: this.displayHeight,
+        resolution: this.resolution,
+        blockLimit: this.blockLimit,
+        orientation: this.orientation,
+        flip: this.flip,
+        vertexArray: this.vertexArray,
+      });
       this.start();
     }
   }
@@ -204,7 +243,11 @@ export class BlockOverviewGraphComponent implements AfterViewInit, OnDestroy, On
     this.gl.compileShader(shader);
 
     if (!this.gl.getShaderParameter(shader, this.gl.COMPILE_STATUS)) {
-      console.log(`Error compiling ${type === this.gl.VERTEX_SHADER ? 'vertex' : 'fragment'} shader:`);
+      console.log(
+        `Error compiling ${
+          type === this.gl.VERTEX_SHADER ? 'vertex' : 'fragment'
+        } shader:`
+      );
       console.log(this.gl.getShaderInfoLog(shader));
     }
     return shader;
@@ -250,32 +293,53 @@ export class BlockOverviewGraphComponent implements AfterViewInit, OnDestroy, On
     if (this.scene) {
       /* SET UP SHADER UNIFORMS */
       // screen dimensions
-      this.gl.uniform2f(this.gl.getUniformLocation(this.shaderProgram, 'screenSize'), this.displayWidth, this.displayHeight);
+      this.gl.uniform2f(
+        this.gl.getUniformLocation(this.shaderProgram, 'screenSize'),
+        this.displayWidth,
+        this.displayHeight
+      );
       // frame timestamp
-      this.gl.uniform1f(this.gl.getUniformLocation(this.shaderProgram, 'now'), now);
+      this.gl.uniform1f(
+        this.gl.getUniformLocation(this.shaderProgram, 'now'),
+        now
+      );
 
       if (this.vertexArray.dirty) {
         /* SET UP SHADER ATTRIBUTES */
         Object.keys(attribs).forEach((key, i) => {
-          this.gl.vertexAttribPointer(attribs[key].pointer,
-          attribs[key].count,  // number of primitives in this attribute
-          this.gl[attribs[key].type],  // type of primitive in this attribute (e.g. gl.FLOAT)
-          false, // never normalised
-          stride,   // distance between values of the same attribute
-          attribs[key].offset);  // offset of the first value
+          this.gl.vertexAttribPointer(
+            attribs[key].pointer,
+            attribs[key].count, // number of primitives in this attribute
+            this.gl[attribs[key].type], // type of primitive in this attribute (e.g. gl.FLOAT)
+            false, // never normalised
+            stride, // distance between values of the same attribute
+            attribs[key].offset
+          ); // offset of the first value
         });
 
         const pointArray = this.vertexArray.getVertexData();
 
         if (pointArray.length) {
-          this.gl.bufferData(this.gl.ARRAY_BUFFER, pointArray, this.gl.DYNAMIC_DRAW);
-          this.gl.drawArrays(this.gl.TRIANGLES, 0, pointArray.length / TxSprite.vertexSize);
+          this.gl.bufferData(
+            this.gl.ARRAY_BUFFER,
+            pointArray,
+            this.gl.DYNAMIC_DRAW
+          );
+          this.gl.drawArrays(
+            this.gl.TRIANGLES,
+            0,
+            pointArray.length / TxSprite.vertexSize
+          );
         }
         this.vertexArray.dirty = false;
       } else {
         const pointArray = this.vertexArray.getVertexData();
         if (pointArray.length) {
-          this.gl.drawArrays(this.gl.TRIANGLES, 0, pointArray.length / TxSprite.vertexSize);
+          this.gl.drawArrays(
+            this.gl.TRIANGLES,
+            0,
+            pointArray.length / TxSprite.vertexSize
+          );
         }
       }
 
@@ -286,7 +350,7 @@ export class BlockOverviewGraphComponent implements AfterViewInit, OnDestroy, On
     }
 
     /* LOOP */
-    if (this.running && this.scene && now <= (this.scene.animateUntil + 500)) {
+    if (this.running && this.scene && now <= this.scene.animateUntil + 500) {
       this.doRun();
     } else {
       if (this.animationHeartBeat) {
@@ -314,7 +378,10 @@ export class BlockOverviewGraphComponent implements AfterViewInit, OnDestroy, On
 
   @HostListener('pointerup', ['$event'])
   onClick(event) {
-    if (event.target === this.canvas.nativeElement && event.pointerType === 'touch') {
+    if (
+      event.target === this.canvas.nativeElement &&
+      event.pointerType === 'touch'
+    ) {
       this.setPreviewTx(event.offsetX, event.offsetY, true);
     } else if (event.target === this.canvas.nativeElement) {
       this.onTxClick(event.offsetX, event.offsetY);
@@ -341,7 +408,7 @@ export class BlockOverviewGraphComponent implements AfterViewInit, OnDestroy, On
     if (this.scene && (!this.selectedTx || clicked)) {
       this.tooltipPosition = {
         x: cssX,
-        y: cssY
+        y: cssY,
       };
       const selected = this.scene.getTxAt({ x, y });
       const currentPreview = this.selectedTx || this.hoverTx;
@@ -416,17 +483,17 @@ const attribs = {
   colR: { type: 'FLOAT', count: 4, pointer: null, offset: 0 },
   colG: { type: 'FLOAT', count: 4, pointer: null, offset: 0 },
   colB: { type: 'FLOAT', count: 4, pointer: null, offset: 0 },
-  colA: { type: 'FLOAT', count: 4, pointer: null, offset: 0 }
+  colA: { type: 'FLOAT', count: 4, pointer: null, offset: 0 },
 };
 // Calculate the number of bytes per vertex based on specified attributes
 const stride = Object.values(attribs).reduce((total, attrib) => {
-  return total + (attrib.count * 4);
+  return total + attrib.count * 4;
 }, 0);
 // Calculate vertex attribute offsets
 for (let i = 0, offset = 0; i < Object.keys(attribs).length; i++) {
   const attrib = Object.values(attribs)[i];
   attrib.offset = offset;
-  offset += (attrib.count * 4);
+  offset += attrib.count * 4;
 }
 
 const vertShaderSrc = `

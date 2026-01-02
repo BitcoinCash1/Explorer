@@ -1,4 +1,9 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { StateService } from '../../services/state-bch.service';
 
@@ -14,9 +19,7 @@ export class BlockchainComponentBch implements OnInit, OnDestroy {
   timeLtr: boolean = this.stateService.timeLtr.value;
   ltrTransitionEnabled = false;
 
-  constructor(
-    public stateService: StateService,
-  ) {}
+  constructor(public stateService: StateService) {}
 
   ngOnInit() {
     this.network = this.stateService.network;

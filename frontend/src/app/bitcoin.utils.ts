@@ -1,7 +1,7 @@
 import { Transaction, Vin } from './interfaces/electrs.interface';
 
 const P2SH_P2WPKH_COST = 21 * 4; // the WU cost for the non-witness part of P2SH-P2WPKH
-const P2SH_P2WSH_COST  = 35 * 4; // the WU cost for the non-witness part of P2SH-P2WSH
+const P2SH_P2WSH_COST = 35 * 4; // the WU cost for the non-witness part of P2SH-P2WSH
 
 export function calcSegwitFeeGains(tx: Transaction) {
   // calculated in weight units
@@ -12,20 +12,22 @@ export function calcSegwitFeeGains(tx: Transaction) {
   let realizedTaprootGains = 0;
 
   for (const vin of tx.vin) {
-    if (!vin.prevout) { continue; }
+    if (!vin.prevout) {
+      continue;
+    }
 
-    const isP2pk         = vin.prevout.scriptpubkey_type === 'p2pk';
+    const isP2pk = vin.prevout.scriptpubkey_type === 'p2pk';
     // const isBareMultisig = vin.prevout.scriptpubkey_type === 'multisig'; // type will be unknown, so use the multisig helper from the address labels
     const isBareMultisig = !!parseMultisigScript(vin.prevout.scriptpubkey_asm);
-    const isP2pkh        = vin.prevout.scriptpubkey_type === 'p2pkh';
-    const isP2sh         = vin.prevout.scriptpubkey_type === 'p2sh';
-    const isP2wsh        = vin.prevout.scriptpubkey_type === 'v0_p2wsh';
-    const isP2wpkh       = vin.prevout.scriptpubkey_type === 'v0_p2wpkh';
-    const isP2tr         = vin.prevout.scriptpubkey_type === 'v1_p2tr';
+    const isP2pkh = vin.prevout.scriptpubkey_type === 'p2pkh';
+    const isP2sh = vin.prevout.scriptpubkey_type === 'p2sh';
+    const isP2wsh = vin.prevout.scriptpubkey_type === 'v0_p2wsh';
+    const isP2wpkh = vin.prevout.scriptpubkey_type === 'v0_p2wpkh';
+    const isP2tr = vin.prevout.scriptpubkey_type === 'v1_p2tr';
 
     const op = vin.scriptsig ? vin.scriptsig_asm.split(' ')[0] : null;
     const isP2shP2Wpkh = isP2sh && !!vin.witness && op === 'OP_PUSHBYTES_22';
-    const isP2shP2Wsh  = isP2sh && !!vin.witness && op === 'OP_PUSHBYTES_34';
+    const isP2shP2Wsh = isP2sh && !!vin.witness && op === 'OP_PUSHBYTES_34';
 
     switch (true) {
       // Native Segwit - P2WPKH/P2WSH/P2TR
@@ -64,7 +66,8 @@ export function calcSegwitFeeGains(tx: Transaction) {
           fullGains -= vin.prevout.scriptpubkey.length / 2;
         }
         potentialSegwitGains += fullGains;
-        potentialP2shSegwitGains += fullGains - (isP2pkh ? P2SH_P2WPKH_COST : P2SH_P2WSH_COST);
+        potentialP2shSegwitGains +=
+          fullGains - (isP2pkh ? P2SH_P2WPKH_COST : P2SH_P2WSH_COST);
         break;
       }
     }
@@ -85,13 +88,20 @@ export function calcSegwitFeeGains(tx: Transaction) {
         // TODO maybe add some complex scripts that are specified somewhere, so that size is known, such as lightning scripts
       }
     } else {
-      const script = isP2shP2Wsh || isP2wsh ? vin.inner_witnessscript_asm : vin.inner_redeemscript_asm;
+      const script =
+        isP2shP2Wsh || isP2wsh
+          ? vin.inner_witnessscript_asm
+          : vin.inner_redeemscript_asm;
       let replacementSize: number;
       if (
         // single sig
-        isP2pk || isP2pkh || isP2wpkh || isP2shP2Wpkh ||
+        isP2pk ||
+        isP2pkh ||
+        isP2wpkh ||
+        isP2shP2Wpkh ||
         // multisig
-        isBareMultisig || parseMultisigScript(script)
+        isBareMultisig ||
+        parseMultisigScript(script)
       ) {
         // the scriptSig and scriptWitness can all be replaced by a 66 witness WU with taproot
         replacementSize = 66;
@@ -99,28 +109,37 @@ export function calcSegwitFeeGains(tx: Transaction) {
         // not single sig, not multisig: the complex scripts
         // rough calculations on spending paths
         // every OP_IF and OP_NOTIF indicates an _extra_ spending path, so add 1
-        const spendingPaths = script.split(' ').filter(op => /^(OP_IF|OP_NOTIF)$/g.test(op)).length + 1;
+        const spendingPaths =
+          script.split(' ').filter((op) => /^(OP_IF|OP_NOTIF)$/g.test(op))
+            .length + 1;
         // now assume the script could have been split in ${spendingPaths} equal tapleaves
-        replacementSize = script.length / 2 / spendingPaths +
-        // but account for the leaf and branch hashes and internal key in the control block
-          32 * Math.log2((spendingPaths - 1) || 1) + 33;
+        replacementSize =
+          script.length / 2 / spendingPaths +
+          // but account for the leaf and branch hashes and internal key in the control block
+          32 * Math.log2(spendingPaths - 1 || 1) +
+          33;
       }
-      potentialTaprootGains += witnessSize(vin) + scriptSigSize(vin) * 4 - replacementSize;
+      potentialTaprootGains +=
+        witnessSize(vin) + scriptSigSize(vin) * 4 - replacementSize;
     }
   }
 
   // returned as percentage of the total tx weight
   return {
-    realizedSegwitGains: realizedSegwitGains / (tx.weight + realizedSegwitGains), // percent of the pre-segwit tx size
+    realizedSegwitGains:
+      realizedSegwitGains / (tx.weight + realizedSegwitGains), // percent of the pre-segwit tx size
     potentialSegwitGains: potentialSegwitGains / tx.weight,
     potentialP2shSegwitGains: potentialP2shSegwitGains / tx.weight,
     potentialTaprootGains: potentialTaprootGains / tx.weight,
-    realizedTaprootGains: realizedTaprootGains / (tx.weight + realizedTaprootGains)
+    realizedTaprootGains:
+      realizedTaprootGains / (tx.weight + realizedTaprootGains),
   };
 }
 
 /** extracts m and n from a multisig script (asm), returns nothing if it is not a multisig script */
-export function parseMultisigScript(script: string): void | { m: number, n: number } {
+export function parseMultisigScript(
+  script: string
+): void | { m: number; n: number } {
   if (!script) {
     return;
   }
@@ -164,10 +183,10 @@ export function moveDec(num: number, n: number) {
   if (n === 0) {
     return num.toString();
   }
-  ref = ('' + num).split('.'), int = ref[0], frac = ref[1];
+  (ref = ('' + num).split('.')), (int = ref[0]), (frac = ref[1]);
   int || (int = '0');
   frac || (frac = '0');
-  neg = (int[0] === '-' ? '-' : '');
+  neg = int[0] === '-' ? '-' : '';
   if (neg) {
     int = int.slice(1);
   }
@@ -180,7 +199,7 @@ export function moveDec(num: number, n: number) {
   } else {
     n = n * -1;
     if (n > int.length) {
-      int = (zeros(n - int.length)) + int;
+      int = zeros(n - int.length) + int;
     }
     frac = int.slice(n * -1) + frac;
     int = int.slice(0, n * -1);
@@ -199,8 +218,11 @@ function zeros(n: number) {
 }
 
 // Formats a number for display. Treats the number as a string to avoid rounding errors.
-export const formatNumber = (s: number | string, precision: number | null = null) => {
-  let [ whole, dec ] = s.toString().split('.');
+export const formatNumber = (
+  s: number | string,
+  precision: number | null = null
+) => {
+  let [whole, dec] = s.toString().split('.');
 
   // divide numbers into groups of three separated with a thin space (U+202F, "NARROW NO-BREAK SPACE"),
   // but only when there are more than a total of 5 non-decimal digits.
@@ -211,8 +233,7 @@ export const formatNumber = (s: number | string, precision: number | null = null
   if (precision != null && precision > 0) {
     if (dec == null) {
       dec = '0'.repeat(precision);
-    }
-    else if (dec.length < precision) {
+    } else if (dec.length < precision) {
       dec += '0'.repeat(precision - dec.length);
     }
   }
@@ -221,11 +242,16 @@ export const formatNumber = (s: number | string, precision: number | null = null
 };
 
 // Utilities for segwitFeeGains
-const witnessSize = (vin: Vin) => vin.witness ? vin.witness.reduce((S, w) => S + (w.length / 2), 0) : 0;
-const scriptSigSize = (vin: Vin) => vin.scriptsig ? vin.scriptsig.length / 2 : 0;
+const witnessSize = (vin: Vin) =>
+  vin.witness ? vin.witness.reduce((S, w) => S + w.length / 2, 0) : 0;
+const scriptSigSize = (vin: Vin) =>
+  vin.scriptsig ? vin.scriptsig.length / 2 : 0;
 
 // Power of ten wrapper
-export function selectPowerOfTen(val: number): { divider: number, unit: string } {
+export function selectPowerOfTen(val: number): {
+  divider: number;
+  unit: string;
+} {
   const powerOfTen = {
     exa: Math.pow(10, 18),
     peta: Math.pow(10, 15),
@@ -235,7 +261,7 @@ export function selectPowerOfTen(val: number): { divider: number, unit: string }
     kilo: Math.pow(10, 3),
   };
 
-  let selectedPowerOfTen: { divider: number, unit: string };
+  let selectedPowerOfTen: { divider: number; unit: string };
   if (val < powerOfTen.kilo) {
     selectedPowerOfTen = { divider: 1, unit: '' }; // no scaling
   } else if (val < powerOfTen.mega) {

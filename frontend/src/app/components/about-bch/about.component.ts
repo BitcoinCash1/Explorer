@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, Inject, LOCALE_ID, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  LOCALE_ID,
+  OnInit,
+} from '@angular/core';
 import { WebsocketService } from '../../services/websocket-bch.service';
 import { SeoService } from '../../services/seo-bch.service';
 import { StateService } from '../../services/state-bch.service';
@@ -31,26 +37,27 @@ export class AboutComponentBch implements OnInit {
     public stateService: StateService,
     private apiService: ApiService,
     private router: Router,
-    @Inject(LOCALE_ID) public locale: string,
-  ) { }
+    @Inject(LOCALE_ID) public locale: string
+  ) {}
 
   ngOnInit() {
     this.backendInfo$ = this.stateService.backendInfo$;
-    this.seoService.setTitle($localize`:@@004b222ff9ef9dd4771b777950ca1d0e4cd4348a:About`);
+    this.seoService.setTitle(
+      $localize`:@@004b222ff9ef9dd4771b777950ca1d0e4cd4348a:About`
+    );
     this.websocketService.want(['blocks']);
 
     this.sponsors$ = this.apiService.getDonation$();
-    this.translators$ = this.apiService.getTranslators$()
-      .pipe(
-        map((translators) => {
-          for (const t in translators) {
-            if (translators[t] === '') {
-              delete translators[t];
-            }
+    this.translators$ = this.apiService.getTranslators$().pipe(
+      map((translators) => {
+        for (const t in translators) {
+          if (translators[t] === '') {
+            delete translators[t];
           }
-          return translators;
-        })
-      );
+        }
+        return translators;
+      })
+    );
     this.allContributors$ = this.apiService.getContributor$().pipe(
       map((contributors) => {
         return {
@@ -62,7 +69,10 @@ export class AboutComponentBch implements OnInit {
   }
 
   sponsor(): void {
-    if (this.officialMempoolSpace && this.stateService.env.BASE_MODULE === 'mempool.cash') {
+    if (
+      this.officialMempoolSpace &&
+      this.stateService.env.BASE_MODULE === 'mempool.cash'
+    ) {
       this.router.navigateByUrl('/enterprise');
     } else {
       this.showNavigateToSponsor = true;

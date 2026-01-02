@@ -1,4 +1,10 @@
-import { Component, OnInit, OnDestroy, Input, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  Input,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { StateService } from '../../services/state-bch.service';
 import { Observable, Subscription } from 'rxjs';
 
@@ -20,14 +26,14 @@ export class AmountComponentBch implements OnInit, OnDestroy {
   @Input() noFiat = false;
   @Input() addPlus = false;
 
-  constructor(
-    private stateService: StateService,
-  ) { }
+  constructor(private stateService: StateService) {}
 
   ngOnInit() {
     this.viewFiat$ = this.stateService.viewFiat$.asObservable();
     this.conversions$ = this.stateService.conversions$.asObservable();
-    this.stateSubscription = this.stateService.networkChanged$.subscribe((network) => this.network = network);
+    this.stateSubscription = this.stateService.networkChanged$.subscribe(
+      (network) => (this.network = network)
+    );
   }
 
   ngOnDestroy() {
@@ -35,5 +41,4 @@ export class AmountComponentBch implements OnInit, OnDestroy {
       this.stateSubscription.unsubscribe();
     }
   }
-
 }

@@ -1,4 +1,11 @@
-import { Component, ElementRef, HostListener, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { StateService } from '../../services/state-bch.service';
 import { specialBlocks } from '../../app.constants';
@@ -21,45 +28,44 @@ export class StartComponentBch implements OnInit, OnDestroy {
   timeLtr: boolean = this.stateService.timeLtr.value;
   @ViewChild('blockchainContainer') blockchainContainer: ElementRef;
 
-  constructor(
-    private stateService: StateService,
-  ) { }
+  constructor(private stateService: StateService) {}
 
   ngOnInit() {
     this.timeLtrSubscription = this.stateService.timeLtr.subscribe((ltr) => {
       this.timeLtr = !!ltr;
     });
-    this.stateService.blocks$
-      .subscribe((blocks: any) => {
-        if (this.stateService.network !== '') {
-          return;
-        }
-        this.countdown = 0;
-        const block = blocks[0];
+    this.stateService.blocks$.subscribe((blocks: any) => {
+      if (this.stateService.network !== '') {
+        return;
+      }
+      this.countdown = 0;
+      const block = blocks[0];
 
-        for (const sb in specialBlocks) {
-          const height = parseInt(sb, 10);
-          const diff = height - block.height;
-          if (diff > 0 && diff <= 1008) {
-            this.countdown = diff;
-            this.eventName = specialBlocks[sb].labelEvent;
-          }
+      for (const sb in specialBlocks) {
+        const height = parseInt(sb, 10);
+        const diff = height - block.height;
+        if (diff > 0 && diff <= 1008) {
+          this.countdown = diff;
+          this.eventName = specialBlocks[sb].labelEvent;
         }
-        if (specialBlocks[block.height]) {
-          this.specialEvent = true;
-          this.eventName = specialBlocks[block.height].labelEventCompleted;
-          setTimeout(() => {
-            this.specialEvent = false;
-          }, 60 * 60 * 1000);
-        }
-      });
+      }
+      if (specialBlocks[block.height]) {
+        this.specialEvent = true;
+        this.eventName = specialBlocks[block.height].labelEventCompleted;
+        setTimeout(() => {
+          this.specialEvent = false;
+        }, 60 * 60 * 1000);
+      }
+    });
   }
 
   onMouseDown(event: MouseEvent) {
     this.mouseDragStartX = event.clientX;
-    this.blockchainScrollLeftInit = this.blockchainContainer.nativeElement.scrollLeft;
+    this.blockchainScrollLeftInit =
+      this.blockchainContainer.nativeElement.scrollLeft;
   }
-  onDragStart(event: MouseEvent) { // Ignore Firefox annoying default drag behavior
+  onDragStart(event: MouseEvent) {
+    // Ignore Firefox annoying default drag behavior
     event.preventDefault();
   }
 

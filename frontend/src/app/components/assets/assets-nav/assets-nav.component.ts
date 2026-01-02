@@ -14,16 +14,20 @@ import { environment } from '../../../../environments/environment';
 @Component({
   selector: 'app-assets-nav',
   templateUrl: './assets-nav.component.html',
-  styleUrls: ['./assets-nav.component.scss']
+  styleUrls: ['./assets-nav.component.scss'],
 })
 export class AssetsNavComponent implements OnInit {
-  @ViewChild('instance', {static: true}) instance: NgbTypeahead;
-  nativeAssetId = this.stateService.network === 'liquidtestnet' ? environment.nativeTestAssetId : environment.nativeAssetId;
+  @ViewChild('instance', { static: true }) instance: NgbTypeahead;
+  nativeAssetId =
+    this.stateService.network === 'liquidtestnet'
+      ? environment.nativeTestAssetId
+      : environment.nativeAssetId;
   searchForm: FormGroup;
   assetsCache: AssetExtended[];
 
-  typeaheadSearchFn: ((text: Observable<string>) => Observable<readonly any[]>);
-  formatterFn = (asset: AssetExtended) => asset.name + ' (' + asset.ticker  + ')';
+  typeaheadSearchFn: (text: Observable<string>) => Observable<readonly any[]>;
+  formatterFn = (asset: AssetExtended) =>
+    asset.name + ' (' + asset.ticker + ')';
   focus$ = new Subject<string>();
   click$ = new Subject<string>();
 
@@ -35,45 +39,54 @@ export class AssetsNavComponent implements OnInit {
     private router: Router,
     private assetsService: AssetsService,
     private stateService: StateService,
-    private relativeUrlPipe: RelativeUrlPipe,
-  ) { }
+    private relativeUrlPipe: RelativeUrlPipe
+  ) {}
 
   ngOnInit(): void {
-    this.seoService.setTitle($localize`:@@ee8f8008bae6ce3a49840c4e1d39b4af23d4c263:Assets`);
+    this.seoService.setTitle(
+      $localize`:@@ee8f8008bae6ce3a49840c4e1d39b4af23d4c263:Assets`
+    );
     this.typeaheadSearchFn = this.typeaheadSearch;
 
     this.searchForm = this.formBuilder.group({
-      searchText: [{ value: '', disabled: false }, Validators.required]
+      searchText: [{ value: '', disabled: false }, Validators.required],
     });
   }
 
   typeaheadSearch = (text$: Observable<string>) => {
-    const debouncedText$ = text$.pipe(
-      distinctUntilChanged()
+    const debouncedText$ = text$.pipe(distinctUntilChanged());
+    const clicksWithClosedPopup$ = this.click$.pipe(
+      filter(() => !this.instance.isPopupOpen())
     );
-    const clicksWithClosedPopup$ = this.click$.pipe(filter(() => !this.instance.isPopupOpen()));
     const inputFocus$ = this.focus$;
 
-    return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$)
-      .pipe(
-        switchMap((searchText) => {
-          if (!searchText.length) {
-            return of([]);
-          }
-          return this.assetsService.getAssetsJson$.pipe(
-            map((assets) => {
-              if (searchText.length ) {
-                const filteredAssets = assets.array.filter((asset) => asset.name.toLowerCase().indexOf(searchText.toLowerCase()) > -1
-                  || (asset.ticker || '').toLowerCase().indexOf(searchText.toLowerCase()) > -1
-                  || (asset.entity && asset.entity.domain || '').toLowerCase().indexOf(searchText.toLowerCase()) > -1);
-                return filteredAssets.slice(0, this.itemsPerPage);
-              } else {
-                return assets.array.slice(0, this.itemsPerPage);
-              }
-            })
-          );
-        }),
-      );
+    return merge(debouncedText$, inputFocus$, clicksWithClosedPopup$).pipe(
+      switchMap((searchText) => {
+        if (!searchText.length) {
+          return of([]);
+        }
+        return this.assetsService.getAssetsJson$.pipe(
+          map((assets) => {
+            if (searchText.length) {
+              const filteredAssets = assets.array.filter(
+                (asset) =>
+                  asset.name.toLowerCase().indexOf(searchText.toLowerCase()) >
+                    -1 ||
+                  (asset.ticker || '')
+                    .toLowerCase()
+                    .indexOf(searchText.toLowerCase()) > -1 ||
+                  ((asset.entity && asset.entity.domain) || '')
+                    .toLowerCase()
+                    .indexOf(searchText.toLowerCase()) > -1
+              );
+              return filteredAssets.slice(0, this.itemsPerPage);
+            } else {
+              return assets.array.slice(0, this.itemsPerPage);
+            }
+          })
+        );
+      })
+    );
   };
 
   itemSelected() {
@@ -86,10 +99,12 @@ export class AssetsNavComponent implements OnInit {
   }
 
   navigate(url: string, searchText: string, extras?: any) {
-    this.router.navigate([this.relativeUrlPipe.transform(url), searchText], extras);
+    this.router.navigate(
+      [this.relativeUrlPipe.transform(url), searchText],
+      extras
+    );
     this.searchForm.setValue({
       searchText: '',
     });
   }
-
 }

@@ -1,6 +1,14 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { INodesRanking, ITopNodesPerChannels } from '../../../interfaces/node-api.interface';
+import {
+  INodesRanking,
+  ITopNodesPerChannels,
+} from '../../../interfaces/node-api.interface';
 import { isMobile } from '../../../shared/common.utils';
 import { GeolocationData } from '../../../shared/components/geolocation/geolocation.component';
 import { LightningApiService } from '../../lightning-api.service';
@@ -14,13 +22,11 @@ import { LightningApiService } from '../../lightning-api.service';
 export class TopNodesPerChannels implements OnInit {
   @Input() nodes$: Observable<INodesRanking>;
   @Input() widget: boolean = false;
-  
+
   topNodesPerChannels$: Observable<ITopNodesPerChannels[]>;
   skeletonRows: number[] = [];
 
-  constructor(
-    private apiService: LightningApiService,
-  ) {}
+  constructor(private apiService: LightningApiService) {}
 
   ngOnInit(): void {
     for (let i = 1; i <= (this.widget ? (isMobile() ? 8 : 7) : 100); ++i) {
@@ -49,5 +55,4 @@ export class TopNodesPerChannels implements OnInit {
       );
     }
   }
-
 }

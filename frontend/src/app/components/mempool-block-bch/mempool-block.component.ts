@@ -1,8 +1,16 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { StateService } from '../../services/state-bch.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap, map, tap, filter } from 'rxjs/operators';
-import { MempoolBlock, TransactionStripped } from '../../interfaces-bch/websocket.interface';
+import {
+  MempoolBlock,
+  TransactionStripped,
+} from '../../interfaces-bch/websocket.interface';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { SeoService } from '../../services/seo-bch.service';
 import { WebsocketService } from '../../services/websocket-bch.service';
@@ -25,7 +33,7 @@ export class MempoolBlockComponentBch implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     public stateService: StateService,
     private seoService: SeoService,
-    private websocketService: WebsocketService,
+    private websocketService: WebsocketService
   ) {
     this.webGlEnabled = detectWebGL();
   }
@@ -33,34 +41,46 @@ export class MempoolBlockComponentBch implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.websocketService.want(['blocks', 'mempool-blocks']);
 
-    this.mempoolBlock$ = this.route.paramMap
-      .pipe(
-        switchMap((params: ParamMap) => {
-          this.mempoolBlockIndex = parseInt(params.get('id'), 10) || 0;
-          return this.stateService.mempoolBlocks$
-            .pipe(
-              map((blocks) => {
-                if (!blocks.length) {
-                  return [{ index: 0, blockSize: 0, blockVSize: 0, feeRange: [0, 0], medianFee: 0, nTx: 0, totalFees: 0 }];
-                }
-                return blocks;
-              }),
-              filter((mempoolBlocks) => mempoolBlocks.length > 0),
-              map((mempoolBlocks) => {
-                while (!mempoolBlocks[this.mempoolBlockIndex]) {
-                  this.mempoolBlockIndex--;
-                }
-                const ordinal = this.getOrdinal(mempoolBlocks[this.mempoolBlockIndex]);
-                this.ordinal$.next(ordinal);
-                this.seoService.setTitle(ordinal);
-                return mempoolBlocks[this.mempoolBlockIndex];
-              })
+    this.mempoolBlock$ = this.route.paramMap.pipe(
+      switchMap((params: ParamMap) => {
+        this.mempoolBlockIndex = parseInt(params.get('id'), 10) || 0;
+        return this.stateService.mempoolBlocks$.pipe(
+          map((blocks) => {
+            if (!blocks.length) {
+              return [
+                {
+                  index: 0,
+                  blockSize: 0,
+                  blockVSize: 0,
+                  feeRange: [0, 0],
+                  medianFee: 0,
+                  nTx: 0,
+                  totalFees: 0,
+                },
+              ];
+            }
+            return blocks;
+          }),
+          filter((mempoolBlocks) => mempoolBlocks.length > 0),
+          map((mempoolBlocks) => {
+            while (!mempoolBlocks[this.mempoolBlockIndex]) {
+              this.mempoolBlockIndex--;
+            }
+            const ordinal = this.getOrdinal(
+              mempoolBlocks[this.mempoolBlockIndex]
             );
-        }),
-        tap(() => {
-          this.stateService.markBlock$.next({ mempoolBlockIndex: this.mempoolBlockIndex });
-        })
-      );
+            this.ordinal$.next(ordinal);
+            this.seoService.setTitle(ordinal);
+            return mempoolBlocks[this.mempoolBlockIndex];
+          })
+        );
+      }),
+      tap(() => {
+        this.stateService.markBlock$.next({
+          mempoolBlockIndex: this.mempoolBlockIndex,
+        });
+      })
+    );
 
     this.network$ = this.stateService.networkChanged$;
   }
@@ -70,7 +90,7 @@ export class MempoolBlockComponentBch implements OnInit, OnDestroy {
   }
 
   getOrdinal(mempoolBlock: MempoolBlock): string {
-    // TODO: What should we do here for BCH? Since this doesn't make really sense 
+    // TODO: What should we do here for BCH? Since this doesn't make really sense
     /* 
     const blocksInBlock = Math.ceil(mempoolBlock.blockSize / this.stateService.blockSize);
     if (this.mempoolBlockIndex === 0) {
@@ -92,6 +112,7 @@ export class MempoolBlockComponentBch implements OnInit, OnDestroy {
 
 function detectWebGL() {
   const canvas = document.createElement('canvas');
-  const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-  return (gl && gl instanceof WebGLRenderingContext);
+  const gl =
+    canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+  return gl && gl instanceof WebGLRenderingContext;
 }

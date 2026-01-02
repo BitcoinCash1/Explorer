@@ -25,4 +25,4 @@ import { MasterPagePreviewComponent } from './components/master-page-preview/mas
     GraphsModule,
   ],
 })
-export class PreviewsModule { }
+export class PreviewsModule {}

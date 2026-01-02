@@ -3,7 +3,7 @@ import { Title, Meta } from '@angular/platform-browser';
 import { StateService } from './state.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SeoService {
   network = '';
@@ -12,23 +12,34 @@ export class SeoService {
   constructor(
     private titleService: Title,
     private metaService: Meta,
-    private stateService: StateService,
+    private stateService: StateService
   ) {
-    this.stateService.networkChanged$.subscribe((network) => this.network = network);
+    this.stateService.networkChanged$.subscribe(
+      (network) => (this.network = network)
+    );
   }
 
   setTitle(newTitle: string): void {
     this.titleService.setTitle(newTitle + ' - ' + this.getTitle());
-    this.metaService.updateTag({ property: 'og:title', content: newTitle});
-    this.metaService.updateTag({ property: 'twitter:title', content: newTitle});
-    this.metaService.updateTag({ property: 'og:meta:ready', content: 'ready'});
+    this.metaService.updateTag({ property: 'og:title', content: newTitle });
+    this.metaService.updateTag({
+      property: 'twitter:title',
+      content: newTitle,
+    });
+    this.metaService.updateTag({ property: 'og:meta:ready', content: 'ready' });
   }
 
   resetTitle(): void {
     this.titleService.setTitle(this.getTitle());
-    this.metaService.updateTag({ property: 'og:title', content: this.getTitle()});
-    this.metaService.updateTag({ property: 'twitter:title', content: this.getTitle()});
-    this.metaService.updateTag({ property: 'og:meta:ready', content: 'ready'});
+    this.metaService.updateTag({
+      property: 'og:title',
+      content: this.getTitle(),
+    });
+    this.metaService.updateTag({
+      property: 'twitter:title',
+      content: this.getTitle(),
+    });
+    this.metaService.updateTag({ property: 'og:meta:ready', content: 'ready' });
   }
 
   setEnterpriseTitle(title: string) {
@@ -39,15 +50,17 @@ export class SeoService {
   getTitle(): string {
     if (this.network === 'testnet')
       return this.baseTitle + ' - Bitcoin Testnet';
-    if (this.network === 'signet')
-      return this.baseTitle + ' - Bitcoin Signet';
-    if (this.network === 'liquid')
-      return this.baseTitle + ' - Liquid Network';
+    if (this.network === 'signet') return this.baseTitle + ' - Bitcoin Signet';
+    if (this.network === 'liquid') return this.baseTitle + ' - Liquid Network';
     if (this.network === 'liquidtestnet')
       return this.baseTitle + ' - Liquid Testnet';
-    if (this.network === 'bisq')
-      return this.baseTitle + ' - Bisq Markets';
-    return this.baseTitle + ' - ' + (this.network ? this.ucfirst(this.network) : 'Bitcoin') + ' Explorer';
+    if (this.network === 'bisq') return this.baseTitle + ' - Bisq Markets';
+    return (
+      this.baseTitle +
+      ' - ' +
+      (this.network ? this.ucfirst(this.network) : 'Bitcoin') +
+      ' Explorer'
+    );
   }
 
   ucfirst(str: string) {

@@ -37,7 +37,7 @@ const routes: Routes = [
             path: '',
             component: MiningDashboardComponentBch,
           },
-        ]
+        ],
       },
       {
         path: 'mempool-block/:id',
@@ -48,7 +48,7 @@ const routes: Routes = [
             path: '',
             component: MempoolBlockComponentBch,
           },
-        ]
+        ],
       },
       {
         path: 'graphs',
@@ -104,26 +104,28 @@ const routes: Routes = [
             data: { networks: ['bitcoin'] },
             component: BlockPredictionGraphComponentBch,
           },
-        ]
+        ],
       },
       {
         path: '',
         component: StartComponentBch,
-        children: [{
-          path: '',
-          component: DashboardComponentBch,
-        }]
+        children: [
+          {
+            path: '',
+            component: DashboardComponentBch,
+          },
+        ],
       },
-    ]
+    ],
   },
   {
     path: 'tv',
     data: { networks: ['bitcoin', 'liquid'] },
-    component: TelevisionComponentBch
+    component: TelevisionComponentBch,
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
 })
-export class GraphsRoutingModule { }
+export class GraphsRoutingModule {}

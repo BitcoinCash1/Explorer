@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { BehaviorSubject, merge, Observable } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
@@ -31,8 +39,8 @@ export class ChannelsListComponent implements OnInit, OnChanges {
 
   constructor(
     private lightningApiService: LightningApiService,
-    private formBuilder: FormBuilder,
-  ) { 
+    private formBuilder: FormBuilder
+  ) {
     this.channelStatusForm = this.formBuilder.group({
       status: [this.defaultStatus],
     });
@@ -49,14 +57,15 @@ export class ChannelsListComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(): void {
-    this.channelStatusForm.get('status').setValue(this.defaultStatus, { emitEvent: true });
+    this.channelStatusForm
+      .get('status')
+      .setValue(this.defaultStatus, { emitEvent: true });
     this.channelsPage$.next(1);
 
     this.channels$ = merge(
       this.channelsPage$,
-      this.channelStatusForm.get('status').valueChanges,
-    )
-    .pipe(
+      this.channelStatusForm.get('status').valueChanges
+    ).pipe(
       tap((val) => {
         this.isLoading = true;
         this.loadingEvent.emit(true);
@@ -69,21 +78,24 @@ export class ChannelsListComponent implements OnInit, OnChanges {
       }),
       switchMap(() => {
         this.channelsStatusChangedEvent.emit(this.status);
-        return this.lightningApiService.getChannelsByNodeId$(this.publicKey, (this.page - 1) * this.itemsPerPage, this.status);
+        return this.lightningApiService.getChannelsByNodeId$(
+          this.publicKey,
+          (this.page - 1) * this.itemsPerPage,
+          this.status
+        );
       }),
       map((response) => {
         this.isLoading = false;
         this.loadingEvent.emit(false);
         return {
           channels: response.body,
-          totalItems: parseInt(response.headers.get('x-total-count'), 10)
+          totalItems: parseInt(response.headers.get('x-total-count'), 10),
         };
-      }),
+      })
     );
   }
 
   pageChange(page: number): void {
     this.channelsPage$.next(page);
   }
-
 }

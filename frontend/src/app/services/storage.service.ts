@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class StorageService {
   constructor(private router: Router, private route: ActivatedRoute) {
@@ -12,19 +12,31 @@ export class StorageService {
 
   setDefaultValueIfNeeded(key: string, defaultValue: string) {
     const graphWindowPreference: string = this.getValue(key);
-    if (graphWindowPreference === null) { // First visit to mempool.space
-      if (this.router.url.includes('graphs') && key === 'graphWindowPreference' ||
-        this.router.url.includes('pools') && key === 'miningWindowPreference'
+    if (graphWindowPreference === null) {
+      // First visit to mempool.space
+      if (
+        (this.router.url.includes('graphs') &&
+          key === 'graphWindowPreference') ||
+        (this.router.url.includes('pools') && key === 'miningWindowPreference')
       ) {
-        this.setValue(key, this.route.snapshot.fragment ? this.route.snapshot.fragment : defaultValue);
+        this.setValue(
+          key,
+          this.route.snapshot.fragment
+            ? this.route.snapshot.fragment
+            : defaultValue
+        );
       } else {
         this.setValue(key, defaultValue);
       }
-    } else if (this.router.url.includes('graphs') && key === 'graphWindowPreference' ||
-      this.router.url.includes('pools') && key === 'miningWindowPreference'
+    } else if (
+      (this.router.url.includes('graphs') && key === 'graphWindowPreference') ||
+      (this.router.url.includes('pools') && key === 'miningWindowPreference')
     ) {
       // Visit a different graphs#fragment from last visit
-      if (this.route.snapshot.fragment !== null && graphWindowPreference !== this.route.snapshot.fragment) {
+      if (
+        this.route.snapshot.fragment !== null &&
+        graphWindowPreference !== this.route.snapshot.fragment
+      ) {
         this.setValue(key, this.route.snapshot.fragment);
       }
     }

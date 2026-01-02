@@ -8,11 +8,11 @@ import { LightningApiService } from '../lightning-api.service';
 @Component({
   selector: 'app-group',
   templateUrl: './group.component.html',
-  styleUrls: ['./group.component.scss']
+  styleUrls: ['./group.component.scss'],
 })
 export class GroupComponent implements OnInit {
   nodes$: Observable<any>;
-  isp: {name: string, id: number};
+  isp: { name: string; id: number };
 
   skeletonLines: number[] = [];
   selectedSocketIndex = 0;
@@ -22,7 +22,7 @@ export class GroupComponent implements OnInit {
   constructor(
     private lightningApiService: LightningApiService,
     private seoService: SeoService,
-    private formBuilder: FormBuilder,
+    private formBuilder: FormBuilder
   ) {
     for (let i = 0; i < 20; ++i) {
       this.skeletonLines.push(i);
@@ -40,7 +40,8 @@ export class GroupComponent implements OnInit {
 
     this.seoService.setTitle(`Mempool.space Lightning Nodes`);
 
-    this.nodes$ = this.lightningApiService.getNodGroupNodes$('mempool.space')
+    this.nodes$ = this.lightningApiService
+      .getNodGroupNodes$('mempool.space')
       .pipe(
         map((nodes) => {
           for (const node of nodes) {
@@ -65,10 +66,9 @@ export class GroupComponent implements OnInit {
             // @ts-ignore
             node.socketsObject = socketsObject;
 
-            if (!node?.country && !node?.city &&
-              !node?.subdivision) {
-                // @ts-ignore
-                node.geolocation = null;
+            if (!node?.country && !node?.city && !node?.subdivision) {
+              // @ts-ignore
+              node.geolocation = null;
             } else {
               // @ts-ignore
               node.geolocation = <GeolocationData>{
@@ -79,9 +79,15 @@ export class GroupComponent implements OnInit {
               };
             }
           }
-          const sumLiquidity = nodes.reduce((partialSum, a) => partialSum + parseInt(a.capacity, 10), 0);
-          const sumChannels = nodes.reduce((partialSum, a) => partialSum + a.opened_channel_count, 0);
-          
+          const sumLiquidity = nodes.reduce(
+            (partialSum, a) => partialSum + parseInt(a.capacity, 10),
+            0
+          );
+          const sumChannels = nodes.reduce(
+            (partialSum, a) => partialSum + a.opened_channel_count,
+            0
+          );
+
           return {
             nodes: nodes,
             sumLiquidity: sumLiquidity,
@@ -99,5 +105,4 @@ export class GroupComponent implements OnInit {
   changeSocket(index: number) {
     this.selectedSocketIndex = index;
   }
-
 }

@@ -44,15 +44,13 @@ export class TransactionPreviewComponentBch implements OnInit, OnDestroy {
     private stateService: StateService,
     private apiService: ApiService,
     private seoService: SeoService,
-    private openGraphService: OpenGraphService,
+    private openGraphService: OpenGraphService
   ) {}
 
   ngOnInit() {
-    this.stateService.networkChanged$.subscribe(
-      (network) => {
-        this.network = network;
-      }
-    );
+    this.stateService.networkChanged$.subscribe((network) => {
+      this.network = network;
+    });
 
     this.fetchCpfpSubscription = this.fetchCpfp$
       .pipe(
@@ -118,7 +116,7 @@ export class TransactionPreviewComponentBch implements OnInit, OnDestroy {
             transactionObservable$ = this.electrsApiService
               .getTransaction$(this.txId)
               .pipe(
-                catchError(error => {
+                catchError((error) => {
                   this.error = error;
                   this.isLoadingTx = false;
                   return of(null);
@@ -132,7 +130,8 @@ export class TransactionPreviewComponentBch implements OnInit, OnDestroy {
         }),
         switchMap((tx) => of(tx))
       )
-      .subscribe((tx: Transaction) => {
+      .subscribe(
+        (tx: Transaction) => {
           if (!tx) {
             this.openGraphService.fail('tx-data-' + this.txId);
             return;
@@ -213,11 +212,17 @@ export class TransactionPreviewComponentBch implements OnInit, OnDestroy {
   }
 
   getTotalTxOutput(tx: Transaction) {
-    return tx.vout.map((v: Vout) => v.value || 0).reduce((a: number, b: number) => a + b);
+    return tx.vout
+      .map((v: Vout) => v.value || 0)
+      .reduce((a: number, b: number) => a + b);
   }
 
   getOpReturns(tx: Transaction): Vout[] {
-    return tx.vout.filter((v) => v.scriptpubkey_type === 'op_return' && v.scriptpubkey_asm !== 'OP_RETURN');
+    return tx.vout.filter(
+      (v) =>
+        v.scriptpubkey_type === 'op_return' &&
+        v.scriptpubkey_asm !== 'OP_RETURN'
+    );
   }
 
   chooseExtraData(): 'none' | 'opreturn' | 'coinbase' {

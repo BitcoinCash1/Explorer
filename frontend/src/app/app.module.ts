@@ -1,4 +1,7 @@
-import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
+import {
+  BrowserModule,
+  BrowserTransferStateModule,
+} from '@angular/platform-browser';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -40,13 +43,11 @@ const providers = [
   FiatShortenerPipe,
   CapAddressPipe,
   AppPreloadingStrategy,
-  { provide: HTTP_INTERCEPTORS, useClass: HttpCacheInterceptor, multi: true }
+  { provide: HTTP_INTERCEPTORS, useClass: HttpCacheInterceptor, multi: true },
 ];
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     BrowserTransferStateModule,
@@ -56,16 +57,16 @@ const providers = [
     SharedModule,
   ],
   providers: providers,
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
 
 @NgModule({})
-export class MempoolSharedModule{
+export class MempoolSharedModule {
   static forRoot(): ModuleWithProviders<MempoolSharedModule> {
     return {
       ngModule: AppModule,
-      providers: providers
+      providers: providers,
     };
   }
 }

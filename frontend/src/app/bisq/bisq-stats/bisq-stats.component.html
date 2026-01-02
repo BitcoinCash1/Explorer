@@ -1,6 +1,6 @@
 <div class="container-xl">
-  <h1 style="float: left;" i18n="BSQ statistics header">BSQ statistics</h1>
-  <br>
+  <h1 style="float: left" i18n="BSQ statistics header">BSQ statistics</h1>
+  <br />
 
   <div class="clearfix"></div>
 
@@ -10,15 +10,24 @@
         <tbody *ngIf="!isLoading; else loadingTemplate">
           <tr>
             <td class="td-width" i18n="BSQ existing amount">Existing amount</td>
-            <td>{{ (stats.minted - stats.burnt) | number: '1.2-2' }} <span class="symbol">BSQ</span></td>
+            <td>
+              {{ stats.minted - stats.burnt | number : "1.2-2" }}
+              <span class="symbol">BSQ</span>
+            </td>
           </tr>
           <tr>
             <td i18n="BSQ minted amount">Minted amount</td>
-            <td>{{ stats.minted | number: '1.2-2' }} <span class="symbol">BSQ</span></td>
+            <td>
+              {{ stats.minted | number : "1.2-2" }}
+              <span class="symbol">BSQ</span>
+            </td>
           </tr>
           <tr>
             <td i18n="BSQ burnt amount">Burnt amount</td>
-            <td>{{ stats.burnt | number: '1.2-2' }} <span class="symbol">BSQ</span></td>
+            <td>
+              {{ stats.burnt | number : "1.2-2" }}
+              <span class="symbol">BSQ</span>
+            </td>
           </tr>
           <tr>
             <td i18n="BSQ addresses">Addresses</td>
@@ -38,11 +47,14 @@
           </tr>
           <tr>
             <td i18n="BSQ token market cap">Market cap</td>
-            <td><app-fiat [value]="price * (stats.minted - stats.burnt)"></app-fiat></td>
+            <td>
+              <app-fiat
+                [value]="price * (stats.minted - stats.burnt)"
+              ></app-fiat>
+            </td>
           </tr>
         </tbody>
       </table>
-
     </div>
     <div class="col-md"></div>
   </div>

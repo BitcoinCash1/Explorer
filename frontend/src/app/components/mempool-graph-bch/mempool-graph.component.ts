@@ -1,4 +1,12 @@
-import { Component, OnInit, Input, Inject, LOCALE_ID, ChangeDetectionStrategy, OnChanges } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Inject,
+  LOCALE_ID,
+  ChangeDetectionStrategy,
+  OnChanges,
+} from '@angular/core';
 import { BytesPipe } from '../../shared/pipes/bytes-pipe/bytes.pipe';
 import { formatNumber } from '@angular/common';
 import { OptimizedMempoolStats } from '../../interfaces-bch/node-api.interface';
@@ -6,19 +14,25 @@ import { StateService } from '../../services/state-bch.service';
 import { StorageService } from '../../services/storage.service';
 import { EChartsOption } from 'echarts';
 import { feeLevels, chartColors } from '../../app.constants';
-import { download, formatterXAxis, formatterXAxisLabel } from '../../shared/graphs.utils';
+import {
+  download,
+  formatterXAxis,
+  formatterXAxisLabel,
+} from '../../shared/graphs.utils';
 
 @Component({
   selector: 'app-mempool-graph-bch',
   templateUrl: './mempool-graph.component.html',
-  styles: [`
-    .loadingGraphs {
-      position: absolute;
-      top: 50%;
-      left: calc(50% - 16px);
-      z-index: 100;
-    }
-  `],
+  styles: [
+    `
+      .loadingGraphs {
+        position: absolute;
+        top: 50%;
+        left: calc(50% - 16px);
+        z-index: 100;
+      }
+    `,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MempoolGraphComponentBch implements OnInit, OnChanges {
@@ -29,7 +43,7 @@ export class MempoolGraphComponentBch implements OnInit, OnChanges {
   @Input() top: number | string = 20;
   @Input() right: number | string = 10;
   @Input() left: number | string = 75;
-  @Input() template: ('widget' | 'advanced') = 'widget';
+  @Input() template: 'widget' | 'advanced' = 'widget';
   @Input() showZoom = true;
   @Input() windowPreferenceOverride: string;
 
@@ -51,8 +65,8 @@ export class MempoolGraphComponentBch implements OnInit, OnChanges {
     private bytesPipe: BytesPipe,
     private stateService: StateService,
     private storageService: StorageService,
-    @Inject(LOCALE_ID) private locale: string,
-  ) { }
+    @Inject(LOCALE_ID) private locale: string
+  ) {}
 
   ngOnInit(): void {
     this.isLoading = true;
@@ -63,7 +77,9 @@ export class MempoolGraphComponentBch implements OnInit, OnChanges {
     if (!this.data) {
       return;
     }
-    this.windowPreference = this.windowPreferenceOverride ? this.windowPreferenceOverride : this.storageService.getValue('graphWindowPreference');
+    this.windowPreference = this.windowPreferenceOverride
+      ? this.windowPreferenceOverride
+      : this.storageService.getValue('graphWindowPreference');
     this.mempoolVsizeFeesData = this.handleNewMempoolData(this.data.concat([]));
     this.mountFeeChart();
   }
@@ -77,11 +93,13 @@ export class MempoolGraphComponentBch implements OnInit, OnChanges {
 
   onChartReady(myChart: any) {
     myChart.getZr().on('mousemove', (e: any) => {
-      if (e.target !== undefined &&
+      if (
+        e.target !== undefined &&
         e.target.parent !== undefined &&
         e.target.parent.parent !== null &&
-        e.target.parent.parent.__ecComponentInfo !== undefined) {
-          this.hoverIndexSerie = e.target.parent.parent.__ecComponentInfo.index;
+        e.target.parent.parent.__ecComponentInfo !== undefined
+      ) {
+        this.hoverIndexSerie = e.target.parent.parent.__ecComponentInfo.index;
       }
     });
     this.chartInstance = myChart;
@@ -89,12 +107,12 @@ export class MempoolGraphComponentBch implements OnInit, OnChanges {
 
   handleNewMempoolData(mempoolStats: OptimizedMempoolStats[]) {
     mempoolStats.reverse();
-    const labels = mempoolStats.map(stats => stats.added);
+    const labels = mempoolStats.map((stats) => stats.added);
     const finalArrayByte = this.generateArray(mempoolStats);
 
     return {
       labels: labels,
-      series: finalArrayByte
+      series: finalArrayByte,
     };
   }
 
@@ -105,7 +123,10 @@ export class MempoolGraphComponentBch implements OnInit, OnChanges {
     for (let index = limitFeesTemplate; index > -1; index--) {
       feesArray = [];
       mempoolStats.forEach((stats) => {
-        feesArray.push([stats.added * 1000, stats.sizes[index] ? stats.sizes[index] : 0]);
+        feesArray.push([
+          stats.added * 1000,
+          stats.sizes[index] ? stats.sizes[index] : 0,
+        ]);
       });
       finalArray.push(feesArray);
     }
@@ -151,19 +172,21 @@ export class MempoolGraphComponentBch implements OnInit, OnChanges {
               opacity: 1,
               width: this.inverted ? 2 : 0,
             },
-            data: [{
-              yAxis: '1000000',
-              label: {
-                show: false,
-                color: '#ffffff',
-              }
-            }],
+            data: [
+              {
+                yAxis: '1000000',
+                label: {
+                  show: false,
+                  color: '#ffffff',
+                },
+              },
+            ],
           },
           areaStyle: {
             color: this.chartColorsOrdered[index],
             opacity: 1,
           },
-          data: value
+          data: value,
         });
       }
     }
@@ -177,11 +200,13 @@ export class MempoolGraphComponentBch implements OnInit, OnChanges {
         trigger: 'axis',
         alwaysShowContent: false,
         position: (pos, params, el, elRect, size) => {
-          const positions = { top: (this.template === 'advanced') ? 0 : -30 };
+          const positions = { top: this.template === 'advanced' ? 0 : -30 };
           positions[['left', 'right'][+(pos[0] < size.viewSize[0] / 2)]] = 60;
           return positions;
         },
-        extraCssText: `width: ${(this.template === 'advanced') ? '275px' : '200px'};
+        extraCssText: `width: ${
+          this.template === 'advanced' ? '275px' : '200px'
+        };
                       background: transparent;
                       border: none;
                       box-shadow: none;`,
@@ -189,7 +214,11 @@ export class MempoolGraphComponentBch implements OnInit, OnChanges {
           type: 'line',
         },
         formatter: (params: any) => {
-          const axisValueLabel: string = formatterXAxis(this.locale, this.windowPreference, params[0].axisValue);         
+          const axisValueLabel: string = formatterXAxis(
+            this.locale,
+            this.windowPreference,
+            params[0].axisValue
+          );
           const { totalValue, totalValueArray } = this.getTotalValues(params);
           const itemFormatted = [];
           let totalParcial = 0;
@@ -198,11 +227,16 @@ export class MempoolGraphComponentBch implements OnInit, OnChanges {
           items.map((item: any, index: number) => {
             totalParcial += item.value[1];
             const progressPercentage = (item.value[1] / totalValue) * 100;
-            const progressPercentageSum = (totalValueArray[index] / totalValue) * 100;
+            const progressPercentageSum =
+              (totalValueArray[index] / totalValue) * 100;
             let activeItemClass = '';
             let hoverActive = 0;
             if (this.inverted) {
-              hoverActive = Math.abs(this.feeLevelsOrdered.length - item.seriesIndex - this.feeLevelsOrdered.length);
+              hoverActive = Math.abs(
+                this.feeLevelsOrdered.length -
+                  item.seriesIndex -
+                  this.feeLevelsOrdered.length
+              );
             } else {
               hoverActive = item.seriesIndex;
             }
@@ -237,12 +271,24 @@ export class MempoolGraphComponentBch implements OnInit, OnChanges {
               </td>
               <td class="total-progress-sum">
                 <span>
-                  ${this.bytesPipe.transform(item.value[1], 2, 'B', 'MB', false)}
+                  ${this.bytesPipe.transform(
+                    item.value[1],
+                    2,
+                    'B',
+                    'MB',
+                    false
+                  )}
                 </span>
               </td>
               <td class="total-progress-sum">
                 <span>
-                  ${this.bytesPipe.transform(totalValueArray[index], 2, 'B', 'MB', false)}
+                  ${this.bytesPipe.transform(
+                    totalValueArray[index],
+                    2,
+                    'B',
+                    'MB',
+                    false
+                  )}
                 </span>
               </td>
               <td class="total-progress-sum-bar">
@@ -255,7 +301,10 @@ export class MempoolGraphComponentBch implements OnInit, OnChanges {
               </td>
             </tr>`);
           });
-          const classActive = (this.template === 'advanced') ? 'fees-wrapper-tooltip-chart-advanced' : '';
+          const classActive =
+            this.template === 'advanced'
+              ? 'fees-wrapper-tooltip-chart-advanced'
+              : '';
           const titleRange = $localize`Range`;
           const titleSize = $localize`:@@7faaaa08f56427999f3be41df1093ce4089bbd75:Size`;
           const titleSum = $localize`Sum`;
@@ -276,40 +325,51 @@ export class MempoolGraphComponentBch implements OnInit, OnChanges {
                 </tr>
               </thead>
               <tbody>
-                ${this.inverted ? itemFormatted.join('') : itemFormatted.reverse().join('')}
+                ${
+                  this.inverted
+                    ? itemFormatted.join('')
+                    : itemFormatted.reverse().join('')
+                }
               </tbody>
             </table>
             <span class="total-value">
               ${progressPercentageText}
             </span>
           </div>`;
-        }
+        },
       },
-      dataZoom: (this.template === 'widget' && this.isMobile()) ? null : [{
-        type: 'inside',
-        realtime: true,
-        zoomLock: (this.template === 'widget') ? true : false,
-        zoomOnMouseWheel: (this.template === 'advanced') ? true : false,
-        moveOnMouseMove: (this.template === 'widget') ? true : false,
-        maxSpan: 100,
-        minSpan: 10,
-      }, {
-        showDetail: false,
-        show: (this.template === 'advanced' && this.showZoom) ? true : false,
-        type: 'slider',
-        brushSelect: false,
-        realtime: true,
-        bottom: 0,
-        selectedDataBackground: {
-          lineStyle: {
-            color: '#fff',
-            opacity: 0.45,
-          },
-          areaStyle: {
-            opacity: 0,
-          }
-        }
-      }],
+      dataZoom:
+        this.template === 'widget' && this.isMobile()
+          ? null
+          : [
+              {
+                type: 'inside',
+                realtime: true,
+                zoomLock: this.template === 'widget' ? true : false,
+                zoomOnMouseWheel: this.template === 'advanced' ? true : false,
+                moveOnMouseMove: this.template === 'widget' ? true : false,
+                maxSpan: 100,
+                minSpan: 10,
+              },
+              {
+                showDetail: false,
+                show:
+                  this.template === 'advanced' && this.showZoom ? true : false,
+                type: 'slider',
+                brushSelect: false,
+                realtime: true,
+                bottom: 0,
+                selectedDataBackground: {
+                  lineStyle: {
+                    color: '#fff',
+                    opacity: 0.45,
+                  },
+                  areaStyle: {
+                    opacity: 0,
+                  },
+                },
+              },
+            ],
       animation: false,
       grid: {
         height: this.height,
@@ -319,7 +379,10 @@ export class MempoolGraphComponentBch implements OnInit, OnChanges {
       },
       xAxis: [
         {
-          name: this.template === 'widget' ? '' : formatterXAxisLabel(this.locale, this.windowPreference),
+          name:
+            this.template === 'widget'
+              ? ''
+              : formatterXAxisLabel(this.locale, this.windowPreference),
           nameLocation: 'middle',
           nameTextStyle: {
             padding: [20, 0, 0, 0],
@@ -335,22 +398,23 @@ export class MempoolGraphComponentBch implements OnInit, OnChanges {
             hideOverlap: true,
             padding: [0, 5],
           },
-        }
+        },
       ],
       yAxis: {
         type: 'value',
         axisLine: { onZero: false },
         axisLabel: {
           fontSize: 11,
-          formatter: (value: number) => (`${this.bytesPipe.transform(value, 2, 'B', 'MB', true)}`),
+          formatter: (value: number) =>
+            `${this.bytesPipe.transform(value, 2, 'B', 'MB', true)}`,
         },
         splitLine: {
           lineStyle: {
             type: 'dotted',
             color: '#ffffff66',
             opacity: 0.25,
-          }
-        }
+          },
+        },
       },
     };
   }
@@ -376,14 +440,24 @@ export class MempoolGraphComponentBch implements OnInit, OnChanges {
         this.feeLimitIndex = i;
       }
       if (feeLevels[i] <= this.limitFee) {
-        if (this.stateService.network === 'liquid' || this.stateService.network === 'liquidtestnet') {
-          this.feeLevelsOrdered.push(`${(feeLevels[i] / 10).toFixed(1)} - ${(feeLevels[i + 1]  / 10).toFixed(1)}`);
+        if (
+          this.stateService.network === 'liquid' ||
+          this.stateService.network === 'liquidtestnet'
+        ) {
+          this.feeLevelsOrdered.push(
+            `${(feeLevels[i] / 10).toFixed(1)} - ${(
+              feeLevels[i + 1] / 10
+            ).toFixed(1)}`
+          );
         } else {
           this.feeLevelsOrdered.push(`${feeLevels[i]} - ${feeLevels[i + 1]}`);
         }
       }
     }
-    this.chartColorsOrdered =  chartColors.slice(0, this.feeLevelsOrdered.length);
+    this.chartColorsOrdered = chartColors.slice(
+      0,
+      this.feeLevelsOrdered.length
+    );
   }
 
   isMobile() {
@@ -398,14 +472,16 @@ export class MempoolGraphComponentBch implements OnInit, OnChanges {
     this.mempoolVsizeFeesOptions.grid.height = prevHeight + 20;
     this.mempoolVsizeFeesOptions.backgroundColor = '#11131f';
     this.chartInstance.setOption(this.mempoolVsizeFeesOptions);
-    download(this.chartInstance.getDataURL({
-      pixelRatio: 2,
-      excludeComponents: ['dataZoom'],
-    }), `mempool-graph-${timespan}-${Math.round(now.getTime() / 1000)}.svg`);
+    download(
+      this.chartInstance.getDataURL({
+        pixelRatio: 2,
+        excludeComponents: ['dataZoom'],
+      }),
+      `mempool-graph-${timespan}-${Math.round(now.getTime() / 1000)}.svg`
+    );
     // @ts-ignore
     this.mempoolVsizeFeesOptions.grid.height = prevHeight;
     this.mempoolVsizeFeesOptions.backgroundColor = 'none';
     this.chartInstance.setOption(this.mempoolVsizeFeesOptions);
   }
 }
-

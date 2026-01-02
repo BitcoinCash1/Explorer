@@ -1,5 +1,13 @@
-import { ChangeDetectionStrategy, Component, Inject, Input, LOCALE_ID, OnInit, HostBinding } from '@angular/core';
-import { EChartsOption} from 'echarts';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Inject,
+  Input,
+  LOCALE_ID,
+  OnInit,
+  HostBinding,
+} from '@angular/core';
+import { EChartsOption } from 'echarts';
 import { Observable } from 'rxjs';
 import { map, share, startWith, switchMap, tap } from 'rxjs/operators';
 import { ApiService } from '../../services/api-bch.service';
@@ -15,14 +23,16 @@ import { download, formatterXAxis } from '../../shared/graphs.utils';
   selector: 'app-block-sizes-graph-bch',
   templateUrl: './block-sizes-graph.component.html',
   styleUrls: ['./block-sizes-graph.component.scss'],
-  styles: [`
-    .loadingGraphs {
-      position: absolute;
-      top: 50%;
-      left: calc(50% - 15px);
-      z-index: 100;
-    }
-  `],
+  styles: [
+    `
+      .loadingGraphs {
+        position: absolute;
+        top: 50%;
+        left: calc(50% - 15px);
+        z-index: 100;
+      }
+    `,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BlockSizesGraphComponentBch implements OnInit {
@@ -52,28 +62,36 @@ export class BlockSizesGraphComponentBch implements OnInit {
     private formBuilder: FormBuilder,
     private storageService: StorageService,
     private miningService: MiningService,
-    private route: ActivatedRoute,
-  ) {
-  }
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     let firstRun = true;
 
-    this.seoService.setTitle($localize`:@@56fa1cd221491b6478998679cba2dc8d55ba330d:Block Sizes`);
+    this.seoService.setTitle(
+      $localize`:@@56fa1cd221491b6478998679cba2dc8d55ba330d:Block Sizes`
+    );
     this.miningWindowPreference = this.miningService.getDefaultTimespan('24h');
-    this.radioGroupForm = this.formBuilder.group({ dateSpan: this.miningWindowPreference });
+    this.radioGroupForm = this.formBuilder.group({
+      dateSpan: this.miningWindowPreference,
+    });
     this.radioGroupForm.controls.dateSpan.setValue(this.miningWindowPreference);
 
-    this.route
-      .fragment
-      .subscribe((fragment) => {
-        if (['24h', '3d', '1w', '1m', '3m', '6m', '1y', '2y', '3y', 'all'].indexOf(fragment) > -1) {
-          this.radioGroupForm.controls.dateSpan.setValue(fragment, { emitEvent: false });
-        }
-      });
+    this.route.fragment.subscribe((fragment) => {
+      if (
+        ['24h', '3d', '1w', '1m', '3m', '6m', '1y', '2y', '3y', 'all'].indexOf(
+          fragment
+        ) > -1
+      ) {
+        this.radioGroupForm.controls.dateSpan.setValue(fragment, {
+          emitEvent: false,
+        });
+      }
+    });
 
-    this.blockSizesObservable$ = this.radioGroupForm.get('dateSpan').valueChanges
-      .pipe(
+    this.blockSizesObservable$ = this.radioGroupForm
+      .get('dateSpan')
+      .valueChanges.pipe(
         startWith(this.radioGroupForm.controls.dateSpan.value),
         switchMap((timespan) => {
           this.timespan = timespan;
@@ -83,21 +101,24 @@ export class BlockSizesGraphComponentBch implements OnInit {
           firstRun = false;
           this.miningWindowPreference = timespan;
           this.isLoading = true;
-          return this.apiService.getHistoricalBlockSizes$(timespan)
-            .pipe(
-              tap((response) => {
-                const data = response.body;
-                this.prepareChartOptions({
-                  sizes: data.sizes.map(val => [val.timestamp * 1000, val.avgSize / 1000000, val.avgHeight]),
-                });
-                this.isLoading = false;
-              }),
-              map((response) => {
-                return {
-                  blockCount: parseInt(response.headers.get('x-total-count'), 10),
-                };
-              }),
-            );
+          return this.apiService.getHistoricalBlockSizes$(timespan).pipe(
+            tap((response) => {
+              const data = response.body;
+              this.prepareChartOptions({
+                sizes: data.sizes.map((val) => [
+                  val.timestamp * 1000,
+                  val.avgSize / 1000000,
+                  val.avgHeight,
+                ]),
+              });
+              this.isLoading = false;
+            }),
+            map((response) => {
+              return {
+                blockCount: parseInt(response.headers.get('x-total-count'), 10),
+              };
+            })
+          );
         }),
         share()
       );
@@ -109,21 +130,18 @@ export class BlockSizesGraphComponentBch implements OnInit {
       title = {
         textStyle: {
           color: 'grey',
-          fontSize: 15
+          fontSize: 15,
         },
         text: $localize`:@@23555386d8af1ff73f297e89dd4af3f4689fb9dd:Indexing blocks`,
         left: 'center',
-        top: 'center'
+        top: 'center',
       };
     }
 
     this.chartOptions = {
       title: title,
       animation: false,
-      color: [
-        '#FDD835',
-        '#D81B60',
-      ],
+      color: ['#FDD835', '#D81B60'],
       grid: {
         top: 30,
         bottom: 70,
@@ -134,7 +152,7 @@ export class BlockSizesGraphComponentBch implements OnInit {
         show: !this.isMobile(),
         trigger: 'axis',
         axisPointer: {
-          type: 'line'
+          type: 'line',
         },
         backgroundColor: 'rgba(17, 19, 31, 1)',
         borderRadius: 4,
@@ -145,126 +163,158 @@ export class BlockSizesGraphComponentBch implements OnInit {
         },
         borderColor: '#000',
         formatter: (ticks) => {
-          let tooltip = `<b style="color: white; margin-left: 2px">${formatterXAxis(this.locale, this.timespan, parseInt(ticks[0].axisValue, 10))}</b><br>`;
+          let tooltip = `<b style="color: white; margin-left: 2px">${formatterXAxis(
+            this.locale,
+            this.timespan,
+            parseInt(ticks[0].axisValue, 10)
+          )}</b><br>`;
 
           for (const tick of ticks) {
-            if (tick.seriesIndex === 0) { // Size
-              tooltip += `${tick.marker} ${tick.seriesName}: ${formatNumber(tick.data[1], this.locale, '1.2-2')} MB`;
+            if (tick.seriesIndex === 0) {
+              // Size
+              tooltip += `${tick.marker} ${tick.seriesName}: ${formatNumber(
+                tick.data[1],
+                this.locale,
+                '1.2-2'
+              )} MB`;
             }
             tooltip += `<br>`;
           }
 
           if (['24h', '3d'].includes(this.timespan)) {
-            tooltip += `<small>` + $localize`At block: ${ticks[0].data[2]}` + `</small>`;
+            tooltip +=
+              `<small>` + $localize`At block: ${ticks[0].data[2]}` + `</small>`;
           } else {
-            tooltip += `<small>` + $localize`Around block: ${ticks[0].data[2]}` + `</small>`;
+            tooltip +=
+              `<small>` +
+              $localize`Around block: ${ticks[0].data[2]}` +
+              `</small>`;
           }
 
           return tooltip;
-        }
-      },
-      xAxis: data.sizes.length === 0 ? undefined : {
-        type: 'time',
-        splitNumber: this.isMobile() ? 5 : 10,
-        axisLabel: {
-          hideOverlap: true,
-        }
-      },
-      legend: data.sizes.length === 0 ? undefined : {
-        padding: 10,
-        data: [
-          {
-            name: $localize`:@@7faaaa08f56427999f3be41df1093ce4089bbd75:Size`,
-            inactiveColor: 'rgb(110, 112, 121)',
-            textStyle: {
-              color: 'white',
-            },
-            icon: 'roundRect',
-          },
-        ],
-        selected: JSON.parse(this.storageService.getValue('sizes_legend'))  ?? {
-          'Size': true,
-        }
-      },
-      yAxis: data.sizes.length === 0 ? undefined : [
-        {
-          type: 'value',
-          position: 'left',
-          min: (value) => {
-            return value.min * 0.9;
-          },
-          axisLabel: {
-            color: 'rgb(110, 112, 121)',
-            formatter: (val) => {
-              return `${Math.round(val * 100) / 100} MB`;
-            }
-          },
-          splitLine: {
-            lineStyle: {
-              type: 'dotted',
-              color: '#ffffff66',
-              opacity: 0.25,
-            }
-          },
-        }
-      ],
-      series: data.sizes.length === 0 ? [] : [
-        {
-          zlevel: 1,
-          name: $localize`:@@7faaaa08f56427999f3be41df1093ce4089bbd75:Size`,
-          showSymbol: false,
-          symbol: 'none',
-          data: data.sizes,
-          type: 'line',
-          lineStyle: {
-            width: 2,
-          },
-          markLine: {
-            silent: true,
-            symbol: 'none',
-            lineStyle: {
-              type: 'solid',
-              color: '#ffffff66',
-              opacity: 1,
-              width: 1,
-            },
-            data: [{
-              yAxis: 32,
-              label: {
-                position: 'end',
-                show: true,
-                color: '#ffffff',
-                formatter: `32 MB`
-              }
-            }],
-          }
-        }
-      ],
-      dataZoom: [{
-        type: 'inside',
-        realtime: true,
-        zoomLock: true,
-        maxSpan: 100,
-        minSpan: 5,
-        moveOnMouseMove: false,
-      }, {
-        showDetail: false,
-        show: true,
-        type: 'slider',
-        brushSelect: false,
-        realtime: true,
-        left: 20,
-        right: 15,
-        selectedDataBackground: {
-          lineStyle: {
-            color: '#fff',
-            opacity: 0.45,
-          },
-          areaStyle: {
-            opacity: 0,
-          }
         },
-      }],
+      },
+      xAxis:
+        data.sizes.length === 0
+          ? undefined
+          : {
+              type: 'time',
+              splitNumber: this.isMobile() ? 5 : 10,
+              axisLabel: {
+                hideOverlap: true,
+              },
+            },
+      legend:
+        data.sizes.length === 0
+          ? undefined
+          : {
+              padding: 10,
+              data: [
+                {
+                  name: $localize`:@@7faaaa08f56427999f3be41df1093ce4089bbd75:Size`,
+                  inactiveColor: 'rgb(110, 112, 121)',
+                  textStyle: {
+                    color: 'white',
+                  },
+                  icon: 'roundRect',
+                },
+              ],
+              selected: JSON.parse(
+                this.storageService.getValue('sizes_legend')
+              ) ?? {
+                Size: true,
+              },
+            },
+      yAxis:
+        data.sizes.length === 0
+          ? undefined
+          : [
+              {
+                type: 'value',
+                position: 'left',
+                min: (value) => {
+                  return value.min * 0.9;
+                },
+                axisLabel: {
+                  color: 'rgb(110, 112, 121)',
+                  formatter: (val) => {
+                    return `${Math.round(val * 100) / 100} MB`;
+                  },
+                },
+                splitLine: {
+                  lineStyle: {
+                    type: 'dotted',
+                    color: '#ffffff66',
+                    opacity: 0.25,
+                  },
+                },
+              },
+            ],
+      series:
+        data.sizes.length === 0
+          ? []
+          : [
+              {
+                zlevel: 1,
+                name: $localize`:@@7faaaa08f56427999f3be41df1093ce4089bbd75:Size`,
+                showSymbol: false,
+                symbol: 'none',
+                data: data.sizes,
+                type: 'line',
+                lineStyle: {
+                  width: 2,
+                },
+                markLine: {
+                  silent: true,
+                  symbol: 'none',
+                  lineStyle: {
+                    type: 'solid',
+                    color: '#ffffff66',
+                    opacity: 1,
+                    width: 1,
+                  },
+                  data: [
+                    {
+                      yAxis: 32,
+                      label: {
+                        position: 'end',
+                        show: true,
+                        color: '#ffffff',
+                        formatter: `32 MB`,
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+      dataZoom: [
+        {
+          type: 'inside',
+          realtime: true,
+          zoomLock: true,
+          maxSpan: 100,
+          minSpan: 5,
+          moveOnMouseMove: false,
+        },
+        {
+          showDetail: false,
+          show: true,
+          type: 'slider',
+          brushSelect: false,
+          realtime: true,
+          left: 20,
+          right: 15,
+          selectedDataBackground: {
+            lineStyle: {
+              color: '#fff',
+              opacity: 0.45,
+            },
+            areaStyle: {
+              opacity: 0,
+            },
+          },
+        },
+      ],
     };
   }
 
@@ -281,7 +331,7 @@ export class BlockSizesGraphComponentBch implements OnInit {
   }
 
   isMobile() {
-    return (window.innerWidth <= 767.98);
+    return window.innerWidth <= 767.98;
   }
 
   onSaveChart() {
@@ -292,10 +342,13 @@ export class BlockSizesGraphComponentBch implements OnInit {
     this.chartOptions.grid.bottom = 40;
     this.chartOptions.backgroundColor = '#11131f';
     this.chartInstance.setOption(this.chartOptions);
-    download(this.chartInstance.getDataURL({
-      pixelRatio: 2,
-      excludeComponents: ['dataZoom'],
-    }), `block-sizes-${this.timespan}-${Math.round(now.getTime() / 1000)}.svg`);
+    download(
+      this.chartInstance.getDataURL({
+        pixelRatio: 2,
+        excludeComponents: ['dataZoom'],
+      }),
+      `block-sizes-${this.timespan}-${Math.round(now.getTime() / 1000)}.svg`
+    );
     // @ts-ignore
     this.chartOptions.grid.bottom = prevBottom;
     this.chartOptions.backgroundColor = 'none';

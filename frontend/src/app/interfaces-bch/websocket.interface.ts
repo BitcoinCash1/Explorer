@@ -50,18 +50,18 @@ export interface MempoolBlockWithTransactions extends MempoolBlock {
 }
 
 export interface MempoolBlockDelta {
-  added: TransactionStripped[],
-  removed: string[],
+  added: TransactionStripped[];
+  removed: string[];
 }
 
 export interface MempoolInfo {
-  loaded: boolean;                 //  (boolean) True if the mempool is fully loaded
-  size: number;                    //  (numeric) Current tx count
-  bytes: number;                   //  (numeric) Sum of all virtual transaction sizes as defined in BIP 141.
-  usage: number;                   //  (numeric) Total memory usage for the mempool
-  maxmempool: number;              //  (numeric) Maximum memory usage for the mempool
-  mempoolminfee: number;           //  (numeric) Minimum fee rate in BTC/kB for tx to be accepted.
-  minrelaytxfee: number;           //  (numeric) Current minimum relay fee for transactions
+  loaded: boolean; //  (boolean) True if the mempool is fully loaded
+  size: number; //  (numeric) Current tx count
+  bytes: number; //  (numeric) Sum of all virtual transaction sizes as defined in BIP 141.
+  usage: number; //  (numeric) Total memory usage for the mempool
+  maxmempool: number; //  (numeric) Maximum memory usage for the mempool
+  mempoolminfee: number; //  (numeric) Minimum fee rate in BTC/kB for tx to be accepted.
+  minrelaytxfee: number; //  (numeric) Current minimum relay fee for transactions
 }
 
 export interface TransactionStripped {

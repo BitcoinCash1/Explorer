@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+} from '@angular/core';
 
 @Component({
   selector: 'app-closing-type',
@@ -16,22 +22,26 @@ export class ClosingTypeComponent implements OnChanges {
 
   getLabelFromType(type: number): { label: string; class: string } {
     switch (type) {
-      case 1: return { 
-        label: 'Mutually closed',
-        class: 'success',
-      };
-      case 2: return {
-        label: 'Force closed',
-        class: 'warning',
-      };
-      case 3: return {
-        label: 'Force closed with penalty',
-        class: 'danger',
-      };
-      default: return {
-        label: 'Unknown',
-        class: 'secondary',
-      };
+      case 1:
+        return {
+          label: 'Mutually closed',
+          class: 'success',
+        };
+      case 2:
+        return {
+          label: 'Force closed',
+          class: 'warning',
+        };
+      case 3:
+        return {
+          label: 'Force closed with penalty',
+          class: 'danger',
+        };
+      default:
+        return {
+          label: 'Unknown',
+          class: 'secondary',
+        };
     }
   }
 }

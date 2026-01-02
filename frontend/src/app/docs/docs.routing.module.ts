@@ -8,52 +8,56 @@ const browserWindowEnv = browserWindow.__env || {};
 
 let routes: Routes = [];
 
-if (browserWindowEnv.BASE_MODULE && (browserWindowEnv.BASE_MODULE === 'bisq' || browserWindowEnv.BASE_MODULE === 'liquid')) {
+if (
+  browserWindowEnv.BASE_MODULE &&
+  (browserWindowEnv.BASE_MODULE === 'bisq' ||
+    browserWindowEnv.BASE_MODULE === 'liquid')
+) {
   routes = [
     {
       path: '',
-      redirectTo: 'api/rest'
+      redirectTo: 'api/rest',
     },
     {
       path: 'api/:type',
-      component: DocsComponent
+      component: DocsComponent,
     },
     {
       path: 'api',
-      redirectTo: 'api/rest'
+      redirectTo: 'api/rest',
     },
     {
       path: '**',
-      redirectTo: 'api/rest'
-    }
+      redirectTo: 'api/rest',
+    },
   ];
 } else {
   routes = [
     {
       path: '',
-      redirectTo: 'faq'
+      redirectTo: 'faq',
     },
     {
       path: 'api/:type',
-      component: DocsComponent
+      component: DocsComponent,
     },
     {
       path: 'faq',
       data: { networks: ['bitcoin'] },
-      component: DocsComponent
+      component: DocsComponent,
     },
     {
       path: 'api',
-      redirectTo: 'api/rest'
+      redirectTo: 'api/rest',
     },
     {
       path: '**',
-      redirectTo: 'api/faq'
-    }
+      redirectTo: 'api/faq',
+    },
   ];
 }
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
 })
-export class DocsRoutingModule { }
+export class DocsRoutingModule {}

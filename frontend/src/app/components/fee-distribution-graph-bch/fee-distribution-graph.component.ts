@@ -1,5 +1,10 @@
 import { OnChanges } from '@angular/core';
-import { Component, Input, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 
 @Component({
   selector: 'app-fee-distribution-graph-bch',
@@ -15,10 +20,10 @@ export class FeeDistributionGraphComponentBch implements OnInit, OnChanges {
 
   mempoolVsizeFeesOptions: any;
   mempoolVsizeFeesInitOptions = {
-    renderer: 'svg'
+    renderer: 'svg',
   };
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     this.mountChart();
@@ -47,37 +52,39 @@ export class FeeDistributionGraphComponentBch implements OnInit, OnChanges {
             type: 'dotted',
             color: '#ffffff66',
             opacity: 0.25,
-          }
-        }
-      },
-      series: [{
-        data: this.data,
-        type: 'line',
-        label: {
-          show: true,
-          position: 'top',
-          color: '#ffffff',
-          textShadowBlur: 0,
-          formatter: (label: any) => {
-            return Math.floor(label.data);
           },
         },
-        smooth: true,
-        lineStyle: {
-          color: '#D81B60',
-          width: 4,
+      },
+      series: [
+        {
+          data: this.data,
+          type: 'line',
+          label: {
+            show: true,
+            position: 'top',
+            color: '#ffffff',
+            textShadowBlur: 0,
+            formatter: (label: any) => {
+              return Math.floor(label.data);
+            },
+          },
+          smooth: true,
+          lineStyle: {
+            color: '#D81B60',
+            width: 4,
+          },
+          itemStyle: {
+            color: '#b71c1c',
+            borderWidth: 10,
+            borderMiterLimit: 10,
+            opacity: 1,
+          },
+          areaStyle: {
+            color: '#D81B60',
+            opacity: 1,
+          },
         },
-        itemStyle: {
-          color: '#b71c1c',
-          borderWidth: 10,
-          borderMiterLimit: 10,
-          opacity: 1,
-        },
-        areaStyle: {
-          color: '#D81B60',
-          opacity: 1,
-        }
-      }]
+      ],
     };
   }
 }

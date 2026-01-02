@@ -1,7 +1,12 @@
 import TxSprite from './tx-sprite';
 import { FastVertexArray } from './fast-vertex-array';
 import { TransactionStripped } from '../../interfaces/websocket.interface';
-import { SpriteUpdateParams, Square, Color, ViewUpdateParams } from './sprite-types';
+import {
+  SpriteUpdateParams,
+  Square,
+  Color,
+  ViewUpdateParams,
+} from './sprite-types';
 import { feeLevels, mempoolFeeColors } from '../../app.constants';
 
 const hoverTransitionTime = 300;
@@ -24,7 +29,7 @@ function toSpriteUpdate(params: ViewUpdateParams): SpriteUpdateParams {
     minDuration: params.minDuration,
     ...params.display.position,
     ...params.display.color,
-    adjust: params.adjust
+    adjust: params.adjust,
   };
 }
 
@@ -76,7 +81,11 @@ export default class TxView implements TransactionStripped {
     if (!this.gridPosition) {
       this.gridPosition = { x: 0, y: 0, s: 0 };
     }
-    if (this.gridPosition.x !== position.x || this.gridPosition.y !== position.y || this.gridPosition.s !== position.s) {
+    if (
+      this.gridPosition.x !== position.x ||
+      this.gridPosition.y !== position.y ||
+      this.gridPosition.s !== position.s
+    ) {
       this.gridPosition.x = position.x;
       this.gridPosition.y = position.y;
       this.gridPosition.s = position.s;
@@ -98,15 +107,12 @@ export default class TxView implements TransactionStripped {
   */
   update(params: ViewUpdateParams): number {
     if (params.jitter) {
-      params.delay += (Math.random() * params.jitter);
+      params.delay += Math.random() * params.jitter;
     }
 
     if (!this.initialised || !this.sprite) {
       this.initialised = true;
-      this.sprite = new TxSprite(
-        toSpriteUpdate(params),
-        this.vertexArray
-      );
+      this.sprite = new TxSprite(toSpriteUpdate(params), this.vertexArray);
       // apply any pending hover event
       if (this.hover) {
         params.duration = Math.max(params.duration, hoverTransitionTime);
@@ -114,16 +120,18 @@ export default class TxView implements TransactionStripped {
           ...this.hoverColor,
           duration: hoverTransitionTime,
           adjust: false,
-          temp: true
+          temp: true,
         });
       }
     } else {
-      this.sprite.update(
-        toSpriteUpdate(params)
-      );
+      this.sprite.update(toSpriteUpdate(params));
     }
     this.dirty = false;
-    return (params.start || performance.now()) + (params.delay || 0) + (params.duration || 0);
+    return (
+      (params.start || performance.now()) +
+      (params.delay || 0) +
+      (params.duration || 0)
+    );
   }
 
   // Temporarily override the tx color
@@ -137,7 +145,7 @@ export default class TxView implements TransactionStripped {
         ...this.hoverColor,
         duration: hoverTransitionTime,
         adjust: false,
-        temp: true
+        temp: true,
       });
     } else {
       this.hover = false;
@@ -151,10 +159,12 @@ export default class TxView implements TransactionStripped {
   }
 
   getColor(): Color {
-    const feeLevelIndex = feeLevels.findIndex((feeLvl) => Math.max(1, this.feerate) < feeLvl) - 1;
-    const feeLevelColor = feeColors[feeLevelIndex] || feeColors[mempoolFeeColors.length - 1];
+    const feeLevelIndex =
+      feeLevels.findIndex((feeLvl) => Math.max(1, this.feerate) < feeLvl) - 1;
+    const feeLevelColor =
+      feeColors[feeLevelIndex] || feeColors[mempoolFeeColors.length - 1];
     // Block audit
-    switch(this.status) {
+    switch (this.status) {
       case 'censored':
         return auditColors.censored;
       case 'missing':
@@ -164,7 +174,10 @@ export default class TxView implements TransactionStripped {
       case 'selected':
         return auditColors.selected;
       case 'found':
-        return auditFeeColors[feeLevelIndex] || auditFeeColors[mempoolFeeColors.length - 1];
+        return (
+          auditFeeColors[feeLevelIndex] ||
+          auditFeeColors[mempoolFeeColors.length - 1]
+        );
       default:
         return feeLevelColor;
     }
@@ -176,16 +189,16 @@ function hexToColor(hex: string): Color {
     r: parseInt(hex.slice(0, 2), 16) / 255,
     g: parseInt(hex.slice(2, 4), 16) / 255,
     b: parseInt(hex.slice(4, 6), 16) / 255,
-    a: 1
+    a: 1,
   };
 }
 
 function desaturate(color: Color, amount: number): Color {
   const gray = (color.r + color.g + color.b) / 6;
   return {
-    r: color.r + ((gray - color.r) * amount),
-    g: color.g + ((gray - color.g) * amount),
-    b: color.b + ((gray - color.b) * amount),
+    r: color.r + (gray - color.r) * amount,
+    g: color.g + (gray - color.g) * amount,
+    b: color.b + (gray - color.b) * amount,
     a: color.a,
   };
 }

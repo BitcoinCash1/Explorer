@@ -5,16 +5,15 @@ import { faqData } from './api-docs-data';
 @Component({
   selector: 'app-api-docs-nav',
   templateUrl: './api-docs-nav.component.html',
-  styleUrls: ['./api-docs-nav.component.scss']
+  styleUrls: ['./api-docs-nav.component.scss'],
 })
 export class ApiDocsNavComponent implements OnInit {
-
   @Input() network: any;
   @Input() whichTab: string;
   @Output() navLinkClickEvent: EventEmitter<any> = new EventEmitter();
   tabData: any[];
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     if (this.whichTab === 'rest') {
@@ -27,5 +26,4 @@ export class ApiDocsNavComponent implements OnInit {
   navLinkClick(event) {
     this.navLinkClickEvent.emit(event);
   }
-
 }

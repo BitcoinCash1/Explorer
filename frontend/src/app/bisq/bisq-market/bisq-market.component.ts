@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, merge, Observable, of } from 'rxjs';
@@ -12,7 +17,7 @@ import { OffersMarket, Trade } from '../bisq.interfaces';
   selector: 'app-bisq-market',
   templateUrl: './bisq-market.component.html',
   styleUrls: ['./bisq-market.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BisqMarketComponent implements OnInit, OnDestroy {
   hlocData$: Observable<any>;
@@ -30,51 +35,68 @@ export class BisqMarketComponent implements OnInit, OnDestroy {
     private bisqApiService: BisqApiService,
     private formBuilder: FormBuilder,
     private seoService: SeoService,
-    private router: Router,
-  ) { }
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.radioGroupForm = this.formBuilder.group({
       interval: [this.defaultInterval],
     });
 
-    if (['half_hour', 'hour', 'half_day', 'day', 'week', 'month', 'year', 'auto'].indexOf(this.route.snapshot.fragment) > -1) {
-      this.radioGroupForm.controls.interval.setValue(this.route.snapshot.fragment, { emitEvent: false });
+    if (
+      [
+        'half_hour',
+        'hour',
+        'half_day',
+        'day',
+        'week',
+        'month',
+        'year',
+        'auto',
+      ].indexOf(this.route.snapshot.fragment) > -1
+    ) {
+      this.radioGroupForm.controls.interval.setValue(
+        this.route.snapshot.fragment,
+        { emitEvent: false }
+      );
     }
 
-    this.currency$ = this.bisqApiService.getMarkets$()
-      .pipe(
-        switchMap((markets) => combineLatest([of(markets), this.route.paramMap])),
-        map(([markets, routeParams]) => {
-          const pair = routeParams.get('pair');
-          const pairUpperCase = pair.replace('_', '/').toUpperCase();
-          this.seoService.setTitle(`Bisq market: ${pairUpperCase}`);
+    this.currency$ = this.bisqApiService.getMarkets$().pipe(
+      switchMap((markets) => combineLatest([of(markets), this.route.paramMap])),
+      map(([markets, routeParams]) => {
+        const pair = routeParams.get('pair');
+        const pairUpperCase = pair.replace('_', '/').toUpperCase();
+        this.seoService.setTitle(`Bisq market: ${pairUpperCase}`);
 
-          return {
-            pair: pairUpperCase,
-            market: markets[pair],
-          };
-        })
-      );
+        return {
+          pair: pairUpperCase,
+          market: markets[pair],
+        };
+      })
+    );
 
-    this.trades$ = this.route.paramMap
-      .pipe(
-        map(routeParams => routeParams.get('pair')),
-        switchMap((marketPair) => this.bisqApiService.getMarketTrades$(marketPair)),
-      );
+    this.trades$ = this.route.paramMap.pipe(
+      map((routeParams) => routeParams.get('pair')),
+      switchMap((marketPair) =>
+        this.bisqApiService.getMarketTrades$(marketPair)
+      )
+    );
 
-    this.offers$ = this.route.paramMap
-      .pipe(
-        map(routeParams => routeParams.get('pair')),
-        switchMap((marketPair) => this.bisqApiService.getMarketOffers$(marketPair)),
-        map((offers) => offers[Object.keys(offers)[0]])
-      );
+    this.offers$ = this.route.paramMap.pipe(
+      map((routeParams) => routeParams.get('pair')),
+      switchMap((marketPair) =>
+        this.bisqApiService.getMarketOffers$(marketPair)
+      ),
+      map((offers) => offers[Object.keys(offers)[0]])
+    );
 
     this.hlocData$ = combineLatest([
       this.route.paramMap,
-      merge(this.radioGroupForm.get('interval').valueChanges, of(this.radioGroupForm.get('interval').value)),
-    ])
-    .pipe(
+      merge(
+        this.radioGroupForm.get('interval').valueChanges,
+        of(this.radioGroupForm.get('interval').value)
+      ),
+    ]).pipe(
       switchMap(([routeParams, interval]) => {
         this.isLoadingGraph = true;
         const pair = routeParams.get('pair');
@@ -92,7 +114,8 @@ export class BisqMarketComponent implements OnInit, OnDestroy {
           return {
             time: h.time,
             value: h.volume_right,
-            color: h.close > h.avg ? 'rgba(0, 41, 74, 0.7)' : 'rgba(0, 41, 74, 1)',
+            color:
+              h.close > h.avg ? 'rgba(0, 41, 74, 0.7)' : 'rgba(0, 41, 74, 1)',
           };
         });
 
@@ -101,13 +124,18 @@ export class BisqMarketComponent implements OnInit, OnDestroy {
           const newHloc = [];
           newHloc.push(hlocData[0]);
 
-          const period = this.getUnixTimestampFromInterval(this.radioGroupForm.get('interval').value); // temp
+          const period = this.getUnixTimestampFromInterval(
+            this.radioGroupForm.get('interval').value
+          ); // temp
           let periods = 0;
           const startingDate = hlocData[0].period_start;
           let index = 1;
           while (true) {
             periods++;
-            if (hlocData[index].period_start > startingDate + period * periods) {
+            if (
+              hlocData[index].period_start >
+              startingDate + period * periods
+            ) {
               newHloc.push({
                 time: startingDate + period * periods,
               });
@@ -126,7 +154,7 @@ export class BisqMarketComponent implements OnInit, OnDestroy {
           hloc: hlocData,
           volume: hlocVolume,
         };
-      }),
+      })
     );
   }
 
@@ -134,7 +162,7 @@ export class BisqMarketComponent implements OnInit, OnDestroy {
     this.router.navigate([], {
       relativeTo: this.route,
       queryParamsHandling: 'merge',
-      fragment: fragment
+      fragment: fragment,
     });
   }
 
@@ -144,15 +172,22 @@ export class BisqMarketComponent implements OnInit, OnDestroy {
 
   getUnixTimestampFromInterval(interval: string): number {
     switch (interval) {
-      case 'minute': return 60;
-      case 'half_hour': return 1800;
-      case 'hour': return 3600;
-      case 'half_day': return 43200;
-      case 'day': return 86400;
-      case 'week': return 604800;
-      case 'month': return 2592000;
-      case 'year': return 31579200;
+      case 'minute':
+        return 60;
+      case 'half_hour':
+        return 1800;
+      case 'hour':
+        return 3600;
+      case 'half_day':
+        return 43200;
+      case 'day':
+        return 86400;
+      case 'week':
+        return 604800;
+      case 'month':
+        return 2592000;
+      case 'year':
+        return 31579200;
     }
   }
-
 }

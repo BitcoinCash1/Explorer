@@ -98,8 +98,6 @@ import { GroupComponent } from './group/group.component';
     NodesRankingsDashboard,
     NodeChannels,
   ],
-  providers: [
-    LightningApiService,
-  ]
+  providers: [LightningApiService],
 })
-export class LightningModule { }
+export class LightningModule {}

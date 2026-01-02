@@ -1,4 +1,9 @@
-import { Component, ChangeDetectionStrategy, OnChanges, Input } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  OnChanges,
+  Input,
+} from '@angular/core';
 import { calcSegwitFeeGains } from '../../bitcoin.utils';
 import { Transaction } from '../../interfaces/electrs.interface';
 
@@ -16,12 +21,12 @@ export class TxFeaturesComponent implements OnChanges {
     potentialSegwitGains: 0,
     potentialP2shSegwitGains: 0,
     potentialTaprootGains: 0,
-    realizedTaprootGains: 0
+    realizedTaprootGains: 0,
   };
   isRbfTransaction: boolean;
   isTaproot: boolean;
 
-  constructor() { }
+  constructor() {}
 
   ngOnChanges() {
     if (!this.tx) {
@@ -29,6 +34,8 @@ export class TxFeaturesComponent implements OnChanges {
     }
     this.segwitGains = calcSegwitFeeGains(this.tx);
     this.isRbfTransaction = this.tx.vin.some((v) => v.sequence < 0xfffffffe);
-    this.isTaproot = this.tx.vin.some((v) => v.prevout && v.prevout.scriptpubkey_type === 'v1_p2tr');
+    this.isTaproot = this.tx.vin.some(
+      (v) => v.prevout && v.prevout.scriptpubkey_type === 'v1_p2tr'
+    );
   }
 }

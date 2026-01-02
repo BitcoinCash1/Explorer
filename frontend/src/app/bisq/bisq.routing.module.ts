@@ -14,77 +14,77 @@ import { TermsOfServiceComponent } from '../components/terms-of-service/terms-of
 import { PushTransactionComponent } from '../components/push-transaction/push-transaction.component';
 
 const routes: Routes = [
-    {
-      path: '',
-      component: BisqMainDashboardComponent,
-    },
-    {
-      path: 'markets',
-      data: { networks: ['bisq'] },
-      component: BisqDashboardComponent,
-    },
-    {
-      path: 'transactions',
-      data: { networks: ['bisq'] },
-      component: BisqTransactionsComponent
-    },
-    {
-      path: 'market/:pair',
-      data: { networkSpecific: true },
-      component: BisqMarketComponent,
-    },
-    {
-      path: 'tx/push',
-      component: PushTransactionComponent,
-    },
-    {
-      path: 'tx/:id',
-      data: { networkSpecific: true },
-      component: BisqTransactionComponent
-    },
-    {
-      path: 'blocks',
-      children: [],
-      component: BisqBlocksComponent
-    },
-    {
-      path: 'block/:id',
-      data: { networkSpecific: true },
-      component: BisqBlockComponent,
-    },
-    {
-      path: 'address/:id',
-      data: { networkSpecific: true },
-      component: BisqAddressComponent,
-    },
-    {
-      path: 'stats',
-      data: { networks: ['bisq'] },
-      component: BisqStatsComponent,
-    },
-    {
-      path: 'about',
-      component: AboutComponent,
-    },
-    {
-      path: 'docs',
-      loadChildren: () => import('../docs/docs.module').then(m => m.DocsModule)
-    },
-    {
-      path: 'api',
-      loadChildren: () => import('../docs/docs.module').then(m => m.DocsModule)
-    },
-    {
-      path: 'terms-of-service',
-      component: TermsOfServiceComponent
-    },
-    {
-      path: '**',
-      redirectTo: ''
-    }
+  {
+    path: '',
+    component: BisqMainDashboardComponent,
+  },
+  {
+    path: 'markets',
+    data: { networks: ['bisq'] },
+    component: BisqDashboardComponent,
+  },
+  {
+    path: 'transactions',
+    data: { networks: ['bisq'] },
+    component: BisqTransactionsComponent,
+  },
+  {
+    path: 'market/:pair',
+    data: { networkSpecific: true },
+    component: BisqMarketComponent,
+  },
+  {
+    path: 'tx/push',
+    component: PushTransactionComponent,
+  },
+  {
+    path: 'tx/:id',
+    data: { networkSpecific: true },
+    component: BisqTransactionComponent,
+  },
+  {
+    path: 'blocks',
+    children: [],
+    component: BisqBlocksComponent,
+  },
+  {
+    path: 'block/:id',
+    data: { networkSpecific: true },
+    component: BisqBlockComponent,
+  },
+  {
+    path: 'address/:id',
+    data: { networkSpecific: true },
+    component: BisqAddressComponent,
+  },
+  {
+    path: 'stats',
+    data: { networks: ['bisq'] },
+    component: BisqStatsComponent,
+  },
+  {
+    path: 'about',
+    component: AboutComponent,
+  },
+  {
+    path: 'docs',
+    loadChildren: () => import('../docs/docs.module').then((m) => m.DocsModule),
+  },
+  {
+    path: 'api',
+    loadChildren: () => import('../docs/docs.module').then((m) => m.DocsModule),
+  },
+  {
+    path: 'terms-of-service',
+    component: TermsOfServiceComponent,
+  },
+  {
+    path: '**',
+    redirectTo: '',
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
 })
-export class BisqRoutingModule { }
+export class BisqRoutingModule {}

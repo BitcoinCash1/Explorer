@@ -1,22 +1,21 @@
-
 .table-container {
   overflow: scroll;
   scrollbar-width: none;
   font-size: 13px;
   &::-webkit-scrollbar {
-      display: none;
+    display: none;
   }
-  @media(min-width: 576px){
-      font-size: 16px;
+  @media (min-width: 576px) {
+    font-size: 16px;
   }
-  thead th{
+  thead th {
     text-align: right;
-    &:first-child{
+    &:first-child {
       text-align: left;
     }
     &:nth-child(2) {
       display: none;
-      @media(min-width: 1100px){
+      @media (min-width: 1100px) {
         display: table-cell;
       }
     }
@@ -24,12 +23,12 @@
   tr {
     td {
       text-align: right;
-      &:first-child{
+      &:first-child {
         text-align: left;
       }
       &:nth-child(2) {
         display: none;
-        @media(min-width: 1100px){
+        @media (min-width: 1100px) {
           display: table-cell;
         }
       }

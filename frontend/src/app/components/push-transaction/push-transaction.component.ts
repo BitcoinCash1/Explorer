@@ -5,7 +5,7 @@ import { ApiService } from '../../services/api.service';
 @Component({
   selector: 'app-push-transaction',
   templateUrl: './push-transaction.component.html',
-  styleUrls: ['./push-transaction.component.scss']
+  styleUrls: ['./push-transaction.component.scss'],
 })
 export class PushTransactionComponent implements OnInit {
   pushTxForm: FormGroup;
@@ -15,8 +15,8 @@ export class PushTransactionComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private apiService: ApiService,
-  ) { }
+    private apiService: ApiService
+  ) {}
 
   ngOnInit(): void {
     this.pushTxForm = this.formBuilder.group({
@@ -28,21 +28,23 @@ export class PushTransactionComponent implements OnInit {
     this.isLoading = true;
     this.error = '';
     this.txId = '';
-    this.apiService.postTransaction$(this.pushTxForm.get('txHash').value)
-      .subscribe((result) => {
-        this.isLoading = false;
-        this.txId = result;
-        this.pushTxForm.reset();
-      },
-      (error) => {
-        if (typeof error.error === 'string') {
-          const matchText = error.error.match('"message":"(.*?)"');
-          this.error = matchText && matchText[1] || error.error;
-        } else if (error.message) {
-          this.error = error.message;
+    this.apiService
+      .postTransaction$(this.pushTxForm.get('txHash').value)
+      .subscribe(
+        (result) => {
+          this.isLoading = false;
+          this.txId = result;
+          this.pushTxForm.reset();
+        },
+        (error) => {
+          if (typeof error.error === 'string') {
+            const matchText = error.error.match('"message":"(.*?)"');
+            this.error = (matchText && matchText[1]) || error.error;
+          } else if (error.message) {
+            this.error = error.message;
+          }
+          this.isLoading = false;
         }
-        this.isLoading = false;
-      });
+      );
   }
-
 }

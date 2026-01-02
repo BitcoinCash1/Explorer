@@ -1,11 +1,19 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, Input, ChangeDetectorRef, OnChanges } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ChangeDetectionStrategy,
+  Input,
+  ChangeDetectorRef,
+  OnChanges,
+} from '@angular/core';
 import { StateService } from '../../services/state.service';
 import { dates } from '../../shared/i18n/dates';
 
 @Component({
   selector: 'app-time-since',
   template: `{{ text }}`,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TimeSinceComponent implements OnInit, OnChanges, OnDestroy {
   interval: number;
@@ -18,17 +26,17 @@ export class TimeSinceComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor(
     private ref: ChangeDetectorRef,
-    private stateService: StateService,
+    private stateService: StateService
   ) {
-      this.intervals = {
-        year: 31536000,
-        month: 2592000,
-        week: 604800,
-        day: 86400,
-        hour: 3600,
-        minute: 60,
-        second: 1
-      };
+    this.intervals = {
+      year: 31536000,
+      month: 2592000,
+      week: 604800,
+      day: 86400,
+      hour: 3600,
+      minute: 60,
+      second: 1,
+    };
   }
 
   ngOnInit() {
@@ -70,29 +78,60 @@ export class TimeSinceComponent implements OnInit, OnChanges, OnDestroy {
         const dateStrings = dates(counter);
         if (counter > 0) {
           if (counter === 1) {
-            switch (i) { // singular (1 day)
-              case 'year': return $localize`:@@time-since:${dateStrings.i18nYear}:DATE: ago`; break;
-              case 'month': return $localize`:@@time-since:${dateStrings.i18nMonth}:DATE: ago`; break;
-              case 'week': return $localize`:@@time-since:${dateStrings.i18nWeek}:DATE: ago`; break;
-              case 'day': return $localize`:@@time-since:${dateStrings.i18nDay}:DATE: ago`; break;
-              case 'hour': return $localize`:@@time-since:${dateStrings.i18nHour}:DATE: ago`; break;
-              case 'minute': return $localize`:@@time-since:${dateStrings.i18nMinute}:DATE: ago`; break;
-              case 'second': return $localize`:@@time-since:${dateStrings.i18nSecond}:DATE: ago`; break;
+            switch (
+              i // singular (1 day)
+            ) {
+              case 'year':
+                return $localize`:@@time-since:${dateStrings.i18nYear}:DATE: ago`;
+                break;
+              case 'month':
+                return $localize`:@@time-since:${dateStrings.i18nMonth}:DATE: ago`;
+                break;
+              case 'week':
+                return $localize`:@@time-since:${dateStrings.i18nWeek}:DATE: ago`;
+                break;
+              case 'day':
+                return $localize`:@@time-since:${dateStrings.i18nDay}:DATE: ago`;
+                break;
+              case 'hour':
+                return $localize`:@@time-since:${dateStrings.i18nHour}:DATE: ago`;
+                break;
+              case 'minute':
+                return $localize`:@@time-since:${dateStrings.i18nMinute}:DATE: ago`;
+                break;
+              case 'second':
+                return $localize`:@@time-since:${dateStrings.i18nSecond}:DATE: ago`;
+                break;
             }
           } else {
-            switch (i) { // plural (2 days)
-              case 'year': return $localize`:@@time-since:${dateStrings.i18nYears}:DATE: ago`; break;
-              case 'month': return $localize`:@@time-since:${dateStrings.i18nMonths}:DATE: ago`; break;
-              case 'week': return $localize`:@@time-since:${dateStrings.i18nWeeks}:DATE: ago`; break;
-              case 'day': return $localize`:@@time-since:${dateStrings.i18nDays}:DATE: ago`; break;
-              case 'hour': return $localize`:@@time-since:${dateStrings.i18nHours}:DATE: ago`; break;
-              case 'minute': return $localize`:@@time-since:${dateStrings.i18nMinutes}:DATE: ago`; break;
-              case 'second': return $localize`:@@time-since:${dateStrings.i18nSeconds}:DATE: ago`; break;
+            switch (
+              i // plural (2 days)
+            ) {
+              case 'year':
+                return $localize`:@@time-since:${dateStrings.i18nYears}:DATE: ago`;
+                break;
+              case 'month':
+                return $localize`:@@time-since:${dateStrings.i18nMonths}:DATE: ago`;
+                break;
+              case 'week':
+                return $localize`:@@time-since:${dateStrings.i18nWeeks}:DATE: ago`;
+                break;
+              case 'day':
+                return $localize`:@@time-since:${dateStrings.i18nDays}:DATE: ago`;
+                break;
+              case 'hour':
+                return $localize`:@@time-since:${dateStrings.i18nHours}:DATE: ago`;
+                break;
+              case 'minute':
+                return $localize`:@@time-since:${dateStrings.i18nMinutes}:DATE: ago`;
+                break;
+              case 'second':
+                return $localize`:@@time-since:${dateStrings.i18nSeconds}:DATE: ago`;
+                break;
             }
           }
         }
       }
     }
   }
-
 }

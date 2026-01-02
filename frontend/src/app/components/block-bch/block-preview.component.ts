@@ -1,19 +1,31 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ElectrsApiService } from '../../services/electrs-api.service';
-import { switchMap, tap, throttleTime, catchError, shareReplay, startWith, pairwise, filter } from 'rxjs/operators';
+import {
+  switchMap,
+  tap,
+  throttleTime,
+  catchError,
+  shareReplay,
+  startWith,
+  pairwise,
+  filter,
+} from 'rxjs/operators';
 import { of, Subscription, asyncScheduler } from 'rxjs';
 import { StateService } from '../../services/state-bch.service';
 import { SeoService } from '../../services/seo-bch.service';
 import { OpenGraphService } from '../../services/opengraph.service';
-import { BlockExtended, TransactionStripped } from '../../interfaces-bch/node-api.interface';
+import {
+  BlockExtended,
+  TransactionStripped,
+} from '../../interfaces-bch/node-api.interface';
 import { ApiService } from '../../services/api-bch.service';
 import { BlockOverviewGraphComponentBch } from '../block-overview-graph-bch/block-overview-graph.component';
 
 @Component({
   selector: 'app-block-preview-bch',
   templateUrl: './block-preview.component.html',
-  styleUrls: ['./block-preview.component.scss']
+  styleUrls: ['./block-preview.component.scss'],
 })
 export class BlockPreviewComponentBch implements OnInit, OnDestroy {
   network = '';
@@ -42,7 +54,7 @@ export class BlockPreviewComponentBch implements OnInit, OnDestroy {
     private seoService: SeoService,
     private openGraphService: OpenGraphService,
     private apiService: ApiService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.network = this.stateService.network;
@@ -70,7 +82,8 @@ export class BlockPreviewComponentBch implements OnInit, OnDestroy {
         this.isLoadingOverview = true;
 
         if (isBlockHeight) {
-          return this.electrsApiService.getBlockHashFromHeight$(parseInt(blockHash, 10))
+          return this.electrsApiService
+            .getBlockHashFromHeight$(parseInt(blockHash, 10))
             .pipe(
               switchMap((hash) => {
                 if (hash) {
@@ -85,7 +98,7 @@ export class BlockPreviewComponentBch implements OnInit, OnDestroy {
                 this.openGraphService.fail('block-data-' + this.rawId);
                 this.openGraphService.fail('block-viz-' + this.rawId);
                 return of(null);
-              }),
+              })
             );
         }
         return this.apiService.getBlock$(blockHash);
@@ -95,7 +108,9 @@ export class BlockPreviewComponentBch implements OnInit, OnDestroy {
         this.block = block;
         this.blockHeight = block.height;
 
-        this.seoService.setTitle($localize`:@@block.component.browser-title:Block ${block.height}:BLOCK_HEIGHT:: ${block.id}:BLOCK_ID:`);
+        this.seoService.setTitle(
+          $localize`:@@block.component.browser-title:Block ${block.height}:BLOCK_HEIGHT:: ${block.id}:BLOCK_ID:`
+        );
         this.isLoadingBlock = false;
         this.setBlockSubsidy();
         if (block?.extras?.reward !== undefined) {
@@ -111,42 +126,53 @@ export class BlockPreviewComponentBch implements OnInit, OnDestroy {
       shareReplay(1)
     );
 
-    this.overviewSubscription = block$.pipe(
-      startWith(null),
-      pairwise(),
-      switchMap(([prevBlock, block]) => this.apiService.getStrippedBlockTransactions$(block.id)
-        .pipe(
-          catchError((err) => {
-            this.overviewError = err;
-            this.openGraphService.fail('block-viz-' + this.rawId);
-            return of([]);
-          }),
-          switchMap((transactions) => {
-            return of({ transactions, direction: 'down' });
-          })
+    this.overviewSubscription = block$
+      .pipe(
+        startWith(null),
+        pairwise(),
+        switchMap(([prevBlock, block]) =>
+          this.apiService.getStrippedBlockTransactions$(block.id).pipe(
+            catchError((err) => {
+              this.overviewError = err;
+              this.openGraphService.fail('block-viz-' + this.rawId);
+              return of([]);
+            }),
+            switchMap((transactions) => {
+              return of({ transactions, direction: 'down' });
+            })
+          )
         )
-      ),
-    )
-    .subscribe(({transactions, direction}: {transactions: TransactionStripped[], direction: string}) => {
-      this.strippedTransactions = transactions;
-      this.isLoadingOverview = false;
-      if (this.blockGraph) {
-        this.blockGraph.destroy();
-        this.blockGraph.setup(this.strippedTransactions);
-      }
-    },
-    (error) => {
-      this.error = error;
-      this.isLoadingOverview = false;
-      this.openGraphService.fail('block-viz-' + this.rawId);
-      this.openGraphService.fail('block-data-' + this.rawId);
-      if (this.blockGraph) {
-        this.blockGraph.destroy();
-      }
-    });
+      )
+      .subscribe(
+        ({
+          transactions,
+          direction,
+        }: {
+          transactions: TransactionStripped[];
+          direction: string;
+        }) => {
+          this.strippedTransactions = transactions;
+          this.isLoadingOverview = false;
+          if (this.blockGraph) {
+            this.blockGraph.destroy();
+            this.blockGraph.setup(this.strippedTransactions);
+          }
+        },
+        (error) => {
+          this.error = error;
+          this.isLoadingOverview = false;
+          this.openGraphService.fail('block-viz-' + this.rawId);
+          this.openGraphService.fail('block-data-' + this.rawId);
+          if (this.blockGraph) {
+            this.blockGraph.destroy();
+          }
+        }
+      );
 
-    this.networkChangedSubscription = this.stateService.networkChanged$
-      .subscribe((network) => this.network = network);
+    this.networkChangedSubscription =
+      this.stateService.networkChanged$.subscribe(
+        (network) => (this.network = network)
+      );
   }
 
   ngOnDestroy() {

@@ -17,27 +17,37 @@ export class FeesBoxComponentBch implements OnInit {
   gradient = 'linear-gradient(to right, #2e324e, #2e324e)';
   noPriority = '#2e324e';
 
-  constructor(
-    private stateService: StateService
-  ) { }
+  constructor(private stateService: StateService) {}
 
   ngOnInit(): void {
     this.isLoadingWebSocket$ = this.stateService.isLoadingWebSocket$;
-    this.recommendedFees$ = this.stateService.recommendedFees$
-      .pipe(
-        tap((fees) => {
-          let feeLevelIndex = feeLevels.slice().reverse().findIndex((feeLvl) => fees.minimumFee >= feeLvl);
-          feeLevelIndex = feeLevelIndex >= 0 ? feeLevels.length - feeLevelIndex : feeLevelIndex;
-          const startColor = '#' + (mempoolFeeColors[feeLevelIndex - 1] || mempoolFeeColors[mempoolFeeColors.length - 1]);
+    this.recommendedFees$ = this.stateService.recommendedFees$.pipe(
+      tap((fees) => {
+        let feeLevelIndex = feeLevels
+          .slice()
+          .reverse()
+          .findIndex((feeLvl) => fees.minimumFee >= feeLvl);
+        feeLevelIndex =
+          feeLevelIndex >= 0 ? feeLevels.length - feeLevelIndex : feeLevelIndex;
+        const startColor =
+          '#' +
+          (mempoolFeeColors[feeLevelIndex - 1] ||
+            mempoolFeeColors[mempoolFeeColors.length - 1]);
 
-          feeLevelIndex = feeLevels.slice().reverse().findIndex((feeLvl) => fees.fastestFee >= feeLvl);
-          feeLevelIndex = feeLevelIndex >= 0 ? feeLevels.length - feeLevelIndex : feeLevelIndex;
-          const endColor = '#' + (mempoolFeeColors[feeLevelIndex - 1] || mempoolFeeColors[mempoolFeeColors.length - 1]);
+        feeLevelIndex = feeLevels
+          .slice()
+          .reverse()
+          .findIndex((feeLvl) => fees.fastestFee >= feeLvl);
+        feeLevelIndex =
+          feeLevelIndex >= 0 ? feeLevels.length - feeLevelIndex : feeLevelIndex;
+        const endColor =
+          '#' +
+          (mempoolFeeColors[feeLevelIndex - 1] ||
+            mempoolFeeColors[mempoolFeeColors.length - 1]);
 
-          this.gradient = `linear-gradient(to right, ${startColor}, ${endColor})`;
-          this.noPriority = startColor;
-        }
-      )
+        this.gradient = `linear-gradient(to right, ${startColor}, ${endColor})`;
+        this.noPriority = startColor;
+      })
     );
   }
 }

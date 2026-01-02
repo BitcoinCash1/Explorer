@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { GeolocationData } from '../../../shared/components/geolocation/geolocation.component';
 import { SeoService } from '../../../services/seo.service';
@@ -13,7 +18,7 @@ import { LightningApiService } from '../../lightning-api.service';
 })
 export class OldestNodes implements OnInit {
   @Input() widget: boolean = false;
-  
+
   oldestNodes$: Observable<IOldestNodes[]>;
   skeletonRows: number[] = [];
 
@@ -53,5 +58,4 @@ export class OldestNodes implements OnInit {
       );
     }
   }
-
 }

@@ -1,10 +1,53 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgbCollapse, NgbCollapseModule, NgbRadioGroup, NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
-import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { faFilter, faAngleDown, faAngleUp, faAngleRight, faAngleLeft, faBolt, faChartArea, faCogs, faCubes, faHammer, faDatabase, faExchangeAlt, faInfoCircle,
-  faLink, faList, faSearch, faCaretUp, faCaretDown, faTachometerAlt, faThList, faTint, faTv, faAngleDoubleDown, faSortUp, faAngleDoubleUp, faChevronDown,
-  faFileAlt, faRedoAlt, faArrowAltCircleRight, faExternalLinkAlt, faBook, faListUl, faDownload, faQrcode, faArrowRightArrowLeft, faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
+import {
+  NgbCollapse,
+  NgbCollapseModule,
+  NgbRadioGroup,
+  NgbTypeaheadModule,
+} from '@ng-bootstrap/ng-bootstrap';
+import {
+  FontAwesomeModule,
+  FaIconLibrary,
+} from '@fortawesome/angular-fontawesome';
+import {
+  faFilter,
+  faAngleDown,
+  faAngleUp,
+  faAngleRight,
+  faAngleLeft,
+  faBolt,
+  faChartArea,
+  faCogs,
+  faCubes,
+  faHammer,
+  faDatabase,
+  faExchangeAlt,
+  faInfoCircle,
+  faLink,
+  faList,
+  faSearch,
+  faCaretUp,
+  faCaretDown,
+  faTachometerAlt,
+  faThList,
+  faTint,
+  faTv,
+  faAngleDoubleDown,
+  faSortUp,
+  faAngleDoubleUp,
+  faChevronDown,
+  faFileAlt,
+  faRedoAlt,
+  faArrowAltCircleRight,
+  faExternalLinkAlt,
+  faBook,
+  faListUl,
+  faDownload,
+  faQrcode,
+  faArrowRightArrowLeft,
+  faArrowsRotate,
+} from '@fortawesome/free-solid-svg-icons';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { MasterPageComponent } from '../components/master-page/master-page.component';
 import { MasterPageComponentBch } from '../components/master-page-bch/master-page.component';
@@ -35,7 +78,14 @@ import { ClipboardComponent } from '../components/clipboard/clipboard.component'
 import { QrcodeComponent } from '../components/qrcode/qrcode.component';
 import { FiatComponent } from '../fiat/fiat.component';
 import { FiatComponent as FiatComponentBch } from '../fiat-bch/fiat.component';
-import { NgbNavModule, NgbTooltipModule, NgbButtonsModule, NgbPaginationModule, NgbDropdownModule, NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbNavModule,
+  NgbTooltipModule,
+  NgbButtonsModule,
+  NgbPaginationModule,
+  NgbDropdownModule,
+  NgbAccordionModule,
+} from '@ng-bootstrap/ng-bootstrap';
 import { TxFeaturesComponent } from '../components/tx-features/tx-features.component';
 import { TxFeaturesComponentBch } from '../components/tx-features-bch/tx-features.component';
 import { TxFeeRatingComponent } from '../components/tx-fee-rating/tx-fee-rating.component';
@@ -341,7 +391,7 @@ import { GeolocationComponent } from '../shared/components/geolocation/geolocati
     ToggleComponent,
     GeolocationComponent,
     PreviewTitleComponent,
-  ]
+  ],
 })
 export class SharedModule {
   constructor(library: FaIconLibrary) {

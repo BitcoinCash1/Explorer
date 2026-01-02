@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'amountShortener'
+  name: 'amountShortener',
 })
 export class AmountShortenerPipe implements PipeTransform {
   transform(num: number, ...args: any[]): unknown {
@@ -20,15 +20,25 @@ export class AmountShortenerPipe implements PipeTransform {
       { value: 1e9, symbol: isMoney ? 'B' : 'G' },
       { value: 1e12, symbol: 'T' },
       { value: 1e15, symbol: 'P' },
-      { value: 1e18, symbol: 'E' }
+      { value: 1e18, symbol: 'E' },
     ];
     const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
-    const item = lookup.slice().reverse().find((item) => num >= item.value);
+    const item = lookup
+      .slice()
+      .reverse()
+      .find((item) => num >= item.value);
 
     if (unit !== undefined) {
-      return item ? (num / item.value).toFixed(digits).replace(rx, '$1') + ' ' + item.symbol + unit : '0';
+      return item
+        ? (num / item.value).toFixed(digits).replace(rx, '$1') +
+            ' ' +
+            item.symbol +
+            unit
+        : '0';
     } else {
-      return item ? (num / item.value).toFixed(digits).replace(rx, '$1') + item.symbol : '0';
+      return item
+        ? (num / item.value).toFixed(digits).replace(rx, '$1') + item.symbol
+        : '0';
     }
   }
 }

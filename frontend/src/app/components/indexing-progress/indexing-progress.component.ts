@@ -3,12 +3,10 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-indexing-progress',
   templateUrl: './indexing-progress.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IndexingProgressComponent implements OnInit {
-  constructor(
-  ) {}
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 }

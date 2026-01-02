@@ -25,8 +25,8 @@ export class MasterPageComponentBch implements OnInit {
     public stateService: StateService,
     private languageService: LanguageService,
     private enterpriseService: EnterpriseService,
-    private navigationService: NavigationService,
-  ) { }
+    private navigationService: NavigationService
+  ) {}
 
   ngOnInit() {
     this.env = this.stateService.env;

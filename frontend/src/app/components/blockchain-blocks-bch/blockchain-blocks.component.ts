@@ -1,4 +1,10 @@
-import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { StateService } from '../../services/state-bch.service';
 import { specialBlocks } from '../../app.constants';
@@ -45,9 +51,8 @@ export class BlockchainBlocksComponentBch implements OnInit, OnDestroy {
   constructor(
     public stateService: StateService,
     private cd: ChangeDetectorRef,
-    private location: Location,
-  ) {
-  }
+    private location: Location
+  ) {}
 
   enabledMiningInfoIfNeeded(url) {
     this.showMiningInfo = url.indexOf('/mining') !== -1;
@@ -65,12 +70,18 @@ export class BlockchainBlocksComponentBch implements OnInit, OnDestroy {
       this.cd.markForCheck();
     });
 
-    this.emptyBlocks.forEach((b) => this.emptyBlockStyles.push(this.getStyleForEmptyBlock(b)));
+    this.emptyBlocks.forEach((b) =>
+      this.emptyBlockStyles.push(this.getStyleForEmptyBlock(b))
+    );
     this.loadingBlocks$ = this.stateService.isLoadingWebSocket$;
-    this.networkSubscription = this.stateService.networkChanged$.subscribe((network) => this.network = network);
-    this.tabHiddenSubscription = this.stateService.isTabHidden$.subscribe((tabHidden) => this.tabHidden = tabHidden);
-    this.blocksSubscription = this.stateService.blocks$
-      .subscribe(([block, txConfirmed]) => {
+    this.networkSubscription = this.stateService.networkChanged$.subscribe(
+      (network) => (this.network = network)
+    );
+    this.tabHiddenSubscription = this.stateService.isTabHidden$.subscribe(
+      (tabHidden) => (this.tabHidden = tabHidden)
+    );
+    this.blocksSubscription = this.stateService.blocks$.subscribe(
+      ([block, txConfirmed]) => {
         if (this.blocks.some((b) => b.height === block.height)) {
           return;
         }
@@ -81,7 +92,10 @@ export class BlockchainBlocksComponentBch implements OnInit, OnDestroy {
         }
 
         this.blocks.unshift(block);
-        this.blocks = this.blocks.slice(0, this.stateService.env.KEEP_BLOCKS_AMOUNT);
+        this.blocks = this.blocks.slice(
+          0,
+          this.stateService.env.KEEP_BLOCKS_AMOUNT
+        );
 
         if (this.blocksFilled && !this.tabHidden && block.extras) {
           block.extras.stage = block.extras.matchRate >= 66 ? 1 : 2;
@@ -95,10 +109,14 @@ export class BlockchainBlocksComponentBch implements OnInit, OnDestroy {
         }
 
         this.blockStyles = [];
-        this.blocks.forEach((b) => this.blockStyles.push(this.getStyleForBlock(b)));
+        this.blocks.forEach((b) =>
+          this.blockStyles.push(this.getStyleForBlock(b))
+        );
         setTimeout(() => {
           this.blockStyles = [];
-          this.blocks.forEach((b) => this.blockStyles.push(this.getStyleForBlock(b)));
+          this.blocks.forEach((b) =>
+            this.blockStyles.push(this.getStyleForBlock(b))
+          );
           this.cd.markForCheck();
         }, 50);
 
@@ -106,17 +124,19 @@ export class BlockchainBlocksComponentBch implements OnInit, OnDestroy {
           this.blocksFilled = true;
         }
         this.cd.markForCheck();
-      });
+      }
+    );
 
-    this.markBlockSubscription = this.stateService.markBlock$
-      .subscribe((state) => {
+    this.markBlockSubscription = this.stateService.markBlock$.subscribe(
+      (state) => {
         this.markHeight = undefined;
         if (state.blockHeight !== undefined) {
           this.markHeight = state.blockHeight;
         }
         this.moveArrowToPosition(false);
         this.cd.markForCheck();
-      });
+      }
+    );
   }
 
   ngOnDestroy() {
@@ -133,7 +153,9 @@ export class BlockchainBlocksComponentBch implements OnInit, OnDestroy {
       this.arrowVisible = false;
       return;
     }
-    const blockindex = this.blocks.findIndex((b) => b.height === this.markHeight);
+    const blockindex = this.blocks.findIndex(
+      (b) => b.height === this.markHeight
+    );
     if (blockindex > -1) {
       if (!animate) {
         this.transition = 'inherit';
@@ -163,7 +185,8 @@ export class BlockchainBlocksComponentBch implements OnInit, OnDestroy {
   }
 
   getStyleForBlock(block: BlockExtended) {
-    const greenBackgroundHeight = 100 - (block.size / this.stateService.blockSize) * 100;
+    const greenBackgroundHeight =
+      100 - (block.size / this.stateService.blockSize) * 100;
     let addLeft = 0;
 
     if (block?.extras?.stage === 1) {
@@ -176,7 +199,10 @@ export class BlockchainBlocksComponentBch implements OnInit, OnDestroy {
       background: `repeating-linear-gradient(
         #2d3348,
         #2d3348 ${greenBackgroundHeight}%,
-        ${this.gradientColors[this.network][0]} ${Math.max(greenBackgroundHeight, 0)}%,
+        ${this.gradientColors[this.network][0]} ${Math.max(
+        greenBackgroundHeight,
+        0
+      )}%,
         ${this.gradientColors[this.network][1]} 100%
       )`,
     };

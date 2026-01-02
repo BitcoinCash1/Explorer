@@ -38,39 +38,39 @@
 }
 
 .td-width {
-	width: 150px;
+  width: 150px;
 
-	@media (max-width: 768px) {
-	  width: 175px;
-	}
+  @media (max-width: 768px) {
+    width: 175px;
+  }
 }
 
 .badge {
-	position: relative;
-	top: -1px;
+  position: relative;
+  top: -1px;
 }
 
 .btn-small-height {
-	line-height: 1.1;
+  line-height: 1.1;
 }
 
 .arrow-green {
-	color: #1a9436;
+  color: #1a9436;
 }
 
 .arrow-red {
-	color: #dc3545;
+  color: #dc3545;
 }
 
 .container-xl {
-	margin-bottom: 40px;
+  margin-bottom: 40px;
 }
 
-.row{
-	flex-direction: column;
-	@media (min-width: 850px) {
-		flex-direction: row;
-	}
+.row {
+  flex-direction: column;
+  @media (min-width: 850px) {
+    flex-direction: row;
+  }
 }
 
 .box.hidden {
@@ -101,47 +101,47 @@
 }
 
 @media (max-width: 767.98px) {
-	.mobile-bottomcol {
-		margin-top: 15px;
-	}
+  .mobile-bottomcol {
+    margin-top: 15px;
+  }
 
-	.details-table td:first-child {
-		white-space: pre-wrap;
-	}
+  .details-table td:first-child {
+    white-space: pre-wrap;
+  }
 }
 
 .fiat {
-	display: block;
-	@media (min-width: 768px){
-		display: inline-block;
-		margin-left: 15px;
-		text-align: left;
-	}
+  display: block;
+  @media (min-width: 768px) {
+    display: inline-block;
+    margin-left: 15px;
+    text-align: left;
+  }
 }
 
 .table {
-  	tr td {
-		padding: 0.75rem 0.5rem;
-		@media (min-width: 576px) {
-			padding: 0.75rem 0.75rem;
-		}
-		&:last-child {
-			text-align: right;
-			@media (min-width: 850px) {
-			text-align: left;
-			}
-		}
-		.btn {
-			display: block;
-		}
-	}
+  tr td {
+    padding: 0.75rem 0.5rem;
+    @media (min-width: 576px) {
+      padding: 0.75rem 0.75rem;
+    }
+    &:last-child {
+      text-align: right;
+      @media (min-width: 850px) {
+        text-align: left;
+      }
+    }
+    .btn {
+      display: block;
+    }
+  }
 }
 
 .effective-fee-container {
-	display: block;
-	@media (min-width: 768px){
-		display: inline-block;
-	}
+  display: block;
+  @media (min-width: 768px) {
+    display: inline-block;
+  }
 }
 
 .title {
@@ -153,20 +153,21 @@
 }
 
 .btn-outline-info {
-	margin-top: 5px;
-	@media (min-width: 768px){
-		margin-top: 0px;
-	}
+  margin-top: 5px;
+  @media (min-width: 768px) {
+    margin-top: 0px;
+  }
 }
 
-.details-button, .flow-toggle {
+.details-button,
+.flow-toggle {
   margin-top: -5px;
   margin-left: 10px;
-	@media (min-width: 768px){
-		display: inline-block;
+  @media (min-width: 768px) {
+    display: inline-block;
     margin-top: 0px;
     margin-bottom: 0px;
-	}
+  }
 }
 
 .subtitle-block {

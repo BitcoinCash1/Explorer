@@ -14,14 +14,14 @@ import { GeolocationData } from '../../shared/components/geolocation/geolocation
 })
 export class NodesPerISP implements OnInit {
   nodes$: Observable<any>;
-  isp: {name: string, id: number};
+  isp: { name: string; id: number };
 
   skeletonLines: number[] = [];
 
   constructor(
     private apiService: ApiService,
     private seoService: SeoService,
-    private route: ActivatedRoute,
+    private route: ActivatedRoute
   ) {
     for (let i = 0; i < 20; ++i) {
       this.skeletonLines.push(i);
@@ -29,14 +29,17 @@ export class NodesPerISP implements OnInit {
   }
 
   ngOnInit(): void {
-    this.nodes$ = this.apiService.getNodeForISP$(this.route.snapshot.params.isp)
+    this.nodes$ = this.apiService
+      .getNodeForISP$(this.route.snapshot.params.isp)
       .pipe(
-        map(response => {
+        map((response) => {
           this.isp = {
             name: response.isp,
-            id: this.route.snapshot.params.isp.split(',').join(', ')
+            id: this.route.snapshot.params.isp.split(',').join(', '),
           };
-          this.seoService.setTitle($localize`Lightning nodes on ISP: ${response.isp} [AS${this.route.snapshot.params.isp}]`);
+          this.seoService.setTitle(
+            $localize`Lightning nodes on ISP: ${response.isp} [AS${this.route.snapshot.params.isp}]`
+          );
 
           for (const i in response.nodes) {
             response.nodes[i].geolocation = <GeolocationData>{
@@ -47,8 +50,14 @@ export class NodesPerISP implements OnInit {
             };
           }
 
-          const sumLiquidity = response.nodes.reduce((partialSum, a) => partialSum + a.capacity, 0);
-          const sumChannels = response.nodes.reduce((partialSum, a) => partialSum + a.channels, 0);
+          const sumLiquidity = response.nodes.reduce(
+            (partialSum, a) => partialSum + a.capacity,
+            0
+          );
+          const sumChannels = response.nodes.reduce(
+            (partialSum, a) => partialSum + a.channels,
+            0
+          );
           const countries = {};
           const topCountry = {
             count: 0,
@@ -60,7 +69,8 @@ export class NodesPerISP implements OnInit {
             if (!node.geolocation.iso) {
               continue;
             }
-            countries[node.geolocation.iso] = countries[node.geolocation.iso] ?? 0 + 1;
+            countries[node.geolocation.iso] =
+              countries[node.geolocation.iso] ?? 0 + 1;
             if (countries[node.geolocation.iso] > topCountry.count) {
               topCountry.count = countries[node.geolocation.iso];
               topCountry.country = node.geolocation.country;
@@ -68,7 +78,7 @@ export class NodesPerISP implements OnInit {
             }
           }
           topCountry.flag = getFlagEmoji(topCountry.iso);
-          
+
           return {
             nodes: response.nodes,
             sumLiquidity: sumLiquidity,

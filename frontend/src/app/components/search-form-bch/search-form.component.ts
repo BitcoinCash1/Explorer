@@ -1,10 +1,34 @@
-import { Component, OnInit, ChangeDetectionStrategy, EventEmitter, Output, ViewChild, HostListener, ElementRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  EventEmitter,
+  Output,
+  ViewChild,
+  HostListener,
+  ElementRef,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AssetsService } from '../../services/assets.service';
 import { StateService } from '../../services/state-bch.service';
-import { Observable, of, Subject, zip, BehaviorSubject, combineLatest } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap, catchError, map, startWith,  tap } from 'rxjs/operators';
+import {
+  Observable,
+  of,
+  Subject,
+  zip,
+  BehaviorSubject,
+  combineLatest,
+} from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  switchMap,
+  catchError,
+  map,
+  startWith,
+  tap,
+} from 'rxjs/operators';
 import { ElectrsApiService } from '../../services/electrs-api.service';
 import { RelativeUrlPipe } from '../../shared/pipes/relative-url-bch/relative-url.pipe';
 import { ApiService } from '../../services/api-bch.service';
@@ -34,7 +58,8 @@ export class SearchFormComponentBch implements OnInit {
     }
   }
 
-  regexAddress = /^((bitcoincash|bchreg|bchtest):)?(q|p)[a-z0-9]{41}|[13][a-km-zA-HJ-NP-Z1-9]{33}$/;
+  regexAddress =
+    /^((bitcoincash|bchreg|bchtest):)?(q|p)[a-z0-9]{41}|[13][a-km-zA-HJ-NP-Z1-9]{33}$/;
   regexBlockhash = /^[0]{8}[a-fA-F0-9]{56}$/;
   regexTransaction = /^([a-fA-F0-9]{64})(:\d+)?$/;
   regexBlockheight = /^[0-9]{1,9}$/;
@@ -55,56 +80,61 @@ export class SearchFormComponentBch implements OnInit {
     private electrsApiService: ElectrsApiService,
     private apiService: ApiService,
     private relativeUrlPipe: RelativeUrlPipe,
-    private elementRef: ElementRef,
-  ) { }
+    private elementRef: ElementRef
+  ) {}
 
   ngOnInit(): void {
-    this.stateService.networkChanged$.subscribe((network) => this.network = network);
+    this.stateService.networkChanged$.subscribe(
+      (network) => (this.network = network)
+    );
 
     this.searchForm = this.formBuilder.group({
       searchText: ['', Validators.required],
     });
 
     if (this.network === 'liquid' || this.network === 'liquidtestnet') {
-      this.assetsService.getAssetsMinimalJson$
-        .subscribe((assets) => {
-          this.assets = assets;
-        });
+      this.assetsService.getAssetsMinimalJson$.subscribe((assets) => {
+        this.assets = assets;
+      });
     }
 
-    const searchText$ = this.searchForm.get('searchText').valueChanges
-    .pipe(
+    const searchText$ = this.searchForm.get('searchText').valueChanges.pipe(
       map((text) => {
         if (this.network === 'bisq' && text.match(/^(b)[^c]/i)) {
           return text.substr(1);
         }
         return text.trim();
       }),
-      distinctUntilChanged(),
+      distinctUntilChanged()
     );
 
     const searchResults$ = searchText$.pipe(
       debounceTime(200),
       switchMap((text) => {
         if (!text.length) {
-          return of([
-            [],
-            { nodes: [], channels: [] }
-          ]);
+          return of([[], { nodes: [], channels: [] }]);
         }
         this.isTypeaheading$.next(true);
         if (!this.stateService.env.LIGHTNING) {
           return zip(
-            this.electrsApiService.getAddressesByPrefix$(text).pipe(catchError(() => of([]))),
-            [{ nodes: [], channels: [] }],
+            this.electrsApiService
+              .getAddressesByPrefix$(text)
+              .pipe(catchError(() => of([]))),
+            [{ nodes: [], channels: [] }]
           );
         }
         return zip(
-          this.electrsApiService.getAddressesByPrefix$(text).pipe(catchError(() => of([]))),
-          this.apiService.lightningSearch$(text).pipe(catchError(() => of({
-            nodes: [],
-            channels: [],
-          }))),
+          this.electrsApiService
+            .getAddressesByPrefix$(text)
+            .pipe(catchError(() => of([]))),
+          this.apiService.lightningSearch$(text).pipe(
+            catchError(() =>
+              of({
+                nodes: [],
+                channels: [],
+              })
+            )
+          )
         );
       }),
       tap((result: any[]) => {
@@ -112,60 +142,66 @@ export class SearchFormComponentBch implements OnInit {
       })
     );
 
-    this.typeAhead$ = combineLatest(
-      [
-        searchText$,
-        searchResults$.pipe(
+    this.typeAhead$ = combineLatest([
+      searchText$,
+      searchResults$.pipe(
         startWith([
           [],
           {
             nodes: [],
             channels: [],
-          }
-        ]))
-      ]
-      ).pipe(
-        map((latestData) => {
-          const searchText = latestData[0];
-          if (!searchText.length) {
-            return {
-              searchText: '',
-              hashQuickMatch: false,
-              blockHeight: false,
-              txId: false,
-              address: false,
-              addresses: [],
-              nodes: [],
-              channels: [],
-            };
-          }
-
-          const result = latestData[1];
-          const addressPrefixSearchResults = result[0];
-          const lightningResults = result[1];
-
-          if (this.network === 'bisq') {
-            return searchText.map((address: string) => 'B' + address);
-          }
-
-          const matchesBlockHeight = this.regexBlockheight.test(searchText);
-          const matchesTxId = this.regexTransaction.test(searchText) && !this.regexBlockhash.test(searchText);
-          const matchesBlockHash = this.regexBlockhash.test(searchText);
-          const matchesAddress = this.regexAddress.test(searchText);
-
+          },
+        ])
+      ),
+    ]).pipe(
+      map((latestData) => {
+        const searchText = latestData[0];
+        if (!searchText.length) {
           return {
-            searchText: searchText,
-            hashQuickMatch: +(matchesBlockHeight || matchesBlockHash || matchesTxId || matchesAddress),
-            blockHeight: matchesBlockHeight,
-            txId: matchesTxId,
-            blockHash: matchesBlockHash,
-            address: matchesAddress,
-            addresses: addressPrefixSearchResults,
-            nodes: lightningResults.nodes,
-            channels: lightningResults.channels,
+            searchText: '',
+            hashQuickMatch: false,
+            blockHeight: false,
+            txId: false,
+            address: false,
+            addresses: [],
+            nodes: [],
+            channels: [],
           };
-        })
-      );
+        }
+
+        const result = latestData[1];
+        const addressPrefixSearchResults = result[0];
+        const lightningResults = result[1];
+
+        if (this.network === 'bisq') {
+          return searchText.map((address: string) => 'B' + address);
+        }
+
+        const matchesBlockHeight = this.regexBlockheight.test(searchText);
+        const matchesTxId =
+          this.regexTransaction.test(searchText) &&
+          !this.regexBlockhash.test(searchText);
+        const matchesBlockHash = this.regexBlockhash.test(searchText);
+        const matchesAddress = this.regexAddress.test(searchText);
+
+        return {
+          searchText: searchText,
+          hashQuickMatch: +(
+            matchesBlockHeight ||
+            matchesBlockHash ||
+            matchesTxId ||
+            matchesAddress
+          ),
+          blockHeight: matchesBlockHeight,
+          txId: matchesTxId,
+          blockHash: matchesBlockHash,
+          address: matchesAddress,
+          addresses: addressPrefixSearchResults,
+          nodes: lightningResults.nodes,
+          channels: lightningResults.channels,
+        };
+      })
+    );
   }
 
   handleKeyDown($event): void {
@@ -194,7 +230,10 @@ export class SearchFormComponentBch implements OnInit {
       this.isSearching = true;
       if (this.regexAddress.test(searchText)) {
         this.navigate('/address/', searchText);
-      } else if (this.regexBlockhash.test(searchText) || this.regexBlockheight.test(searchText)) {
+      } else if (
+        this.regexBlockhash.test(searchText) ||
+        this.regexBlockheight.test(searchText)
+      ) {
         this.navigate('/block/', searchText);
       } else if (this.regexTransaction.test(searchText)) {
         const matches = this.regexTransaction.exec(searchText);
@@ -202,16 +241,23 @@ export class SearchFormComponentBch implements OnInit {
           if (this.assets[matches[1]]) {
             this.navigate('/assets/asset/', matches[1]);
           }
-          this.electrsApiService.getAsset$(matches[1])
-            .subscribe(
-              () => { this.navigate('/assets/asset/', matches[1]); },
-              () => {
-                this.electrsApiService.getBlock$(matches[1])
-                  .subscribe(
-                    (block) => { this.navigate('/block/', matches[1], { state: { data: { block } } }); },
-                    () => { this.navigate('/tx/', matches[0]); });
-              }
-            );
+          this.electrsApiService.getAsset$(matches[1]).subscribe(
+            () => {
+              this.navigate('/assets/asset/', matches[1]);
+            },
+            () => {
+              this.electrsApiService.getBlock$(matches[1]).subscribe(
+                (block) => {
+                  this.navigate('/block/', matches[1], {
+                    state: { data: { block } },
+                  });
+                },
+                () => {
+                  this.navigate('/tx/', matches[0]);
+                }
+              );
+            }
+          );
         } else {
           this.navigate('/tx/', matches[0]);
         }
@@ -223,7 +269,10 @@ export class SearchFormComponentBch implements OnInit {
   }
 
   navigate(url: string, searchText: string, extras?: any): void {
-    this.router.navigate([this.relativeUrlPipe.transform(url), searchText], extras);
+    this.router.navigate(
+      [this.relativeUrlPipe.transform(url), searchText],
+      extras
+    );
     this.searchTriggered.emit();
     this.searchForm.setValue({
       searchText: '',

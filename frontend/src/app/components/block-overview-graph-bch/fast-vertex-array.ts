@@ -54,19 +54,19 @@ export class FastVertexArray {
     this.clearData(index);
     this.freeSlots.push(index);
     this.sprites[index] = null;
-    if (this.length > 2048 && this.count < (this.length * 0.4)) {
+    if (this.length > 2048 && this.count < this.length * 0.4) {
       this.compact();
     }
     this.dirty = true;
   }
 
   setData(index: number, dataChunk: number[]): void {
-    this.data.set(dataChunk, (index * this.stride));
+    this.data.set(dataChunk, index * this.stride);
     this.dirty = true;
   }
 
   clearData(index: number): void {
-    this.data.fill(0, (index * this.stride), ((index + 1) * this.stride));
+    this.data.fill(0, index * this.stride, (index + 1) * this.stride);
     this.dirty = true;
   }
 
@@ -84,7 +84,10 @@ export class FastVertexArray {
 
   compact(): void {
     // New array length is the smallest power of 2 larger than the sprite count (but no smaller than 512)
-    const newLength = Math.max(512, Math.pow(2, Math.ceil(Math.log2(this.count))));
+    const newLength = Math.max(
+      512,
+      Math.pow(2, Math.ceil(Math.log2(this.count)))
+    );
     if (newLength !== this.length) {
       this.length = newLength;
       this.data = new Float32Array(this.length * this.stride);
