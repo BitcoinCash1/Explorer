@@ -1,3 +1,7 @@
+# Old repo
+
+**Important:** We have a new BCH Explorer, see new repository: [https://github.com/BitcoinCash1/bitcoin-cash-explorer](https://github.com/BitcoinCash1/bitcoin-cash-explorer).
+
 # Bitcoin Cash Explorer [![pipeline status](https://gitlab.melroy.org/bitcoincash/explorer/badges/bch/pipeline.svg)](https://gitlab.melroy.org/bitcoincash/explorer/-/pipelines/latest)
 
 Bitcoin Cash Explorer created by Melroy van den Berg, focused on mempool as well as block explorer.
